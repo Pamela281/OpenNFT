@@ -1,0 +1,31 @@
+{
+	"RegulationName": "NFBREG",
+	"nfbDisplayName": "NFBDISP",
+	"Contrast": "+1*NFBREG;0*NFBDISP",
+	"Cond": [
+		{
+			"ConditionName": "NFBREG",
+			"OnOffsets": [
+				[11,20],
+				[31,40],
+				[51,60],
+				[71,80],
+				[91,100],
+				[111,120],
+				[131,140]
+			]
+		},
+		{
+			"ConditionName": "NFBDISP",
+			"OnOffsets": [
+				[21,22],
+				[41,42],
+				[61,62],
+				[81,82],
+				[101,102],
+				[121,122],
+				[141,142]
+			]
+		}
+	]
+}
