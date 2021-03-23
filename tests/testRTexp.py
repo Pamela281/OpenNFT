@@ -24,9 +24,9 @@ fns = None
 testCase = 'PSC'
 
 if testCase == 'PSC':
-    srcpath = 'C:/_RT/rtData/NF_PSC/NF_Run_1_src'
-    dstpath = 'C:/_RT/rtData/NF_PSC/NF_Run_1'
-    pause_in_sec = 1
+    srcpath = 'C:/Users/pp262170/PycharmProjects/OpenNFT_DemoData/NF_PSC/NF_Run_1_src'
+    dstpath = 'C:/Users/pp262170/PycharmProjects/OpenNFT_DemoData/NF_PSC/NF_Run_1'
+    pause_in_sec = 2
 
 elif testCase == 'SVM':
     srcpath = 'C:/_RT/rtData/NF_SVM/NF_Run_1_src'
