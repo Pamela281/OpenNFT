@@ -24,6 +24,28 @@ P = evalin('base', 'P');
 Screen('CloseAll');
 Screen('Preference', 'SkipSyncTests', 2);
 
+imageFormat = 'jpg';
+
+%Get the image files for the neutral condition
+P.image_neutral_condition = 'C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext';
+imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
+P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
+nTrials_neutral = length(P.imgList_neutral_condition);
+
+% Randomize the trial list
+P.randomizedTrials_neutral = randperm(nTrials_neutral);
+P.neutral_image_idx = 1;
+
+% Get the image files for the regulation imgList_neutral_condition
+P.image_regulation_condition ='C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo';
+imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
+P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
+nTrials_regulation = length(P.imgList_regulation_condition);
+
+% Randomize the trial list
+P.randomizedTrials_regulation = randperm(nTrials_regulation);
+P.regulation_image_idx = 1;
+
 if ~ismac
     % Because this command messes the coordinate system on the Mac OS
     Screen('Preference', 'ConserveVRAM', 64);
@@ -31,7 +53,7 @@ end
 
 AssertOpenGL();
 
-myscreens = Screen('Screens');
+myscreens = Screen('Screens'); %screen number PTB
 if length(myscreens) == 3
     % two monitors: [0 1 2]
     screenid = myscreens(screenId + 1);
@@ -48,31 +70,37 @@ fFullScreen = P.DisplayFeedbackFullscreen;
 if ~fFullScreen
     % part of the screen, e.g. for test mode
     if strcmp(protName, 'Cont')
-        P.Screen.wPtr = Screen('OpenWindow', screenid, [125 125 125], ...
-            [40 40 640 520]);
+        [P.Screen.wPtr, ~] = Screen('OpenWindow', screenid, [125 125 125], ...
+            [40 40 640 520]); %screenid = screen display ; [x y z] = color rgb [x y z xx] = pixel
     else
-        P.Screen.wPtr = Screen('OpenWindow', screenid, [125 125 125], ...
+        [P.Screen.wPtr, ~] = Screen('OpenWindow', screenid, [125 125 125], ...
             [40 40 720 720]);
     end
 else
     % full screen
-    P.Screen.wPtr = Screen('OpenWindow', screenid, [0 0 0]);
+    [P.Screen.wPtr, ~] = Screen('OpenWindow', screenid, [0 0 0]);
 end
 
-[w, h] = Screen('WindowSize', P.Screen.wPtr);
-P.Screen.ifi = Screen('GetFlipInterval', P.Screen.wPtr);
+[w, h] = Screen('WindowSize', P.Screen.wPtr); %w and h car screen size and they are used in ligne 68, 69
+
+%get some color information
+P.Screen.white = WhiteIndex(screenid);
+P.Screen.black = BlackIndex(screenid);
+P.Screen.grey = P.Screen.white/2;
+
+P.Screen.ifi = Screen('GetFlipInterval', P.Screen.wPtr);  %get and set information about a screen
 
 % settings
-P.Screen.vbl=Screen('Flip', P.Screen.wPtr);
+P.Screen.vbl=Screen('Flip', P.Screen.wPtr); %synchronize with the windows screen
 P.Screen.h = h;
 P.Screen.w = w;
 P.Screen.lw = 5;
 
 % Text "HELLO" - also to check that PTB-3 function 'DrawText' is working
-Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+Screen('TextSize', P.Screen.wPtr , P.Screen.h/10); %multiple of 10
 Screen('DrawText', P.Screen.wPtr, 'HELLO', ...
     floor(P.Screen.w/2-P.Screen.h/6), ...
-    floor(P.Screen.h/2-P.Screen.h/10), [200 200 200]);
+    floor(P.Screen.h/2-P.Screen.h/10), [200 200 200]); %text position on screen, [] color rgb
 P.Screen.vbl=Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
 pause(1);
