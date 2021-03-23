@@ -10,12 +10,12 @@ function showImagesAndFixationCross (w,backgroundColor, dispW,dispH,slack, image
     pause(2)
 
     % Show fixation cross
-    fixationDuration = TR/2;
-    drawCross(w,dispW,dispH);
-    tFixation = Screen('Flip',w);
+ %   fixationDuration = 1;
+ %   drawCross(w,dispW,dispH);
+%    tFixation = Screen('Flip',w);
 
-    %Blank ptbBlank
-    Screen(w, 'FillRect', backgroundColor);
-    Screen('Flip', w,tFixation + fixationDuration - slack, 0);
+%    %Blank ptbBlank
+%    Screen(w, 'FillRect', backgroundColor);
+%    Screen('Flip', w,tFixation + fixationDuration - slack, 0);
 end
 
