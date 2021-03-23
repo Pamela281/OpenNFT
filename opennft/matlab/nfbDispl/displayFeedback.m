@@ -114,47 +114,27 @@ case 'value_fixation'
         if indexSmiley == 0
             indexSmiley = 1;
         end
+
         switch condition
             case 1  % Baseline
-                for i = 1:2
-                    % fixation
-                    Screen('FillOval', P.Screen.wPtr, ...
-                        [randi([50,200]) 0 0], P.Screen.fix+[0 0 0 0]);
-                    % dots
-                    Screen('DrawDots', P.Screen.wPtr, P.Screen.xy, ...
-                        P.Screen.dsize, P.Screen.dotCol,P.Screen.db,0);
-                    % display
-                    P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
-                        P.Screen.vbl + P.Screen.ifi/2);
-                    % flickering
-                    if 1
-                        pause(randi([30,100])/1000)
-                    end
-                end
+                t = P.randomizedTrials_neutral(P.neutral_image_idx);
+                file = P.imgList_neutral_condition{t};
+                img = imread(fullfile(P.image_neutral_condition,file));
+                imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
+
+                showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
+                    P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+                P.neutral_image_idx = P.neutral_image_idx + 1;
                 
             case 2  % Regualtion
-                for i = 1:2
-                    % arrow
-                    Screen('FillRect',P.Screen.wPtr, instrColor, ...
-                        P.Screen.arrow.rect + [0 0 0 0]);
-                    Screen('FillPoly',P.Screen.wPtr, instrColor, ...
-                        P.Screen.arrow.poly_right + [0 0; 0 0; 0 0]);
-                    Screen('FillPoly',P.Screen.wPtr, instrColor, ...
-                        P.Screen.arrow.poly_left + [0 0; 0 0; 0 0]);
-                    % fixation
-                    Screen('FillOval', P.Screen.wPtr, ...
-                        [randi([50,200]) 0 0], P.Screen.fix+[0 0 0 0]);
-                    % dots
-                    Screen('DrawDots', P.Screen.wPtr, P.Screen.xy, ...
-                        P.Screen.dsize, P.Screen.dotCol, P.Screen.db,0);
-                    % display
-                    P.Screen.vbl=Screen('Flip', P.Screen.wPtr, ...
-                        P.Screen.vbl + P.Screen.ifi/2);
-                    % basic flickering given TR
-                    if 1
-                        pause(randi([30,100])/1000);
-                    end
-                end
+                t = P.randomizedTrials_regulation(P.regulation_image_idx);
+                file = P.imgList_regulation_condition{t};
+                img = imread(fullfile(P.image_regulation_condition,file));
+                imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
+
+                showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
+                    P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+                P.regulation_image_idx = P.regulation_image_idx + 1;
                 
             case 3 % NF
                 % feedback value
