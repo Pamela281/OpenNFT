@@ -28,6 +28,11 @@ if ~strcmp(feedbackType, 'DCM')
     instrColor = [200, 200, 200];
 end
 
+logfile = fopen('C:\Users\pp262170\Documents\NFB_experiment\displayfeedback_log.txt', 'a');
+fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
+        datetime, feedbackType,condition);
+fclose(logfile);
+
 switch feedbackType    
     %% Continuous PSC
     case 'bar_count'
