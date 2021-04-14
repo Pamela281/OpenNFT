@@ -25,13 +25,8 @@ eval(varsFromStruct(displayData, fieldNames, defaultFields))
 
 if ~strcmp(feedbackType, 'DCM')
     dispColor = [255, 255, 255];
-    instrColor = [200, 200, 200];
+    instrColor = [155, 150, 150];
 end
-
-logfile = fopen('C:\Users\pp262170\Documents\NFB_experiment\displayfeedback_log.txt', 'a');
-fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
-        datetime, feedbackType,condition);
-fclose(logfile);
 
 switch feedbackType    
     %% Continuous PSC
@@ -110,33 +105,126 @@ switch feedbackType
         
     %% Intermittent PSC
     case 'value_fixation'
-        indexSmiley = round(dispValue);
+        indexSmiley = round(dispValue/10);
         if indexSmiley == 0
             indexSmiley = 1;
+        elseif indexSmiley > 10
+            indexSmiley = 10;
         end
-
         switch condition
             case 1  % Baseline
-                t = P.randomizedTrials_neutral(P.neutral_image_idx);
-                file = P.imgList_neutral_condition{t};
-                img = imread(fullfile(P.image_neutral_condition,file));
-                imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
+                Screen(P.Screen.wPtr, 'FillRect', [100 100 100]);
+                % fixation cross
+                Screen('DrawLines', P.Screen.wPtr, ...
+                    [floor(P.Screen.w/2-P.Screen.w/20), ...
+                    floor(P.Screen.w/2+P.Screen.w/20); ...
+                    floor(P.Screen.h/2), floor(P.Screen.h/2)], ...
+                    P.Screen.lw, [200 200 200]);
+                Screen('DrawLines', P.Screen.wPtr, ...
+                    [floor(P.Screen.w/2), ...
+                    floor(P.Screen.w/2); ...
+                    floor(P.Screen.h/2+P.Screen.w/20), floor(P.Screen.h/2-P.Screen.w/20)], ...
+                    P.Screen.lw, [200 200 200]);
 
-                showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
-                    P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
-                P.neutral_image_idx = P.neutral_image_idx + 1;
-                
-            case 2  % Regualtion
-                t = P.randomizedTrials_regulation(P.regulation_image_idx);
-                file = P.imgList_regulation_condition{t};
-                img = imread(fullfile(P.image_regulation_condition,file));
-                imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
 
-                showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
-                    P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
-                P.regulation_image_idx = P.regulation_image_idx + 1;
+            case 2  % Regualtion 1
+                % Text
+                Screen(P.Screen.wPtr, 'FillRect', [100 100 100]);
+                Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+                Screen('DrawText', P.Screen.wPtr, 'IMAGINE  TAPPING', ...
+                    floor(P.Screen.w/2-P.Screen.h/3), ...
+                    floor(P.Screen.h/2-P.Screen.h/10), instrColor);
+                % Fixation Point
+                Screen('FillOval', P.Screen.wPtr, [200 200 200], ...
+                    [floor(P.Screen.w/2-P.Screen.w/200), ...
+                    floor(P.Screen.h/2-P.Screen.w/200), ...
+                    floor(P.Screen.w/2+P.Screen.w/200), ...
+                    floor(P.Screen.h/2+P.Screen.w/200)]);
+
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
+            case 3  % Regualtion 2
+                if P.vectList(iteration) == 1
+                    wordDisp = char(P.wordList(iteration));
+                else
+                    wordDisp = char(' ');
+                end
+                % Text
+                Screen(P.Screen.wPtr, 'FillRect', [100 100 100]);
+                Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+                Screen('DrawText', P.Screen.wPtr, wordDisp, ...
+                    floor(P.Screen.w/2-P.Screen.h/10), ...
+                    floor(P.Screen.h/2-P.Screen.h/10), instrColor);
+                % Fixation Point
+                Screen('FillOval', P.Screen.wPtr, [200 200 200], ...
+                    [floor(P.Screen.w/2-P.Screen.w/200), ...
+                    floor(P.Screen.h/2-P.Screen.w/200), ...
+                    floor(P.Screen.w/2+P.Screen.w/200), ...
+                    floor(P.Screen.h/2+P.Screen.w/200)]);
                 
-            case 3 % NF
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
+
+                 nPause = 1.5+randi(5)/10;
+                 pause(nPause);
+
+                % blanck screen
+                 Screen(P.Screen.wPtr, 'FillRect', [100 100 100]);
+                 % Fixation Point
+                 Screen('FillOval', P.Screen.wPtr, [200 200 200], ...
+                     [floor(P.Screen.w/2-P.Screen.w/200), ...
+                     floor(P.Screen.h/2-P.Screen.w/200), ...
+                     floor(P.Screen.w/2+P.Screen.w/200), ...
+                     floor(P.Screen.h/2+P.Screen.w/200)]);
+
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
+
+            case 4  % Regualtion 3
+                if P.vectList(iteration) == 2
+                    wordDisp = char(P.wordList(iteration));
+                else
+                    wordDisp = char(' ');
+                end
+                % Text
+                Screen(P.Screen.wPtr, 'FillRect', [100 100 100]);
+                Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+                Screen('DrawText', P.Screen.wPtr, wordDisp, ...
+                    floor(P.Screen.w/2-P.Screen.h/10), ...
+                    floor(P.Screen.h/2-P.Screen.h/10), instrColor);
+                % Fixation Point
+                Screen('FillOval', P.Screen.wPtr, [200 200 200], ...
+                    [floor(P.Screen.w/2-P.Screen.w/200), ...
+                    floor(P.Screen.h/2-P.Screen.w/200), ...
+                    floor(P.Screen.w/2+P.Screen.w/200), ...
+                    floor(P.Screen.h/2+P.Screen.w/200)]);
+
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
+
+                 nPause = 1.5+randi(5)/10;
+                 pause(nPause);
+
+                 % blanck screen
+                 Screen(P.Screen.wPtr, 'FillRect', [100 100 100]);
+                 % Fixation Point
+                 Screen('FillOval', P.Screen.wPtr, [200 200 200], ...
+                     [floor(P.Screen.w/2-P.Screen.w/200), ...
+                     floor(P.Screen.h/2-P.Screen.w/200), ...
+                     floor(P.Screen.w/2+P.Screen.w/200), ...
+                     floor(P.Screen.h/2+P.Screen.w/200)]);
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
+            case 5  % Rest
+                % blanck screen
+                 Screen(P.Screen.wPtr, 'FillRect', [0 0 0]);
+                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
+
+            case 6 % NF
+                Screen(P.Screen.wPtr, 'FillRect', [0 0 0]);
                 % feedback value
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - P.Screen.w/30+0, ...

@@ -495,7 +495,7 @@ class OpenNFT(QWidget):
     # --------------------------------------------------------------------------
     def updatePlugins(self):
         for i in range(len(self.plugins)): self.plugins[i].update()
-    
+
     # --------------------------------------------------------------------------
     def onChangeDataType(self):
         self.cbgetMAT.setChecked(self.cbgetMAT.isChecked() and self.cbDataType.currentText() == 'DICOM')
@@ -1112,6 +1112,13 @@ class OpenNFT(QWidget):
             xmax = max(self.musterInfo['tmpCond1'][-1][1],
                        self.musterInfo['tmpCond2'][-1][1],
                        self.musterInfo['tmpCond3'][-1][1])
+        elif self.P['Prot'] == 'Inter':
+            xmax = max(self.musterInfo['tmpCond1'][-1][1],
+                       self.musterInfo['tmpCond2'][-1][1],
+                       self.musterInfo['tmpCond3'][-1][1],
+                       self.musterInfo['tmpCond4'][-1][1],
+                       self.musterInfo['tmpCond5'][-1][1],
+                       self.musterInfo['tmpCond6'][-1][1])
         else:
             if not self.P['isRestingState']:
                 xmax = max(self.musterInfo['tmpCond1'][-1][1],
@@ -2129,6 +2136,15 @@ class OpenNFT(QWidget):
 
         if self.P['Prot'] == 'InterBlock':
             blockLength = tmpCond[0][0][1] - tmpCond[0][0][0] + 1
+        elif self.P['Prot'] == 'Inter':
+            blockLength = (
+                    tmpCond[0][0][1] - tmpCond[0][0][0] +
+                    tmpCond[1][0][1] - tmpCond[1][0][0] +
+                    tmpCond[2][0][1] - tmpCond[2][0][0] +
+                    tmpCond[3][0][1] - tmpCond[3][0][0] +
+                    tmpCond[4][0][1] - tmpCond[4][0][0] +
+                    tmpCond[5][0][1] - tmpCond[5][0][0] + 6
+            )
         else:
             # FIXME: tmpCond4 (?)
             blockLength = (
@@ -2177,6 +2193,10 @@ class OpenNFT(QWidget):
         self.musterInfo['nrCond3'] = nrCond[2]
         self.musterInfo['tmpCond4'] = tmpCond[3]
         self.musterInfo['nrCond4'] = nrCond[3]
+        self.musterInfo['tmpCond5'] = tmpCond[4]
+        self.musterInfo['nrCond5'] = nrCond[4]
+        self.musterInfo['tmpCond6'] = tmpCond[5]
+        self.musterInfo['nrCond6'] = nrCond[5]
         self.musterInfo['blockLength'] = blockLength
 
     # --------------------------------------------------------------------------
@@ -2218,6 +2238,21 @@ class OpenNFT(QWidget):
 
             self.musterInfo['xCond3'] = xCond3
             self.musterInfo['yCond3'] = yCond3
+
+            if self.P['Prot'] == 'Inter':
+                xCond4, yCond4 = computeConds(
+                    self.musterInfo['nrCond4'], self.musterInfo['tmpCond4'])
+                xCond5, yCond5 = computeConds(
+                    self.musterInfo['nrCond5'], self.musterInfo['tmpCond5'])
+                xCond6, yCond6 = computeConds(
+                    self.musterInfo['nrCond6'], self.musterInfo['tmpCond6'])
+
+                self.musterInfo['xCond4'] = xCond4
+                self.musterInfo['yCond4'] = yCond4
+                self.musterInfo['xCond5'] = xCond5
+                self.musterInfo['yCond5'] = yCond5
+                self.musterInfo['xCond6'] = xCond6
+                self.musterInfo['yCond6'] = yCond6
 
     # --------------------------------------------------------------------------
     def drawRoiPlots(self, init):
@@ -2311,6 +2346,30 @@ class OpenNFT(QWidget):
                                   pen=config.MUSTER_PEN_COLORS[2],
                                   brush=config.MUSTER_BRUSH_COLORS[2])
                 )
+
+                if self.P['Prot'] == 'Inter':
+                    muster.append(
+                        plotitem.plot(x=self.musterInfo['xCond4'],
+                                      y=self.musterInfo['yCond4'],
+                                      fillLevel=ylim[0],
+                                      pen=config.MUSTER_PEN_COLORS[3],
+                                      brush=config.MUSTER_BRUSH_COLORS[3])
+                    )
+                    muster.append(
+                        plotitem.plot(x=self.musterInfo['xCond5'],
+                                      y=self.musterInfo['yCond5'],
+                                      fillLevel=ylim[0],
+                                      pen=config.MUSTER_PEN_COLORS[4],
+                                      brush=config.MUSTER_BRUSH_COLORS[4])
+                    )
+                    muster.append(
+                        plotitem.plot(x=self.musterInfo['xCond6'],
+                                      y=self.musterInfo['yCond6'],
+                                      fillLevel=ylim[0],
+                                      pen=config.MUSTER_PEN_COLORS[5],
+                                      brush=config.MUSTER_BRUSH_COLORS[5])
+                    )
+
         else:
             muster = [
                 plotitem.plot(x=[1, (self.P['NrOfVolumes'] - self.P['nrSkipVol'])],

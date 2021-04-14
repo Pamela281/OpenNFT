@@ -25,7 +25,7 @@ PTB_MATLAB_NAME = 'MATLAB_NFB_PTB'
 SPM_MATLAB_NAME = 'MATLAB_NFB_SPM'
 MODEL_HELPER_MATLAB_NAME = 'MATLAB_NFB_MODEL_HELPER'
 
-MAIN_MATLAB_STARTUP_OPTIONS = '-nodesktop'
+MAIN_MATLAB_STARTUP_OPTIONS = '-desktop'
 PTB_MATLAB_STARTUP_OPTIONS = '-nodesktop'
 SPM_MATLAB_STARTUP_OPTIONS = '-nodesktop'
 MODEL_HELPER_MATLAB_STARTUP_OPTIONS = '-nodesktop'
@@ -117,21 +117,23 @@ MUSTER_PEN_COLORS = [
     (73, 137, 255, 255),
     (255, 103, 86, 255),
     (22, 255, 104, 255),
-    (255, 255, 255, 255)
+    (200, 200, 100, 255),
+    (125, 125, 125, 255),
+    (200, 100, 200, 255)
 ]
 MUSTER_BRUSH_COLORS = [
     (124, 196, 255, MUSTER_PLOT_ALPHA),
     (255, 156, 117, MUSTER_PLOT_ALPHA),
     (127, 255, 157, MUSTER_PLOT_ALPHA),
-    (255, 255, 255, MUSTER_PLOT_ALPHA)
+    (200, 200, 100, MUSTER_PLOT_ALPHA),
+    (125, 125, 125, MUSTER_PLOT_ALPHA),
+    (200, 100, 200, MUSTER_PLOT_ALPHA)
 ]
-
-# Motion correction plot colors
 MC_PLOT_COLORS = [
-    (255, 123, 0),   # translations - x, y, z
+    (255, 123, 0),
     (255, 56, 109),
     (127, 0, 255),
-    (0, 46, 255),    # rotations - alpha, betta, gamma
+    (0, 46, 255),
     (0, 147, 54),
     (145, 130, 43),
 ]
@@ -144,7 +146,7 @@ HIDE_TEST_BTN = True
 
 # rtQA may cause lear performance loss on the big data
 # due to saving process of iGLM quality paramaters
-USE_RTQA = True
+USE_RTQA = False
 USE_IGLM = True
 USE_ROI = True
 FIRST_SNR_VOLUME = 2
