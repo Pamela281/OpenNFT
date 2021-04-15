@@ -1,0 +1,171 @@
+{
+	"InstructionName_Baseline" : "NFBINST_BAS",
+	"BaselineName" : "BAS",
+	"InstructionName_Regulation" : "NFBINST_REG",
+	"RegulationName": "NFBREG",
+	"nfbDisplayName": "NFBDISP",
+	"Contrast": "+0*NFBINST_BAS",
+	"Contrast" : "+0*NFBINST_REG",
+	"Contrast": "+1*NFBREG;0*NFBDISP",
+	"Cond": [
+		{
+			"ConditionName": "NFBINST_BAS",
+			"OnOffsets": [
+				[1,2],
+				[30,31],
+				[68,69],
+				[97,98],
+				[126,127],
+				[155,156],
+				[184,185],
+				[213,214],
+				[241,242],
+				[270,271]
+			]
+		},
+		{
+			"ConditionName": "BAS",
+			"OnOffsets": [
+				[3,13],
+				[32,42],
+				[70,80],
+				[99,109],
+				[128,138],
+				[157,167],
+				[186,196],
+				[215,225],
+				[243,253],
+				[272,282]
+			]
+		},
+		{
+			"ConditionName": "NFBINST_REG",
+			"OnOffsets": [
+				[14,15],
+				[43,53],
+				[81,82],
+				[110,111],
+				[139,140],
+				[168,169],
+				[197,198],
+				[225,226],
+				[254,255],
+				[283,284]
+			]
+		},
+		{
+			"ConditionName": "NFBREG",
+			"OnOffsets": [
+				[16,26],
+				[54,64],
+				[83,93],
+				[112,122],
+				[141,151],
+				[170,180],
+				[199,209],
+				[227,237],
+				[256,266],
+				[285,295]
+			]
+		},
+		{
+			"ConditionName": "NFBDISP",
+			"OnOffsets": [
+				[27,29],
+				[65,67],
+				[94,96],
+				[123,125],
+				[152,154],
+				[181,183],
+				[210,212],
+				[238,240],
+				[267,269],
+				[297,299]
+			]
+		}
+	]
+}
+
+
+{
+	"RegulationName": "NFBREG",
+	"nfbDisplayName": "NFBDISP",
+	"Contrast": "+1*NFBREG;0*NFBDISP",
+	"Cond": [
+		{
+			"ConditionName": "NFBREG",
+			"OnOffsets": [
+				[11,21],
+				[36,46],
+				[61,71],
+				[86,96],
+				[111,121],
+				[136,146],
+				[161,171],
+				[186,196],
+				[211,221],
+				[236,246]
+			]
+		},
+		{
+			"ConditionName": "NFBDISP",
+			"OnOffsets": [
+				[22,24],
+				[47,49],
+				[72,74],
+				[97,99],
+				[122,124],
+				[147,149],
+				[172,174],
+				[197,199],
+				[222,224],
+				[247,249]
+			]
+		}
+	],
+}
+
+
+{
+	"BaselineName" : "BAS",
+	"RegulationName": "NFBREG",
+	"nfbDisplayName": "NFBDISP",
+	"Contrast": "+1*NFBREG;0*NFBDISP",
+	"Cond": [
+		{
+			"ConditionName": "BAS",
+			"OnOffsets": [
+				[1,10],
+				[25,35],
+				[50,60],
+				[75,85],
+				[100,110],
+				[125,135]
+			]
+		},
+
+		{
+			"ConditionName": "NFBREG",
+			"OnOffsets": [
+				[11,21],
+				[36,46],
+				[61,71],
+				[86,96],
+				[111,121],
+				[136,146]
+			]
+		},
+		{
+			"ConditionName": "NFBDISP",
+			"OnOffsets": [
+				[22,24],
+				[47,49],
+				[72,74],
+				[97,99],
+				[122,124],
+				[147,149]
+
+			]
+		}
+	]
+}

@@ -1,0 +1,38 @@
+{
+	"BaselineName" : "BAS",
+	"RegulationName": "NFBREG",
+	"nfbDisplayName": "NFBDISP",
+	"Contrast": "+1*NFBREG;0*NFBDISP",
+	"Cond": [
+		{
+			"ConditionName": "BAS",
+			"OnOffsets": [
+				[1,10],
+				[25,35],
+				[50,60],
+				[75,85],
+				[100,110]
+			]
+		},
+		{
+			"ConditionName": "NFBREG",
+			"OnOffsets": [
+				[11,21],
+				[36,46],
+				[61,71],
+				[86,96],
+				[111,121]
+			]
+		},
+		{
+			"ConditionName": "NFBDISP",
+			"OnOffsets": [
+				[22,24],
+				[47,49],
+				[72,74],
+				[97,99],
+				[122,124]
+			]
+		}
+	]
+}
