@@ -113,9 +113,9 @@ if isPSC && strcmp(P.Prot, 'Inter')
     %Reward = mainLoopData.Reward;
 
     % NF estimation condition
-    if condition == 2
+    if condition == 4
         % count NF regulation blocks
-        k = cellfun(@(x) x(end) == indVolNorm, P.ProtCond{ 2 });
+        k = cellfun(@(x) x(end) == indVolNorm, P.ProtCond{ 4 });
         if any(k)
             blockNF = find(k);
             firstNF = indVolNorm;
@@ -127,12 +127,12 @@ if isPSC && strcmp(P.Prot, 'Inter')
             % expected when assigning volumes for averaging, take HRF delay
             % into account
             if blockNF<2
-                i_blockNF = P.ProtCond{ 2 }{blockNF}(end-6:end);
-                i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-6:end);
+                i_blockNF = P.ProtCond{ 4 }{blockNF}(end-7:end);
+                %i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-6:end);
             else
-                i_blockNF = P.ProtCond{ 2 }{blockNF}(end-6:end);
-                i_blockBAS = [P.ProtCond{ 1 }{blockNF}(end-5:end) ...
-                              P.ProtCond{ 1 }{blockNF}(end)+1];
+                i_blockNF = P.ProtCond{ 4 }{blockNF}(end-7:end);
+                %i_blockBAS = [P.ProtCond{ 1 }{blockNF}(end-5:end) ...
+                              %P.ProtCond{ 1 }{blockNF}(end)+1];
             end
             
             %Intermittent svm
@@ -280,7 +280,7 @@ if isDCM
 end
 
 %% continuous SVM NF
-if isSVM
+if isSVM && 0
     blockNF = mainLoopData.blockNF;
     firstNF = mainLoopData.firstNF;    
     dispValue = mainLoopData.dispValue;

@@ -15,7 +15,7 @@ function displayFeedback(displayData)
 tDispl = tic;
 
 P = evalin('base', 'P');
-Tex = evalin('base', 'Tex');
+%Tex = evalin('base', 'Tex');
 
 % Note, don't split cell structure in 2 lines with '...'.
 fieldNames = {'feedbackType', 'condition', 'dispValue', 'Reward', 'displayStage','displayBlankScreen', 'iteration'};
@@ -23,7 +23,7 @@ defaultFields = {'', 0, 0, '', '', '', 0};
 % disp(displayData)
 eval(varsFromStruct(displayData, fieldNames, defaultFields))
 
-if ~strcmp(feedbackType, 'DCM')
+if ~strcmp(feedbackType, 'PSC') %Default : 'DCM'
     dispColor = [255, 255, 255];
     instrColor = [155, 150, 150];
 end
@@ -32,6 +32,18 @@ logfile = fopen('C:\Users\pp262170\Documents\NFB_experiment\displayfeedback_log.
 fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
         datetime, feedbackType,condition);
 fclose(logfile);
+
+[StimuliFile_NF, message] = fopen('C:\Users\pp262170\Documents\NFB_experiment\Stimuli_NF_BD.txt','a');
+%[StimuliFile_NF, message] = fopen(sprintf(['Stimuli_NF_BD_' P.NFRunNr '.txt']),'a');
+
+if StimuliFile_NF < 0
+   error('Failed to open myfile because: %s', message);
+end
+% 
+% fprintf(StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
+% fprintf(StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
+% fprintf(StimuliFile_NF, '\n \n \n');
+% fprintf(StimuliFile_NF, 'condition\tnom_image\n');
 
 switch feedbackType    
     %% Continuous PSC
@@ -108,48 +120,140 @@ switch feedbackType
                 
         end
         
-    %% Intermittent PSC
-case 'value_fixation'
-        indexSmiley = round(dispValue);
-        if indexSmiley == 0
-            indexSmiley = 1;
-        end
+    %% Intermittent SVM
+    case 'value_fixation'
+        dispValue  = dispValue*(floor(P.Screen.h/2) - floor(P.Screen.h/10))/100;
 
         switch condition
             case 1  % Baseline
                 t = P.randomizedTrials_neutral(P.neutral_image_idx);
                 file = P.imgList_neutral_condition{t};
-                img = imread(fullfile(P.image_neutral_condition,file));
-                imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
-
+                image_name = fullfile(P.image_neutral_condition,file);
+                image= imread(image_name);
+                imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
                 showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
-                    P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+                        P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
                 P.neutral_image_idx = P.neutral_image_idx + 1;
+                %fprintf(StimuliFile_NF, '%d\t %s\n', condition, convertCharsToStrings(image_name));
+                fprintf(StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
+
+
+            case 2 % Baseline instructions
+                line1 = 'Vous allez voir des images';
+                line2 = '\n \n Classez les images en fonction de leur type';
+                line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
                 
-            case 2  % Regualtion
+                Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                    'center', P.Screen.h * 0.25, [200 200 200]);
+                P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+                pause(2)
+                
+            case 3 % Regulation instructions
+                line1 = 'Vous allez voir des images émotionnelles';
+                line2 = '\n \n \n Réguler la jauge présentée à la fin du bloc';
+                
+                Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.25, [200 200 200]);
+                P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+                pause(2)
+                
+            case 4  % Regulation
                 t = P.randomizedTrials_regulation(P.regulation_image_idx);
                 file = P.imgList_regulation_condition{t};
-                img = imread(fullfile(P.image_regulation_condition,file));
-                imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
-
+                image_name = fullfile(P.image_regulation_condition,file);
+                image= imread(image_name);
+                imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
                 showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
-                    P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+                        P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
                 P.regulation_image_idx = P.regulation_image_idx + 1;
                 
-            case 3 % NF
-                % feedback value
-                Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
-                    P.Screen.w/2 - P.Screen.w/30+0, ...
-                    P.Screen.h/2 - P.Screen.h/4, dispColor);
-                % smiley
-                Screen('DrawTexture', P.Screen.wPtr, ...
-                    Tex(indexSmiley), ...
-                    P.Screen.rectSm, P.Screen.dispRect+[0 0 0 0]);
-                % display
+                fprintf(StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
+                
+            case 5 % NF
+                % Fixation Point
+                Screen('FillOval', P.Screen.wPtr, [255 255 255], ...
+                    [floor(P.Screen.w/2-P.Screen.w/200), ...
+                    floor(P.Screen.h/2-P.Screen.w/200), ...
+                    floor(P.Screen.w/2+P.Screen.w/200), ...
+                    floor(P.Screen.h/2+P.Screen.w/200)]);
+                
+                % draw target bar
+                Screen('DrawLines', P.Screen.wPtr, ...
+                    [floor(P.Screen.w/2-P.Screen.w/20), ...
+                    floor(P.Screen.w/2+P.Screen.w/20); ...
+                    floor(P.Screen.h/10), floor(P.Screen.h/10)], ...
+                    P.Screen.lw, [255 0 0]);
+                    
+                % draw activity bar
+                Screen('DrawLines', P.Screen.wPtr, ...
+                    [floor(P.Screen.w/2-P.Screen.w/20), ... 
+                    floor(P.Screen.w/2+P.Screen.w/20); ...
+                    floor(P.Screen.h/2-dispValue), ...
+                    floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
                     P.Screen.vbl + P.Screen.ifi/2);
+                pause(4)
+                    
+                % red if positive, blue if negative
+%                 if dispValue >0
+%                     dispColor = [255, 0, 0];
+%                 else
+%                     dispColor = [0, 0, 255];
+%                 end
+%                 
+%                 % feedback value
+%                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
+%                     P.Screen.w/2 - P.Screen.w/30+0, ...
+%                     P.Screen.h/2 - P.Screen.h/4, dispColor);
+%                 % display
+%                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+%                     P.Screen.vbl + P.Screen.ifi/2);
         end
         
+        
+        %% intermittent PSC
+%         indexSmiley = round(dispValue);
+%         if indexSmiley == 0
+%             indexSmiley = 1;
+%         end
+% 
+%         switch condition
+%             case 1  % Baseline
+%                 t = P.randomizedTrials_neutral(P.neutral_image_idx);
+%                 file = P.imgList_neutral_condition{t};
+%                 img = imread(fullfile(P.image_neutral_condition,file));
+%                 imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
+% 
+%                 showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
+%                     P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+%                 P.neutral_image_idx = P.neutral_image_idx + 1;
+%                 
+%             case 2  % Regulation
+%                 t = P.randomizedTrials_regulation(P.regulation_image_idx);
+%                 file = P.imgList_regulation_condition{t};
+%                 img = imread(fullfile(P.image_regulation_condition,file));
+%                 imageDisplay = Screen ('MakeTexture', P.Screen.wPtr,img);
+% 
+%                 showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
+%                     P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+%                 P.regulation_image_idx = P.regulation_image_idx + 1;
+%                 
+%             case 3 % NF
+%                 % feedback value
+%                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
+%                     P.Screen.w/2 - P.Screen.w/30+0, ...
+%                     P.Screen.h/2 - P.Screen.h/4, dispColor);
+%                 % smiley
+%                 Screen('DrawTexture', P.Screen.wPtr, ...
+%                     Tex(indexSmiley), ...
+%                     P.Screen.rectSm, P.Screen.dispRect+[0 0 0 0]);
+%                 % display
+%                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+%                     P.Screen.vbl + P.Screen.ifi/2);
+%         end
+         
     %% Trial-based DCM
     case 'DCM'
         nrP = P.nrP;
@@ -237,6 +341,9 @@ case 'value_fixation'
         P.imgPNr = imgPNr;
         P.imgNNr = imgNNr;
 end
+
+
+fclose(StimuliFile_NF);
 
 % EventRecords for PTB
 % Each event row for PTB is formatted as

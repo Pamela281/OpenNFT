@@ -1305,6 +1305,7 @@ class OpenNFT(QWidget):
                     ptbP['TargRAD'] = self.P['TargRAD']
                     ptbP['TargANG'] = self.P['TargANG']
                     ptbP['NFRunNr'] = self.P['NFRunNr']
+                    ptbP['SubjectID'] = self.P['SubjectID'] #rajouter le 06072021 pour recup ptb
                     ptbP['Type'] = self.P['Type']
                     ptbP['WorkFolder'] = self.P['WorkFolder']
                     ptbP['DisplayFeedbackFullscreen'] = self.P['DisplayFeedbackFullscreen']
