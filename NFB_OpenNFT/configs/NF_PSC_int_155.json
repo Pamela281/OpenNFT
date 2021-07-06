@@ -1,9 +1,7 @@
 {
-	"BaselineName" : "BAS",
-	"RegulationName": "NFBREG",
-	"nfbDisplayName": "NFBDISP",
-	"Contrast": "+1*NFBREG;0*NFBDISP",
-	"Cond": [
+	"ContrastActivation": "+1*NFBREG;0*NFBDISP;0*BAS",
+	"SignalPreprocessingBasis": "NFBREG;NFBDISP",
+	"ConditionIndex": [
 		{
 			"ConditionName": "BAS",
 			"OnOffsets": [

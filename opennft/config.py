@@ -26,7 +26,7 @@ SPM_MATLAB_NAME = 'MATLAB_NFB_SPM'
 MODEL_HELPER_MATLAB_NAME = 'MATLAB_NFB_MODEL_HELPER'
 
 MAIN_MATLAB_STARTUP_OPTIONS = '-nodesktop'
-PTB_MATLAB_STARTUP_OPTIONS = '-nodesktop'
+PTB_MATLAB_STARTUP_OPTIONS = '-desktop'
 SPM_MATLAB_STARTUP_OPTIONS = '-nodesktop'
 MODEL_HELPER_MATLAB_STARTUP_OPTIONS = '-nodesktop'
 
@@ -120,7 +120,7 @@ HIDE_TEST_BTN = True
 
 # rtQA may cause linear performance loss on the big data
 # due to saving process of iGLM quality paramaters
-USE_RTQA = True
+USE_RTQA = False
 USE_IGLM = True
 USE_ROI = True
 FIRST_SNR_VOLUME = 2

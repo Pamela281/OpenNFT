@@ -62,20 +62,39 @@ end
 [w, h] = Screen('WindowSize', P.Screen.wPtr);
 P.Screen.ifi = Screen('GetFlipInterval', P.Screen.wPtr);
 
+%get some color information
+P.Screen.white = WhiteIndex(screenid);
+P.Screen.black = BlackIndex(screenid);
+P.Screen.grey = P.Screen.white/2;
+
 % settings
 P.Screen.vbl=Screen('Flip', P.Screen.wPtr);
 P.Screen.h = h;
 P.Screen.w = w;
 P.Screen.lw = 5;
 
-% Text "HELLO" - also to check that PTB-3 function 'DrawText' is working
-Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
-Screen('DrawText', P.Screen.wPtr, 'HELLO', ...
-    floor(P.Screen.w/2-P.Screen.h/6), ...
-    floor(P.Screen.h/2-P.Screen.h/10), [200 200 200]);
-P.Screen.vbl=Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
-pause(1);
+% Text "HELLO" - also to check that PTB-3 function 'DrawText' is working
+% Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+% Screen('DrawText', P.Screen.wPtr, 'BONJOUR', ...
+%     floor(P.Screen.w/2-P.Screen.h/6), ...
+%     floor(P.Screen.h/2-P.Screen.h/10), [200 200 200]);
+% P.Screen.vbl=Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+% 
+% pause(1)
+
+
+%Text "BONJOUR" - also to check that PTB-3 function 'DrawFormattedText" is working
+welcome1 = 'Bonjour';
+welcome2 = '\n Bienvenue dans cette expérience';
+welcome3 = '\n \n Essayez de ne pas bouger la tête';
+
+Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
+DrawFormattedText(P.Screen.wPtr, [welcome1 welcome2 welcome3], ...
+    'center', P.Screen.h * 0.25, [200 200 200]);
+P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+pause(1)
+%WaitTTL;
 
 % Each event row for PTB is formatted as
 % [t9, t10, displayTimeInstruction, displayTimeFeedback]
@@ -157,107 +176,134 @@ if strcmp(protName, 'ContTask')
    
 end
 
+% Intermittent SVM
 if strcmp(protName, 'Inter')
-    for i = 1:10
-        imgSm = imread([workFolder filesep 'Settings' filesep ...
-            'Smiley' filesep 'Sm' sprintf('%02d', i)], 'bmp');
-        Tex(i) = Screen('MakeTexture', P.Screen.wPtr, imgSm);
-        clear imgSm
-    end
-    P.Screen.rectSm = Screen('Rect', Tex(i));
     
-    w_dispRect = round(P.Screen.rectSm(4)*1.5);
-    w_offset_dispRect = 0;
-    P.Screen.dispRect =[(w/2 - w_dispRect/2), ...
-        (h/2 + w_offset_dispRect), (w/2 + w_dispRect/2), ...        
-        (h/2 + w_offset_dispRect+w_dispRect)];
+    imageFormat = 'jpg';
     
-    %% Dots
-    % MRI screen parameters
-    dist_mri = 44.3; % distance to the screen, cm
-    scrw_mri = [34.8 25.8]; % cm
+    % Neutral condition
+    P.image_neutral_condition = 'C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext'; %to change
+    imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
+    P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
+    nTrials_neutral = length(P.imgList_neutral_condition);
     
-    % MRI screen scaling
-    screenpix = [w h]; %pixel resolution
-    screen_VA = [( 2 * atan(scrw_mri(1) / (2*dist_mri)) ), ...
-        ( 2 * atan(scrw_mri(2) / (2*dist_mri)) )]; % the screens visual 
-    % angle in radians
-    screen_VA = screen_VA * 180/pi; % the screens visual angle in degrees
-    degrees_per_pixel = screen_VA ./ screenpix; % degrees per pixel
-    degrees_per_pixel_mean = mean(degrees_per_pixel); % approximation of 
-    % the average number of degrees per pixel
-    pixels_per_degree = 1 ./ degrees_per_pixel;
-    pixels_per_degree_mean = 1 ./ degrees_per_pixel_mean;
+    P.randomizedTrials_neutral = randperm(nTrials_neutral);
+    P.neutral_image_idx = 1;
     
-    % circle prescription, via dots
-    ddeg = 1:10:360; % degree
-    drad = ddeg * pi/180; % rad
-    P.Screen.dsize = 5; % dot size
-    cs = [cos(drad); sin(drad)];
-    % dot positions
-    d=round(P.TargDIAM .* pixels_per_degree_mean);
-    P.Screen.xy = cs * d / 2;
-    r_offset = P.TargRAD * pixels_per_degree(1);
-    loc_xy = round(r_offset * [cosd(P.TargANG) sind(P.TargANG)]);
-    P.Screen.db = [w/2 h/2] + [+loc_xy(1)  -loc_xy(2)];
+    % regulation condition stimuli
+    P.image_regulation_condition ='C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo'; % to change
+    imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
+    P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
+    nTrials_regulation = length(P.imgList_regulation_condition);
     
-    % color
-    P.Screen.dotCol = 200;
-    
-    % fixation
-    P.Screen.fix = [w/2-w/150, h/2-w/150, w/2+w/150, h/2+w/150];
-    Screen('FillOval', P.Screen.wPtr, [155 0 0], P.Screen.fix);
-    P.Screen.vbl=Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
-    
-    % pointing arrow
-    P.Screen.arrow.rect = [w/2-w/100, h/2-w/40, w/2+w/100, h/2-w/52];
-    P.Screen.arrow.poly_right = [w/2+w/100, h/2-w/32; ...
-        w/2+w/50,  h/2-w/46; w/2+w/100, h/2-w/74];
-    P.Screen.arrow.poly_left  = [w/2-w/100, h/2-w/32; ...
-        w/2-w/50,  h/2-w/46; w/2-w/100, h/2-w/74];
-    
-    Screen('TextSize',P.Screen.wPtr, 100);
-    
-    %%
-    fName = [workFolder filesep 'Settings' filesep 'NF_PCS_int_FT_run_' sprintf('%d',P.NFRunNr) '.json'];
-    prt = loadjson(fName);
+    P.randomizedTrials_regulation = randperm(nTrials_regulation);
+    P.regulation_image_idx = 1;
 
-    vectList = zeros(603,1);
-    wordList = strings(603,1);
-
-    load([workFolder filesep 'Settings' filesep 'WORDS_Run_' sprintf('%d',P.NFRunNr) '.mat']);
-    load([workFolder filesep 'Settings' filesep 'NOWORDS_Run_' sprintf('%d',P.NFRunNr) '.mat']);
-
-    for i = 1:6
-        tmpOnstes = prt.Cond{i}.OnOffsets;
-        tmpName = prt.Cond{i}.ConditionName;
-        lOnsets = size(tmpOnstes,1);
-        kW = 0; kNW = 0;
-        for iOn = 1:lOnsets
-            newOnsets = tmpOnstes(iOn,1):2:tmpOnstes(iOn,2)-1;
-            if strcmp(tmpName,'READW')
-                vectList(newOnsets) = 1;
-
-                for iStim = 1:length(newOnsets)
-                    kW = kW + 1;
-                    wordList(newOnsets(iStim)) = WORDS(kW);
-                end
-
-            elseif strcmp(tmpName,'READNW')
-                vectList(newOnsets) = 2;
-
-                for iStim = 1:length(newOnsets)
-                    kNW = kNW + 1;
-                    wordList(newOnsets(iStim)) = NOWORDS(kNW);
-                end
-
-            end
-
-        end
-    end
-    P.vectList = vectList;
-    P.wordList = wordList;
 end
+
+% 
+% % PSC intermittent
+% if strcmp(protName, 'Inter')
+%     for i = 1:10
+%         imgSm = imread([workFolder filesep 'Settings' filesep ...
+%             'Smiley' filesep 'Sm' sprintf('%02d', i)], 'bmp');
+%         Tex(i) = Screen('MakeTexture', P.Screen.wPtr, imgSm);
+%         clear imgSm
+%     end
+%     P.Screen.rectSm = Screen('Rect', Tex(i));
+%     
+%     w_dispRect = round(P.Screen.rectSm(4)*1.5);
+%     w_offset_dispRect = 0;
+%     P.Screen.dispRect =[(w/2 - w_dispRect/2), ...
+%         (h/2 + w_offset_dispRect), (w/2 + w_dispRect/2), ...        
+%         (h/2 + w_offset_dispRect+w_dispRect)];
+%     
+%     %% Dots
+%     % MRI screen parameters
+%     dist_mri = 44.3; % distance to the screen, cm
+%     scrw_mri = [34.8 25.8]; % cm
+%     
+%     % MRI screen scaling
+%     screenpix = [w h]; %pixel resolution
+%     screen_VA = [( 2 * atan(scrw_mri(1) / (2*dist_mri)) ), ...
+%         ( 2 * atan(scrw_mri(2) / (2*dist_mri)) )]; % the screens visual 
+%     % angle in radians
+%     screen_VA = screen_VA * 180/pi; % the screens visual angle in degrees
+%     degrees_per_pixel = screen_VA ./ screenpix; % degrees per pixel
+%     degrees_per_pixel_mean = mean(degrees_per_pixel); % approximation of 
+%     % the average number of degrees per pixel
+%     pixels_per_degree = 1 ./ degrees_per_pixel;
+%     pixels_per_degree_mean = 1 ./ degrees_per_pixel_mean;
+%     
+%     % circle prescription, via dots
+%     ddeg = 1:10:360; % degree
+%     drad = ddeg * pi/180; % rad
+%     P.Screen.dsize = 5; % dot size
+%     cs = [cos(drad); sin(drad)];
+%     % dot positions
+%     d=round(P.TargDIAM .* pixels_per_degree_mean);
+%     P.Screen.xy = cs * d / 2;
+%     r_offset = P.TargRAD * pixels_per_degree(1);
+%     loc_xy = round(r_offset * [cosd(P.TargANG) sind(P.TargANG)]);
+%     P.Screen.db = [w/2 h/2] + [+loc_xy(1)  -loc_xy(2)];
+%     
+%     % color
+%     P.Screen.dotCol = 200;
+%     
+%     % fixation
+%     P.Screen.fix = [w/2-w/150, h/2-w/150, w/2+w/150, h/2+w/150];
+%     Screen('FillOval', P.Screen.wPtr, [155 0 0], P.Screen.fix);
+%     P.Screen.vbl=Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+%     
+%     % pointing arrow
+%     P.Screen.arrow.rect = [w/2-w/100, h/2-w/40, w/2+w/100, h/2-w/52];
+%     P.Screen.arrow.poly_right = [w/2+w/100, h/2-w/32; ...
+%         w/2+w/50,  h/2-w/46; w/2+w/100, h/2-w/74];
+%     P.Screen.arrow.poly_left  = [w/2-w/100, h/2-w/32; ...
+%         w/2-w/50,  h/2-w/46; w/2-w/100, h/2-w/74];
+%     
+%     Screen('TextSize',P.Screen.wPtr, 100);
+%     
+%     %%
+%     fName = [workFolder filesep 'Settings' filesep 'NF_PCS_int_FT_run_' sprintf('%d',P.NFRunNr) '.json'];
+%     prt = loadjson(fName);
+% 
+%     vectList = zeros(603,1);
+%     wordList = strings(603,1);
+% 
+%     load([workFolder filesep 'Settings' filesep 'WORDS_Run_' sprintf('%d',P.NFRunNr) '.mat']);
+%     load([workFolder filesep 'Settings' filesep 'NOWORDS_Run_' sprintf('%d',P.NFRunNr) '.mat']);
+% 
+%     for i = 1:6
+%         tmpOnstes = prt.Cond{i}.OnOffsets;
+%         tmpName = prt.Cond{i}.ConditionName;
+%         lOnsets = size(tmpOnstes,1);
+%         kW = 0; kNW = 0;
+%         for iOn = 1:lOnsets
+%             newOnsets = tmpOnstes(iOn,1):2:tmpOnstes(iOn,2)-1;
+%             if strcmp(tmpName,'READW')
+%                 vectList(newOnsets) = 1;
+% 
+%                 for iStim = 1:length(newOnsets)
+%                     kW = kW + 1;
+%                     wordList(newOnsets(iStim)) = WORDS(kW);
+%                 end
+% 
+%             elseif strcmp(tmpName,'READNW')
+%                 vectList(newOnsets) = 2;
+% 
+%                 for iStim = 1:length(newOnsets)
+%                     kNW = kNW + 1;
+%                     wordList(newOnsets(iStim)) = NOWORDS(kNW);
+%                 end
+% 
+%             end
+% 
+%         end
+%     end
+%     P.vectList = vectList;
+%     P.wordList = wordList;
+% end
 
 %% DCM
 % Note that images are subject of copyright and thereby replaced.
@@ -312,5 +358,5 @@ if strcmp(protName, 'InterBlock')
 end
 
 assignin('base', 'P', P);
-assignin('base', 'Tex', Tex);
+%assignin('base', 'Tex', Tex);
 

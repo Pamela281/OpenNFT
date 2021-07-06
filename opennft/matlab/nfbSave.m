@@ -213,6 +213,10 @@ if isfield(mainLoopData, 'vectNFBs')
     
 end
 
+%save txt file
+%fprintf(StimuliFile_NF, '%d\t %s\n', condition, convertCharsToStrings(stim_path{:}));
+
+%fclose(StimuliFile_NF);
 disp('Saving done')
 
 % Clear workspace
