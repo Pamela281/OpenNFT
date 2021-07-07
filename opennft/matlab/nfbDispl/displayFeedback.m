@@ -33,8 +33,9 @@ fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
         datetime, feedbackType,condition);
 fclose(logfile);
 
-[StimuliFile_NF, message] = fopen('C:\Users\pp262170\Documents\NFB_experiment\Stimuli_NF_BD.txt','a');
-%[StimuliFile_NF, message] = fopen(sprintf(['Stimuli_NF_BD_' P.NFRunNr '.txt']),'a');
+%[StimuliFile_NF, message] = fopen('C:\Users\pp262170\Documents\NFB_experiment\Stimuli_NF_BD.txt','a');
+[StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\code_OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
+    P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'a');
 
 if StimuliFile_NF < 0
    error('Failed to open myfile because: %s', message);
