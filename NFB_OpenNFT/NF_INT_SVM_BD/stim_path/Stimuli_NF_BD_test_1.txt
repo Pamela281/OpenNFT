@@ -1,0 +1,29 @@
+Subject ID:	 test
+Date	 Time
+07-Jul-2021	 17:00:28
+ 
+ 
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\5395 - Copie (2) - Copie.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7035 - Copie (3).jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7026 - Copie (3) - Copie.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7036 - Copie (3).jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7033 - Copie (2).jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\5720.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7036 - Copie (2).jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\5471 - Copie (5).jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\5764 - Copie (2) - Copie.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7030.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\5731 - Copie (3).jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7037 - Copie.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\5711 - Copie (2) - Copie.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7023.jpg
+condition =1, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext\7025 - Copie (2).jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\246 - Copie (3) - Copie.jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\212 - Copie - Copie (2).jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\214 - Copie - Copie.jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\232.jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\247 - Copie (5).jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\247 - Copie (2).jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\220 - Copie.jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\238 - Copie (2).jpg
+condition =4, stimuli=C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo\210 - Copie - Copie (2) - Copie.jpg
