@@ -73,7 +73,6 @@ P.Screen.h = h;
 P.Screen.w = w;
 P.Screen.lw = 5;
 
-
 % Text "HELLO" - also to check that PTB-3 function 'DrawText' is working
 % Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
 % Screen('DrawText', P.Screen.wPtr, 'BONJOUR', ...
@@ -83,6 +82,38 @@ P.Screen.lw = 5;
 % 
 % pause(1)
 
+% preliminary stuff response key
+
+while KbCheck
+end
+
+global deviceIndex
+deviceIndex = [];
+
+%input parameter
+
+KbName('UnifyKeyNames');
+
+ttlKey = KbName('t');                           %emulates trigger from fMRI
+
+keysOfInterest=zeros(1,256); %% 
+keysOfInterest(ttlKey)=1; %% 
+KbQueueCreate(deviceIndex, keysOfInterest); %% 
+KbQueueStart(deviceIndex); %%
+
+RestrictKeysForKbCheck(ttlKey)
+
+
+[P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\code_OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
+    P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+
+if P.StimuliFile_NF < 0
+   error('Failed to open myfile because: %s', message);
+end
+
+fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Subject ID:', P.SubjectID);
+fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
+fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
 
 %Text "BONJOUR" - also to check that PTB-3 function 'DrawFormattedText" is working
 welcome1 = 'Bonjour';
@@ -93,8 +124,9 @@ Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
 DrawFormattedText(P.Screen.wPtr, [welcome1 welcome2 welcome3], ...
     'center', P.Screen.h * 0.25, [200 200 200]);
 P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
-pause(1)
+%pause(1)
 %WaitTTL;
+
 
 % Each event row for PTB is formatted as
 % [t9, t10, displayTimeInstruction, displayTimeFeedback]
@@ -357,6 +389,7 @@ if strcmp(protName, 'InterBlock')
     P.Screen.vbl=Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 end
 
+%fclose(P.StimuliFile_NF);
 assignin('base', 'P', P);
 %assignin('base', 'Tex', Tex);
 
