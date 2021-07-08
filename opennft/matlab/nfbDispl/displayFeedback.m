@@ -33,19 +33,6 @@ fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
         datetime, feedbackType,condition);
 fclose(logfile);
 
-%[StimuliFile_NF, message] = fopen('C:\Users\pp262170\Documents\NFB_experiment\Stimuli_NF_BD.txt','a');
-[StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\code_OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
-    P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'a');
-
-if StimuliFile_NF < 0
-   error('Failed to open myfile because: %s', message);
-end
-% 
-% fprintf(StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
-% fprintf(StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
-% fprintf(StimuliFile_NF, '\n \n \n');
-% fprintf(StimuliFile_NF, 'condition\tnom_image\n');
-
 switch feedbackType    
     %% Continuous PSC
     case 'bar_count'
@@ -135,8 +122,8 @@ switch feedbackType
                 showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
                         P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
                 P.neutral_image_idx = P.neutral_image_idx + 1;
-                %fprintf(StimuliFile_NF, '%d\t %s\n', condition, convertCharsToStrings(image_name));
-                fprintf(StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
+
+                fprintf(P.StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
 
 
             case 2 % Baseline instructions
@@ -170,7 +157,7 @@ switch feedbackType
                         P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
                 P.regulation_image_idx = P.regulation_image_idx + 1;
                 
-                fprintf(StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
+                fprintf(P.StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
                 
             case 5 % NF
                 % Fixation Point
@@ -195,7 +182,7 @@ switch feedbackType
                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
                     P.Screen.vbl + P.Screen.ifi/2);
-                pause(4)
+                %pause(4)
                     
                 % red if positive, blue if negative
 %                 if dispValue >0
@@ -344,7 +331,7 @@ switch feedbackType
 end
 
 
-fclose(StimuliFile_NF);
+%fclose(P.StimuliFile_NF);
 
 % EventRecords for PTB
 % Each event row for PTB is formatted as

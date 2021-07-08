@@ -17,15 +17,15 @@ import glob
 
 delete_files = True
 
-mask = "001_000008_000"
+mask = "001_000002_000"
 #fns = [1, 2, 3, 4, 6, 5, 7, 8]
 fns = None
 
 testCase = 'PSC'
 
 if testCase == 'PSC':
-    srcpath = 'C:/Users/pp262170/PycharmProjects/OpenNFT_DemoData/NF_PSC/NF_Run_1_src'
-    dstpath = 'C:/Users/pp262170/PycharmProjects/OpenNFT_DemoData/NF_PSC/NF_Run_1'
+    srcpath = 'C:/Users/pp262170/PycharmProjects/code_OpenNFT/NFB_OpenNFT/NF_INT_SVM_BD/NF_Run_1_src'
+    dstpath = 'C:/Users/pp262170/PycharmProjects/code_OpenNFT/NFB_OpenNFT/NF_INT_SVM_BD/NF_Run_1'
     pause_in_sec = 2
 
 elif testCase == 'SVM':
