@@ -28,10 +28,10 @@ if ~strcmp(feedbackType, 'PSC') %Default : 'DCM'
     instrColor = [155, 150, 150];
 end
 
-logfile = fopen('C:\Users\pp262170\Documents\NFB_experiment\displayfeedback_log.txt', 'a');
-fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
-        datetime, feedbackType,condition);
-fclose(logfile);
+%logfile = fopen('Documents\displayfeedback_log.txt', 'a');
+%fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
+%        datetime, feedbackType,condition);
+%fclose(logfile);
 
 switch feedbackType    
     %% Continuous PSC
@@ -135,7 +135,7 @@ switch feedbackType
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.25, [200 200 200]);
                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
-                pause(2)
+                %pause(2)
                 
             case 3 % Regulation instructions
                 line1 = 'Vous allez voir des images émotionnelles';
@@ -145,7 +145,7 @@ switch feedbackType
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.25, [200 200 200]);
                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
-                pause(2)
+                %pause(2)
                 
             case 4  % Regulation
                 t = P.randomizedTrials_regulation(P.regulation_image_idx);

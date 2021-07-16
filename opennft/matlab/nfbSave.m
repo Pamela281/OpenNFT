@@ -213,7 +213,7 @@ if isfield(mainLoopData, 'vectNFBs')
     
 end
 
-fclose(P.StimuliFile_NF);
+%fclose(P.StimuliFile_NF);
 disp('Saving done')
 
 % Clear workspace
