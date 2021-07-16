@@ -5,7 +5,10 @@ function showImagesAndFixationCross (w,backgroundColor, dispW,dispH,slack, image
     % Show the images
     Screen(w,'FillRect',backgroundColor);
     Screen('DrawTexture',w, imageDisplay,[]);
-    startTIme = Screen('Flip',w);
+    Screen('Flip',w);
+    %startTime = Screen('Flip',w);
+    %imageduration = 2;
+    %Screen('Flip',w,startTime + imageduration - slack, 0);
     % WaitSecs(2*TR);
     %pause(2)
 

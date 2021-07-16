@@ -104,7 +104,7 @@ KbQueueStart(deviceIndex); %%
 RestrictKeysForKbCheck(ttlKey)
 
 
-[P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\code_OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
+[P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
 if P.StimuliFile_NF < 0
@@ -214,7 +214,7 @@ if strcmp(protName, 'Inter')
     imageFormat = 'jpg';
     
     % Neutral condition
-    P.image_neutral_condition = 'C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Int_ext'; %to change
+    P.image_neutral_condition = '\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run'; %to change
     imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
     P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
     nTrials_neutral = length(P.imgList_neutral_condition);
@@ -223,7 +223,7 @@ if strcmp(protName, 'Inter')
     P.neutral_image_idx = 1;
     
     % regulation condition stimuli
-    P.image_regulation_condition ='C:\Users\pp262170\Documents\NFB_experiment\test_Open_NFT_images\Emo'; % to change
+    P.image_regulation_condition ='\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final'; % to change
     imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
     P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
     nTrials_regulation = length(P.imgList_regulation_condition);
