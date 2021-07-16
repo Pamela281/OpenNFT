@@ -127,7 +127,7 @@ switch feedbackType
 
 
             case 2 % Baseline instructions
-                line1 = 'Vous allez voir des images';
+                line1 = 'Images neutres';
                 line2 = '\n \n Classez les images en fonction de leur type';
                 line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
                 
@@ -138,8 +138,8 @@ switch feedbackType
                 %pause(2)
                 
             case 3 % Regulation instructions
-                line1 = 'Vous allez voir des images émotionnelles';
-                line2 = '\n \n \n Réguler la jauge présentée à la fin du bloc';
+                line1 = 'Images émotionnelles';
+                line2 = '\n \n \n Régulez la jauge présentée en fin de bloc';
                 
                 Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
