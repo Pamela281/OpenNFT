@@ -35,7 +35,6 @@ if isDCM
 end
 if isPSC || P.isRestingState
     ROIs = evalin('base', 'ROIs');
-    WEIGHTs = evalin('base', 'WEIGHTs');
 end
 if isSVM
     ROIs = evalin('base', 'ROIs');
@@ -56,18 +55,15 @@ nrRegrToCorrect = 8; % 6 MC regressors, linear trend, constant
 for indRoi = 1:P.NrROIs
     
     %% Get Raw time-series
-    if isPSC || P.isRestingState
-%         rawTimeSeries(indRoi, indVolNorm) = mean(...
-%             mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0));
-        roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
-        weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
-        rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect);
+    if flags.isPSC || flags.isCorr || P.isRestingState
+        rawTimeSeries(indRoi, indVolNorm) = mean(...
+            mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0));
     end
     
     if isSVM
         roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
         weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
-        rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect*1e-8);
+        rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect);
     end
     
     if isDCM
@@ -349,7 +345,7 @@ for indRoi = 1:P.NrROIs
     mainLoopData.posMax(indRoi,indVolNorm)=mainLoopData.tmp_posMax(indRoi);
 
     % 5. z-scoring and sigmoidal transform
-    if isSVM || isPSC
+    if isSVM
         zcoredVal = ...
             zscore(mainLoopData.scalProcTimeSeries(indRoi, 1:indVolNorm));
         mainLoopData.scalProcTimeSeries(indRoi, indVolNorm) = ...

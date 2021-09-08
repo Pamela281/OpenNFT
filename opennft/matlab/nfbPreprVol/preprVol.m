@@ -28,12 +28,12 @@ end
 if P.UseTCPData, tcp = evalin('base', 'tcp'); end
 
 if indVol <= P.nrSkipVol
-    if P.UseTCPData, [~, ~] = tcp.ReceiveScan; end
+    if P.UseTCPData && (indVol > 1), while ~tcp.BytesAvailable, pause(0.01); end; [~, ~] = tcp.ReceiveScan; end
     return;
 end
 
-[isPSC, isDCM, isSVM, isIGLM] = getFlagsType(P);
-if isDCM
+flags = getFlagsType(P);
+if flags.isDCM
     ROIsAnat = evalin('base', 'ROIsAnat');
 end
 
@@ -66,7 +66,7 @@ indVolNorm = mainLoopData.indVolNorm;
 indVolNorm = double(indVolNorm);
 
 % trial indices for DCM feedback
-if isDCM
+if flags.isDCM
     % skip preprocessing for rest epoch and NF display
     if mainLoopData.flagEndDCM
         assignin('base', 'P', P);
@@ -79,29 +79,23 @@ end
 % Read Data in real-time and update paremeters
 switch P.DataType
     case 'DICOM'
-        if P.UseTCPData
+        if P.UseTCPData && (indVol > 1)
+            while ~tcp.BytesAvailable, pause(0.01); end
             [~, dcmData] = tcp.ReceiveScan;
         else
-            dcmData = double(dicomread(inpFileName));
+            dcmData = [];
+            while isempty(dcmData) || contains(lastwarn,'Suspicious fragmentary file')
+                dcmData = double(dicomread(inpFileName));
+            end
+            dcmData = img2Dvol3D(dcmData, slNrImg2DdimX, slNrImg2DdimY, dimVol);
         end
         R(2,1).mat = matVol;
-        if P.UseTCPData
-            if P.isZeroPadding
-                zeroPadVol = zeros(dimVol(1),dimVol(2),P.nrZeroPadVol);
-                dimVol(3) = dimVol(3)+P.nrZeroPadVol*2;
-                R(2,1).Vol = cat(3, cat(3, zeroPadVol, dcmData), zeroPadVol);
-            else
-                R(2,1).Vol = dcmData;
-            end
+        if P.isZeroPadding
+            zeroPadVol = zeros(dimVol(1),dimVol(2),P.nrZeroPadVol);
+            dimVol(3) = dimVol(3)+P.nrZeroPadVol*2;
+            R(2,1).Vol = cat(3, cat(3, zeroPadVol, dcmData), zeroPadVol);
         else
-            tmpVol = img2Dvol3D(dcmData, slNrImg2DdimX, slNrImg2DdimY, dimVol);
-            if P.isZeroPadding
-                zeroPadVol = zeros(dimVol(1),dimVol(2),P.nrZeroPadVol);
-                dimVol(3) = dimVol(3)+P.nrZeroPadVol*2;
-                R(2,1).Vol = cat(3, cat(3, zeroPadVol, tmpVol), zeroPadVol);
-            else
-                R(2,1).Vol = tmpVol;
-            end
+            R(2,1).Vol = dcmData;
         end
         R(2,1).dim = dimVol;
     case 'IMAPH'
@@ -168,10 +162,10 @@ end
 tStopMC = toc(tStartMotCorr);
 
 %% Smoothing
-if isPSC || isSVM || P.isRestingState
+if flags.isPSC || flags.isSVM || flags.isCorr || P.isRestingState
     gKernel = [5 5 5] ./ dicomInfoVox;
 end
-if isDCM
+if flags.isDCM
     gKernel = [5 5 5] ./ dicomInfoVox;
 end
 mainLoopData.gKernel = gKernel;
@@ -184,7 +178,7 @@ spm_smooth(reslVol, smReslVol, gKernel);
 % RTQA calculations of SNR and CNR
 if P.isRTQA && indVolNorm > FIRST_SNR_VOLUME
     
-    if isDCM && ~isempty(find(P.beginDCMblock == indVol-P.nrSkipVol,1))
+    if flags.isDCM && ~isempty(find(P.beginDCMblock == indVol-P.nrSkipVol,1))
         rtQA_matlab.snrData.meanSmoothed = [];
         rtQA_matlab.cnrData.basData.mean = [];
         rtQA_matlab.cnrData.condData.mean = [];        
@@ -236,14 +230,14 @@ end
     
 
     
-if isPSC || isSVM || P.isRestingState
+if flags.isPSC || flags.isSVM || flags.isCorr || P.isRestingState
     % Smoothed Vol 3D -> 2D
     smReslVol_2D = vol3Dimg2D(smReslVol, slNrImg2DdimX, slNrImg2DdimY, ...
         img2DdimX, img2DdimY, dimVol);
     mainLoopData.smReslVol_2D = smReslVol_2D;
 end
 
-if isDCM
+if flags.isDCM
     if ~P.smForDCM
         % NoN-Smoothed Vol 3D -> 2D
         nosmReslVol_2D = vol3Dimg2D(reslVol, slNrImg2DdimX, ...
@@ -280,13 +274,13 @@ tStopSm = toc(tStartMotCorr);
 indIglm = 1;
 
 %% iGLM 
-if isDCM
+if flags.isDCM
     fIGLM_onset = isempty(find(P.beginDCMblock == indVol-P.nrSkipVol,1));
 else
     fIGLM_onset =  true;
 end
 
-if isIGLM
+if flags.isIGLM
     fLockedTempl = 0; % 0 = update, 1 = fix
     
     if isfield(mainLoopData, 'iGLMinit') && fIGLM_onset
@@ -401,10 +395,10 @@ if isIGLM
         mainLoopData.statMap2D = tempStatMap2D;
     end
     
-    if isPSC || isSVM || P.isRestingState
+    if flags.isPSC || flags.isSVM || flags.isCorr || P.isRestingState
         indIglm = indVolNorm;
     end
-    if isDCM
+    if flags.isDCM
         indIglm = (indVolNorm - P.indNFTrial * P.lengthDCMTrial);
     end
     
@@ -461,7 +455,7 @@ if isIGLM
     end
     
     if P.isRTQA
-        if isDCM
+        if flags.isDCM
             ROIs = evalin('base', 'ROIsAnat');
         else
             ROIs = evalin('base', 'ROIs');
@@ -473,13 +467,13 @@ if isIGLM
                 rtQA_matlab.tn.pos{i}(indIglm,:) = 0; 
             else
                 rtQA_matlab.tn.pos{i}(indIglm,:) = geomean(tn.pos(inds)); 
-            end;
+            end
             inds = intersect(ROIs(i).voxelIndex,find(tn.neg>0));            
             if isempty(inds) 
                 rtQA_matlab.tn.neg{i}(indIglm,:) = 0; 
             else
                 rtQA_matlab.tn.neg{i}(indIglm,:) = geomean(tn.neg(inds)); 
-            end;
+            end
             rtQA_matlab.var{i}(indIglm,:) =  geomean(e2n(ROIs(i).voxelIndex,:));
         end
     end
@@ -556,7 +550,7 @@ if ~isempty(idxActVoxIGLM.neg) && max(tn.neg) > 0
 end
 
 %% storage of iGLM results, could be disabled to save time
-if ~isDCM
+if ~flags.isDCM
     if indIglm == P.NrOfVolumes - P.nrSkipVol
         mainLoopData.statMap3D_iGLM = statMap3D_pos;
     end
@@ -577,7 +571,7 @@ fprintf('TIMING: %d iter - PREPROC MC: %d s - SMOOTH: %d s - IGLM: %d s\n',...
     nrIter, tStopMC, tStopSm-tStopMC, tStopIGLM-tStopSm);
 
 %% dynamic ROI mask based on statMap2D
-if isDCM
+if flags.isDCM
     if ~isempty(find( P.endDCMblock == indVol - P.nrSkipVol,1 ))
         if (indNFTrial+1) > 1
             ROIsGlmAnat = evalin('base', 'ROIsGlmAnat');

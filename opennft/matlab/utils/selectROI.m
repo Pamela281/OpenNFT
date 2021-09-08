@@ -34,9 +34,7 @@ end
 P.DynROI = false;
 
 %% ROIs in a single folder
-if isPSC || P.isRestingState
-    
-    %% ROIs
+if flags.isPSC || flags.isSVM || flags.isCorr || P.isRestingState
     roiDir = pathName;
     roiNames = {};
     roiNames = cellstr([spm_select('FPList', roiDir, '^.*.img$'); ...
@@ -44,40 +42,20 @@ if isPSC || P.isRestingState
 
     P.NrROIs = length(roiNames);
     P.ROINames = roiNames;
-    
+ 
     for iFile = 1:P.NrROIs
         [ROIs(iFile).voxelCoord, ROIs(iFile).voxelIntens, ...
          ROIs(iFile).voxelIndex, ROIs(iFile).mat, ...
-         ROIs(iFile).dim, ROIs(iFile).vol] = readVol(roiNames{iFile});
+         ROIs(iFile).dim, ROIs(iFile).vol] = readVol(roiNames{iFile});   
         [slNrImg2DdimX, slNrImg2DdimY, img2DdimX, img2DdimY] = ...
-                                             getMosaicDim(ROIs(iFile).dim);   
+                                             getMosaicDim(ROIs(iFile).dim);      
         ROIs(iFile).vol(ROIs(iFile).vol < 0.5) = 0;
         ROIs(iFile).vol(ROIs(iFile).vol >= 0.5) = 1;
         ROIs(iFile).mask2D = vol3Dimg2D(ROIs(iFile).vol, slNrImg2DdimX, ...
                      slNrImg2DdimY, img2DdimX, img2DdimY, ROIs(iFile).dim);
     end
-   
-    %% Weights   
-    weightDir = P.WeightsFileName;
-    weightNames = {};
-    weightNames = cellstr([spm_select('FPList', weightDir, '^.*.img$'); ...
-                           spm_select('FPList', weightDir, '^.*.nii$')]);
-
-    P.NrWEIGHTs = length(weightNames);
-    for iFile = 1:P.NrWEIGHTs
-        [WEIGHTs(iFile).voxelCoord, WEIGHTs(iFile).voxelIntens, ...
-         WEIGHTs(iFile).voxelIndex, WEIGHTs(iFile).mat, ...
-         WEIGHTs(iFile).dim, WEIGHTs(iFile).vol] = ...
-                                               readVol(weightNames{iFile});
-        [slNrImg2DdimX, slNrImg2DdimY, img2DdimX, img2DdimY] = ...
-                                          getMosaicDim(WEIGHTs(iFile).dim);         
-        WEIGHTs(iFile).mask2D = vol3Dimg2D(WEIGHTs(iFile).vol, ...
-                                  slNrImg2DdimX, slNrImg2DdimY, img2DdimX, ...
-                                    img2DdimY, WEIGHTs(iFile).dim);
-    end
     
-    assignin('base', 'ROIs', ROIs); 
-    assignin('base', 'WEIGHTs', WEIGHTs);     
+    assignin('base', 'ROIs', ROIs);    
 end
 
 %% ROIs in single folder

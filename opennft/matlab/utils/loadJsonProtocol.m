@@ -41,7 +41,7 @@ if ~P.isRestingState
     % 1 is for Baseline
     indexBAS = strcmp(protNames,'BAS');
     if any(indexBAS)
-        P.basBlockLength = prt.ConditionIndex{ find(indexBAS) }.OnOffsets(1,2);
+        P.basBlockLength = prt.ConditionIndex{ 1 }.OnOffsets(1,2);
         inc = 0;
     else
         inc = 1;
@@ -62,7 +62,7 @@ if ~P.isRestingState
     %% Implicit baseline
     BasInd = find(P.vectEncCond == 1);
     ProtCondBas = accumarray( cumsum([1, diff(BasInd) ~= 1]).', BasInd, [], @(x){x'} );
-    if ~any(strcmp(P.CondIndexNames,'BAS'))
+    if ~any(contains(P.CondIndexNames,'BAS'))
         P.ProtCond = [ {ProtCondBas} P.ProtCond ];
         P.CondIndexNames = [ {''} P.CondIndexNames ];
         P.basBlockLength = ProtCondBas{1}(end);

@@ -66,7 +66,7 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
             norm_percValues(indRoi) = mCond - mBas;
         end
 
-        % compute average PSC feedback value
+        % compute average %SC feedback value
         tmp_fbVal = eval(P.RoiAnatOperation); 
         dispValue = round(P.MaxFeedbackVal*tmp_fbVal, P.FeedbackValDec); 
 
@@ -110,12 +110,12 @@ if isPSC && strcmp(P.Prot, 'Inter')
     blockNF = mainLoopData.blockNF;
     firstNF = mainLoopData.firstNF;
     dispValue = mainLoopData.dispValue;
-    %Reward = mainLoopData.Reward;
+    Reward = mainLoopData.Reward;
 
     % NF estimation condition
-    if condition == 4
+    if condition == 2
         % count NF regulation blocks
-        k = cellfun(@(x) x(end) == indVolNorm, P.ProtCond{ 4 });
+        k = cellfun(@(x) x(end) == indVolNorm, P.ProtCond{ 2 });
         if any(k)
             blockNF = find(k);
             firstNF = indVolNorm;
@@ -127,48 +127,41 @@ if isPSC && strcmp(P.Prot, 'Inter')
             % expected when assigning volumes for averaging, take HRF delay
             % into account
             if blockNF<2
-                i_blockNF = P.ProtCond{ 4 }{blockNF}(end-7:end);
-                %i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-6:end);
+                i_blockNF = P.ProtCond{ 2 }{blockNF}(end-6:end);
+                i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-6:end);
             else
-                i_blockNF = P.ProtCond{ 4 }{blockNF}(end-7:end);
-                %i_blockBAS = [P.ProtCond{ 1 }{blockNF}(end-5:end) ...
-                              %P.ProtCond{ 1 }{blockNF}(end)+1];
+                i_blockNF = P.ProtCond{ 2 }{blockNF}(end-6:end);
+                i_blockBAS = [P.ProtCond{ 1 }{blockNF}(end-5:end) ...
+                              P.ProtCond{ 1 }{blockNF}(end)+1];
             end
-            
-            %Intermittent svm
-            for indRoi = 1:P.NrROIs
 
-                mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
-                                                                   i_blockNF));
+            if flags.isPSC
+                for indRoi = 1:P.NrROIs
+                    % Averaging across blocks
+                    mBas  = median(mainLoopData.scalProcTimeSeries(indRoi,...
+                        i_blockBAS));
+                    mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
+                        i_blockNF));
 
-                mCondScaled = (mCond - mainLoopData.mposMin(indVolNorm)) / ...
-                                            (mainLoopData.mposMax(indVolNorm) - ...
-                                             mainLoopData.mposMin(indVolNorm));                                               
+                    % Scaling
+                    mBasScaled  = (mBas - mainLoopData.mposMin(indVolNorm)) / ...
+                        (mainLoopData.mposMax(indVolNorm) - ...
+                        mainLoopData.mposMin(indVolNorm));
+                    mCondScaled = (mCond - mainLoopData.mposMin(indVolNorm)) / ...
+                        (mainLoopData.mposMax(indVolNorm) - ...
+                        mainLoopData.mposMin(indVolNorm));
+                    norm_percValues(indRoi) = mCondScaled - mBasScaled;
+                end
 
-                norm_percValues(indRoi) = mCondScaled;
+                % compute average %SC feedback value
+                tmp_fbVal = eval(P.RoiAnatOperation);
+            elseif flags.isCorr
+                rho = corrcoef(mainLoopData.scalProcTimeSeries(:,i_blockNF)'); rho = rho(1,2);
+                norm_percValues(1:P.NrROIs) = rho;
+
+                % compute average %SC feedback value
+                tmp_fbVal = rho;
             end
-            
-%             for indRoi = 1:P.NrROIs
-%                 % Averaging across blocks
-%                 mBas  = median(mainLoopData.scalProcTimeSeries(indRoi,...
-%                                                               i_blockBAS));
-%                 mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
-%                                                                i_blockNF));        
-% 
-%                 % Scaling
-%                 mBasScaled  = (mBas - mainLoopData.mposMin(indVolNorm)) / ...
-%                                         (mainLoopData.mposMax(indVolNorm) - ...
-%                                          mainLoopData.mposMin(indVolNorm));
-%                 mCondScaled = (mCond - mainLoopData.mposMin(indVolNorm)) / ...
-%                                         (mainLoopData.mposMax(indVolNorm) - ...
-%                                          mainLoopData.mposMin(indVolNorm));
-%                 norm_percValues(indRoi) = mCondScaled - mBasScaled;
-%             end
-
-            % compute average PSC feedback value (SVM continu)
-            tmp_fbVal = mean(norm_percValues);
-            % compute average PSC feedback value(PSC inter)
-            %tmp_fbVal = eval(P.RoiAnatOperation); %RoiAnatOperation = mean(norm_percValues)
             mainLoopData.vectNFBs(indVolNorm) = tmp_fbVal;
             dispValue = round(P.MaxFeedbackVal*tmp_fbVal, P.FeedbackValDec);
 
@@ -280,7 +273,7 @@ if isDCM
 end
 
 %% continuous SVM NF
-if isSVM && 0
+if isSVM
     blockNF = mainLoopData.blockNF;
     firstNF = mainLoopData.firstNF;    
     dispValue = mainLoopData.dispValue;
