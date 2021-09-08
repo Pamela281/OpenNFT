@@ -1,6 +1,6 @@
 Subject ID:	 test
 Date	 Time
-27-Jul-2021	 09:55:01
+08-Sep-2021	 16:02:13
  
  
 condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N098_NF_LUM.jpg
@@ -23,3 +23,4 @@ condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAP
 condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Sad face 6_NF_LUM.jpg
 condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\6838_NF_LUM.jpg
 condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\9927_NF_LUM.jpg
+condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N104_NF_LUM.jpg
