@@ -24,7 +24,7 @@ fns = None
 testCase = 'PSC'
 
 if testCase == 'PSC':
-    srcpath = '//canif/neurospin/psy_sbox/NF_BD/Dicom_neurofeedback'
+    srcpath = 'C:/Users/pp262170/PycharmProjects/code_OpenNFT/NFB_OpenNFT/NF_INT_SVM_BD/NF_run_src'
     dstpath = 'C:/Users/pp262170/PycharmProjects/code_OpenNFT/NFB_OpenNFT/NF_INT_SVM_BD/NF_Run_1'
     pause_in_sec = 2
 

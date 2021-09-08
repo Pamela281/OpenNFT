@@ -56,7 +56,7 @@ if ~fFullScreen
     end
 else
     % full screen
-    P.Screen.wPtr = Screen('OpenWindow', screenid, [0 0 0]);
+    P.Screen.wPtr = Screen('OpenWindow', screenid, [200 200 200]);
 end
 
 [w, h] = Screen('WindowSize', P.Screen.wPtr);
@@ -120,9 +120,9 @@ welcome1 = 'Bonjour';
 welcome2 = '\n Bienvenue dans cette expérience';
 welcome3 = '\n \n Essayez de ne pas bouger la tête';
 
-Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
+Screen('TextSize', P.Screen.wPtr, 50);
 DrawFormattedText(P.Screen.wPtr, [welcome1 welcome2 welcome3], ...
-    'center', P.Screen.h * 0.25, [200 200 200]);
+    'center', P.Screen.h * 0.45, [000 000 000]);
 P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 %pause(1)
 %WaitTTL;
