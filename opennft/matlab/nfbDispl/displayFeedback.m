@@ -130,19 +130,17 @@ switch feedbackType
                 line1 = 'Images neutres';
                 line2 = '\n \n Classez les images en fonction de leur type';
                 line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
-                
-                Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
+
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.25, [200 200 200]);
+                    'center', P.Screen.h * 0.45);
                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
             case 3 % Regulation instructions
                 line1 = 'Images émotionnelles';
                 line2 = '\n \n \n Réguler la jauge en fin de bloc';
-                
-                Screen('TextSize', P.Screen.wPtr, P.Screen.h/20);
+
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.25, [200 200 200]);
+                    'center', P.Screen.h * 0.45);
                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
             case 4  % Regulation
