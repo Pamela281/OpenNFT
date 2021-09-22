@@ -1,26 +1,38 @@
 Subject ID:	 test
 Date	 Time
-08-Sep-2021	 16:02:13
+22-Sep-2021	 10:43:29
  
  
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N098_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N024_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7150_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7491_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7035_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7217_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N017_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N015_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N093_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N072_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\2278_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\EM0605_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\H112_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\9491_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\6250_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\9415_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\H041_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Sad face 6_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\6838_NF_LUM.jpg
-condition =4, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\9927_NF_LUM.jpg
-condition =1, stimuli=\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N104_NF_LUM.jpg
+
+condition	onsets_seconds	image
+instructions	 -2.318210e-02	 NA	
+instructions	 2.465793e+00	 NA	
+instructions	 6.640101e+00	 NA	
+neutre	 7.717106e+00	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N094_NF_LUM.jpg	
+neutre	 9.799606e+00	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7520_NF_LUM.jpg	
+neutre	 1.169263e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\Desert 1_NF_LUM.jpg	
+neutre	 1.372054e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\5900_NF_LUM.jpg	
+neutre	 1.569068e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\5130_NF_LUM.jpg	
+neutre	 1.771925e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\5731_NF_LUM.jpg	
+neutre	 1.973702e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7033_NF_LUM.jpg	
+neutre	 2.174805e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\EM0497_NF_LUM.jpg	
+neutre	 2.373206e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N099_NF_LUM.jpg	
+neutre	 2.576221e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\N031_NF_LUM.jpg	
+instructions	 2.774035e+01	 NA	
+instructions	 2.975091e+01	 NA	
+regulation	 3.181359e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\H026_NF_LUM.jpg	
+regulation	 3.382119e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\9428_NF_LUM.jpg	
+regulation	 3.586360e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\9426_NF_LUM.jpg	
+regulation	 3.786804e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\6021_NF_LUM.jpg	
+regulation	 3.986851e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\EM0164_NF_LUM.jpg	
+regulation	 4.189316e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\H076_NF_LUM.jpg	
+regulation	 4.393997e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\2095_NF_LUM.jpg	
+regulation	 4.594972e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\2703_NF_LUM.jpg	
+regulation	 4.792066e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\2900.1_NF_LUM.jpg	
+regulation	 4.991735e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\H091_NF_LUM.jpg	
+croix de fixation	 5.191380e+01	 NA	
+croix de fixation	 5.393742e+01	 NA	
+instructions	 5.594191e+01	 NA	
+instructions	 5.811657e+01	 NA	
+neutre	 6.018732e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\7504_NF_LUM.jpg	
+neutre	 6.223171e+01	 \\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run\Volcano 3_NF_LUM.jpg	

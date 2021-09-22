@@ -119,11 +119,16 @@ switch feedbackType
                 image_name = fullfile(P.image_neutral_condition,file);
                 image= imread(image_name);
                 imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
-                showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
-                        P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+
+                Screen(P.Screen.wPtr,'FillRect',255/1.5);
+                Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
+                [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
+
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(2), StimulusOnsetTime - P.TTLonsets,...
+                    convertCharsToStrings(image_name));
+
                 P.neutral_image_idx = P.neutral_image_idx + 1;
 
-                fprintf(P.StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
 
 
             case 2 % Baseline instructions
@@ -133,7 +138,10 @@ switch feedbackType
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45);
-                P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+                
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                    'NA');
                 
             case 3 % Regulation instructions
                 line1 = 'Images émotionnelles';
@@ -141,7 +149,10 @@ switch feedbackType
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45);
-                P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+                
+                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                    'NA');
                 
             case 4  % Regulation
                 t = P.randomizedTrials_regulation(P.regulation_image_idx);
@@ -149,11 +160,16 @@ switch feedbackType
                 image_name = fullfile(P.image_regulation_condition,file);
                 image= imread(image_name);
                 imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
-                showImagesAndFixationCross(P.Screen.wPtr, 255/1.5,...
-                        P.Screen.w,P.Screen.h,P.Screen.ifi, imageDisplay)
+                
+                Screen(P.Screen.wPtr,'FillRect',255/1.5);
+                Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
+                [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
+
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(3), StimulusOnsetTime - P.TTLonsets,...
+                    convertCharsToStrings(image_name));
+
                 P.regulation_image_idx = P.regulation_image_idx + 1;
                 
-                fprintf(P.StimuliFile_NF, 'condition =%d, stimuli=%s\n', condition, convertCharsToStrings(image_name));
                 
             case 5 % NF
 %                 % Fixation Point
@@ -176,13 +192,19 @@ switch feedbackType
 %                     floor(P.Screen.w/2+P.Screen.w/20); ...
 %                     floor(P.Screen.h/2-dispValue), ...
 %                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
-%                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
+%                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, ...
 %                     P.Screen.vbl + P.Screen.ifi/2);
+% 
+%                  fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(4), StimulusOnsetTime - P.TTLonsets,...
+%                     'NA');
                 
                 %transfert
                 drawCross(P.Screen.wPtr,P.Screen.w, P.Screen.h)
                 %Screen(P.Screen.wPtr,'FillRect',255/1.5);
-                Screen('Flip',P.Screen.wPtr);
+                [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
+                
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(5), StimulusOnsetTime - P.TTLonsets,...
+                     'NA');
 
                 % red if positive, blue if negative
 %                 if dispValue >0

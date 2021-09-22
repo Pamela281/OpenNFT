@@ -104,6 +104,7 @@ KbQueueStart(deviceIndex); %%
 RestrictKeysForKbCheck(ttlKey)
 
 
+%% TXT file
 [P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\code_OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
@@ -114,6 +115,15 @@ end
 fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Subject ID:', P.SubjectID);
 fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
 fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
+fprintf(P.StimuliFile_NF, '\n');
+fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\timage\n');
+
+P.condition_instruction = "instructions"; ...
+    P.condition_neutral = "neutre"; P.condition_regulation = "regulation";...
+    P.condition_jauge = "jauge"; P.condition_fixation_cross = "croix de fixation";
+
+P.condition = [P.condition_instruction P.condition_neutral P.condition_regulation ...
+    P.condition_jauge P.condition_fixation_cross];
 
 %Text "BONJOUR" - also to check that PTB-3 function 'DrawFormattedText" is working
 welcome1 = 'Bonjour';
@@ -123,9 +133,11 @@ welcome3 = '\n \n Essayez de ne pas bouger la tête';
 Screen('TextSize', P.Screen.wPtr, 50);
 DrawFormattedText(P.Screen.wPtr, [welcome1 welcome2 welcome3], ...
     'center', P.Screen.h * 0.45, [000 000 000]);
-P.Screen.vbl = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
-%pause(1)
-%WaitTTL;
+[P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
+P.TTLonsets = GetSecs;
+
+fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1),  StimulusOnsetTime - P.TTLonsets,...
+    'NA');
 
 
 % Each event row for PTB is formatted as
