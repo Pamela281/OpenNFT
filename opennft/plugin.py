@@ -6,6 +6,7 @@ from loguru import logger
 import matlab
 
 import importlib
+import os
 
 from opennft import config, utils, eventrecorder
 
@@ -20,8 +21,8 @@ class PluginWindow(QDialog):
         self.setWindowModality(Qt.ApplicationModal)
 
         model = QStandardItemModel(self.lvPlugins)
-        for p in [f.name for f in config.PLUGIN_PATH.glob('*.py')]:
-            plMod = 'opennft.' + config.PLUGIN_PATH.name.lower() + '.' + p[:-3]
+        for p in [f for f in os.listdir(config.PLUGIN_PATH) if f.endswith('.py')]:
+            plMod = 'opennft.' + os.path.basename(config.PLUGIN_PATH).lower() + '.' + p[:-3]
             self.plugins += [importlib.import_module(plMod)]
             plName = self.plugins[-1].META['plugin_name']
             item = QStandardItem(plName)
