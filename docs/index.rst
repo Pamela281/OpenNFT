@@ -18,7 +18,6 @@ Contents
    install_pycharm
    quickstart
    testing
-   updates_fork
    troubleshooting
 
 
