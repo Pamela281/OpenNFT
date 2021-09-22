@@ -52,7 +52,6 @@ def package_data():
         'configs/*',
         'ui/*.ui',
         'ui/images/*',
-        'plugins/*',
     ] + find_matlab_package_files()
     return {'opennft': data}
 
@@ -139,7 +138,7 @@ class InstallMatlabEngineMixin:
 
 class InstallGitSubmodulesMixin:
     def _install_git_submodules(self):
-        if pathlib.Path('.git').exists():
+        if os.path.exists('.git'):
             run(['git', 'submodule', 'update', '--init', '--recursive'])
 
 

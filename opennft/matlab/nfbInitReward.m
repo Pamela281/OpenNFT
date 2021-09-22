@@ -11,13 +11,10 @@ function nfbInitReward()
 % Written by Yury Koush, Artem Nikonorov
 
 P = evalin('base', 'P');
-
-flags = getFlagsType(P);
-
 if P.NFRunNr > 1
     folder = [P.WorkFolder filesep 'NF_Data_' num2str(P.NFRunNr - 1)];
 
-    if strcmp(P.Prot, 'Inter') && (flags.isPSC || flags.isCorr)
+    if strcmp(P.Prot, 'Inter') && strcmp(P.Type, 'PSC')
         load([folder filesep 'reward_' ...
             sprintf('%02d',P.NFRunNr-1) '.mat']);
         P.prev_actValue = prev_actValue;
