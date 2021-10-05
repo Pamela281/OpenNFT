@@ -95,6 +95,7 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
 
     displayData.Reward = mainLoopData.Reward;
     displayData.dispValue = mainLoopData.dispValue;
+
 % else
 %     tmp_fbVal = 0;
 %     mainLoopData.dispValue = 0;
@@ -115,7 +116,7 @@ if isPSC && strcmp(P.Prot, 'Inter')
     % NF estimation condition
     if condition == 4
         % count NF regulation blocks
-        k = cellfun(@(x) x(end) == indVolNorm, P.ProtCond{ 4 });
+        k = cellfun(@(x) x(end) == indVolNorm, P.ProtCond{ 4 }); 
         if any(k)
             blockNF = find(k);
             firstNF = indVolNorm;
@@ -236,6 +237,7 @@ if isPSC && strcmp(P.Prot, 'Inter')
 
     displayData.Reward = mainLoopData.Reward;
     displayData.dispValue = mainLoopData.dispValue;
+
 end
 
 %% trial-based DCM NF
