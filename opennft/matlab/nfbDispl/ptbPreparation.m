@@ -105,7 +105,7 @@ RestrictKeysForKbCheck(ttlKey)
 
 
 %% TXT file
-[P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\PycharmProjects\code_OpenNFT\NFB_OpenNFT\NF_INT_SVM_BD\stim_path\Stimuli_NF_BD_' ...
+[P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\Documents\NF_BD\Pilot_study\01\NF_BD_' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
 if P.StimuliFile_NF < 0
