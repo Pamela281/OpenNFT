@@ -64,7 +64,7 @@ for indRoi = 1:P.NrROIs
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect);
     end
     
-    if isSVM
+    if isSVM || isPSC
         roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
         weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect*1e-8);
@@ -350,10 +350,19 @@ for indRoi = 1:P.NrROIs
 
     % 5. z-scoring and sigmoidal transform
     if isSVM || isPSC
-        zcoredVal = ...
-            zscore(mainLoopData.scalProcTimeSeries(indRoi, 1:indVolNorm));
-        mainLoopData.scalProcTimeSeries(indRoi, indVolNorm) = ...
-            1 ./ (1 + exp(-zcoredVal(end))); % or 1-logsig()
+        if 0
+            % scaling used
+            zcoredVal = ...
+                zscore(mainLoopData.scalProcTimeSeries(indRoi, 1:indVolNorm));
+            mainLoopData.scalProcTimeSeries(indRoi, indVolNorm) = ...
+                1 ./ (1 + exp(-zcoredVal(end))); % or 1-logsig()
+        else
+            % no scaling
+            zcoredVal = ...
+                zscore(mainLoopData.kalmanProcTimeSeries(indRoi, 1:indVolNorm));
+            mainLoopData.scalProcTimeSeries(indRoi, indVolNorm) = ...
+                1 ./ (1 + exp(-zcoredVal(end))); % or 1-logsig()
+        end
     end
     
 end

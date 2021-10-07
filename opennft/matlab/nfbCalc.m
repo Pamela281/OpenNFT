@@ -138,33 +138,12 @@ if isPSC && strcmp(P.Prot, 'Inter')
             
             %Intermittent svm
             for indRoi = 1:P.NrROIs
-
+                
                 mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
-                                                                   i_blockNF));
+                    i_blockNF));
+                norm_percValues(indRoi) =  mCond;
 
-                mCondScaled = (mCond - mainLoopData.mposMin(indVolNorm)) / ...
-                                            (mainLoopData.mposMax(indVolNorm) - ...
-                                             mainLoopData.mposMin(indVolNorm));                                               
-
-                norm_percValues(indRoi) = mCondScaled;
             end
-            
-%             for indRoi = 1:P.NrROIs
-%                 % Averaging across blocks
-%                 mBas  = median(mainLoopData.scalProcTimeSeries(indRoi,...
-%                                                               i_blockBAS));
-%                 mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
-%                                                                i_blockNF));        
-% 
-%                 % Scaling
-%                 mBasScaled  = (mBas - mainLoopData.mposMin(indVolNorm)) / ...
-%                                         (mainLoopData.mposMax(indVolNorm) - ...
-%                                          mainLoopData.mposMin(indVolNorm));
-%                 mCondScaled = (mCond - mainLoopData.mposMin(indVolNorm)) / ...
-%                                         (mainLoopData.mposMax(indVolNorm) - ...
-%                                          mainLoopData.mposMin(indVolNorm));
-%                 norm_percValues(indRoi) = mCondScaled - mBasScaled;
-%             end
 
             % compute average PSC feedback value (SVM continu)
             tmp_fbVal = mean(norm_percValues);
