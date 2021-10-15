@@ -105,7 +105,7 @@ RestrictKeysForKbCheck(ttlKey)
 
 
 %% TXT file
-[P.StimuliFile_NF, message] = fopen(['C:\Users\pp262170\Documents\NF_BD\Pilot_study\01\NF_BD_' ...
+[P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
 if P.StimuliFile_NF < 0
@@ -226,7 +226,7 @@ if strcmp(protName, 'Inter')
     imageFormat = 'jpg';
     
     % Neutral condition
-    P.image_neutral_condition = '\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final\Run'; %to change
+    P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final' filesep 'Run']; %to change
     imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
     P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
     nTrials_neutral = length(P.imgList_neutral_condition);
@@ -235,7 +235,7 @@ if strcmp(protName, 'Inter')
     P.neutral_image_idx = 1;
     
     % regulation condition stimuli
-    P.image_regulation_condition ='\\canif\lnao\Pdiff\josselin\pamela\Images_NFB\Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final'; % to change
+    P.image_regulation_condition =[workFolder filesep '..' filesep 'Images_NFB' filesep 'Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final']; % to change
     imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
     P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
     nTrials_regulation = length(P.imgList_regulation_condition);
