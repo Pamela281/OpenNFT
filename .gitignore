@@ -55,16 +55,15 @@ docs/build/
 # VSCode
 .vscode/
 
+# Virtual environments
+*venv*/
+
 ###########
 # Matlab
 ###########
 *.asv
 matlab/Estimated_*.mat
 matlab/Ind_DCM_*.mat
-OpenNFT_venv/Scripts/Activate.ps1
-OpenNFT_venv/Scripts/activate.bat
-OpenNFT_venv/Scripts/deactivate.bat
-OpenNFT_venv/pyvenv.cfg
 *.mat
 
 #####################
