@@ -76,25 +76,46 @@ switch feedbackType
                     floor(P.Screen.w/2+P.Screen.w/20); ...
                     floor(P.Screen.h/2-dispValue), ...
                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
-%               case 3 % General instructions
-%                 % Text "HOLD"
-%                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
-%                 Screen('DrawText', P.Screen.wPtr, 'HOLD', ...
-%                     floor(P.Screen.w/2-P.Screen.h/7), ...
-%                     floor(P.Screen.h/2+1.5*P.Screen.h/10), [200 200 200]);
-%               case 4 % Instructions to perform actual movement
-%                 % Text "HOLD"
-%                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
-%                 Screen('DrawText', P.Screen.wPtr, 'HOLD', ...
-%                     floor(P.Screen.w/2-P.Screen.h/7), ...
-%                     floor(P.Screen.h/2+1.5*P.Screen.h/10), [200 200 200]);
-                % instrText = 'First, please move your right forefinger up and down.';
-%                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
-%                 Screen('DrawText', P.Screen.wPtr, 'hello', ...
-%                     floor(P.Screen.w/2-P.Screen.h/7), ...
-%                     floor(P.Screen.h/2+1.5*P.Screen.h/10), [200 200 200]);
-%             case 5 % Instructions to only imagine performing the movement
-%             case 6 % End instructions
+            case 3 % General instructions A
+                line1 = 'Before starting with the main experiment,';
+                line2 = '\n\n you are going to perform a small motor task,';
+                line3 = '\n\n to familiarize yourself with the feedback method.';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                    'center', P.Screen.h * 0.45);
+            case 4 % General instructions B
+                line1 = 'You will alternately get the tasks "move" and "hold".';
+                line2 = '\n\n Please perform the movement throughout, while "move"';
+                line3 = '\n\n is displayed, and do not move during "hold".';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                    'center', P.Screen.h * 0.45);            
+            case 5 % Instructions actual movement finger tapping
+                line1 = 'First, please move your right forefinger up and down.';
+                DrawFormattedText(P.Screen.wPtr, line1, ...
+                    'center', P.Screen.h * 0.45); 
+            case 4 % Instructions imagination finger tapping
+                line1 = 'Were you able to spot a difference in activity';
+                line2 = '\n\n between "hold" and "move" periods?';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.45); 
+            case 4 % Instructions imagination finger tapping
+                line1 = 'Next, you will imagine to perform the previous movement, without';
+                line2 = '\n\n actually performing it. Please imagine to finger tap during';
+                line3 = '\n\n "move" and imagine to keep your finger still during "hold".';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                    'center', P.Screen.h * 0.45); 
+            case 6 % Instructions to perform actual movement: fist clenching
+                % Text "HOLD"
+                Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+                Screen('DrawText', P.Screen.wPtr, 'HOLD', ...
+                    floor(P.Screen.w/2-P.Screen.h/7), ...
+                    floor(P.Screen.h/2+1.5*P.Screen.h/10), [200 200 200]);
+                instrText = 'First, please move your right forefinger up and down.';
+                Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
+                Screen('DrawText', P.Screen.wPtr, 'hello', ...
+                    floor(P.Screen.w/2-P.Screen.h/7), ...
+                    floor(P.Screen.h/2+1.5*P.Screen.h/10), [200 200 200]);
+            case 7 % Instructions to only imagine performing the movement: fist clenching
+            case 8 % End instructions
         end
         P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
             P.Screen.vbl + P.Screen.ifi/2);

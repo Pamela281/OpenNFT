@@ -1,13 +1,25 @@
 {
-	"ContrastActivation": "+1*move",
+	"ContrastActivation": "+1*move;-1*instr_gen",
 	"SignalPreprocessingBasis": "move",
 	"ConditionIndex": [
 		{
 			"ConditionName": "move",
 			"OnOffsets": [
-				[10,20],
-				[30,40],
-				[50,60]
+				[20,30],
+				[40,50],
+				[60,70]
+			]
+		},
+		{
+			"ConditionName": "instr_gen",
+			"OnOffsets": [
+				[1,4]
+			]
+		},
+		{
+			"ConditionName": "instr_gen",
+			"OnOffsets": [
+				[5,8]
 			]
 		}
 	]
