@@ -69,7 +69,7 @@ for indRoi = 1:P.NrROIs
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect);
     end
     
-    if isSVM
+    if (isSVM || isPSC) && (isCONT == false)
         roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
         weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect*1e-8);
