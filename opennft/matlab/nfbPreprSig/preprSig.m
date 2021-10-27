@@ -25,6 +25,8 @@ end
 
 [isPSC, isDCM, isSVM, isIGLM] = getFlagsType(P);
 
+[isCONT] = getFlagCont(P);
+
 % Get ROI masks from workspace
 if isDCM
     % skip processing for rest epoch and NF display
@@ -35,7 +37,9 @@ if isDCM
 end
 if isPSC || P.isRestingState
     ROIs = evalin('base', 'ROIs');
-    WEIGHTs = evalin('base', 'WEIGHTs');
+    if (isCONT == false)
+        WEIGHTs = evalin('base', 'WEIGHTs');
+    end
 end
 if isSVM
     ROIs = evalin('base', 'ROIs');
@@ -56,15 +60,16 @@ nrRegrToCorrect = 8; % 6 MC regressors, linear trend, constant
 for indRoi = 1:P.NrROIs
     
     %% Get Raw time-series
-    if isPSC || P.isRestingState
-%         rawTimeSeries(indRoi, indVolNorm) = mean(...
-%             mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0));
+    if (isPSC || P.isRestingState) && isCONT
+        rawTimeSeries(indRoi, indVolNorm) = mean(...
+            mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0));
+    elseif isPSC || P.isRestingState
         roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
         weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect);
     end
     
-    if isSVM || isPSC
+    if (isSVM || isPSC) && (isCONT == false)
         roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
         weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect*1e-8);
