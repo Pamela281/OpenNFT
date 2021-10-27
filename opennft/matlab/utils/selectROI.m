@@ -76,11 +76,9 @@ if isPSC || P.isRestingState
                                       slNrImg2DdimX, slNrImg2DdimY, img2DdimX, ...
                                         img2DdimY, WEIGHTs(iFile).dim);
         end
+        assignin('base', 'WEIGHTs', WEIGHTs);
     end
-
-    
-    assignin('base', 'ROIs', ROIs); 
-    assignin('base', 'WEIGHTs', WEIGHTs);     
+    assignin('base', 'ROIs', ROIs);
 end
 
 %% ROIs in single folder
