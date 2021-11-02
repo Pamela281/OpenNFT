@@ -1,0 +1,71 @@
+{
+	"ContrastActivation": "+1*move;-1*instr_gen;-1*instr_gen2;-1*instr_finger_actual;-1*instr_question;-1*instr_finger_imagine;-1*instr_end_motor;-1*instr_fist_actual;-1*instr_fist_imagine",
+	"SignalPreprocessingBasis": "move",
+	"ConditionIndex": [
+		{
+			"ConditionName": "move",
+			"OnOffsets": [
+				[21,30],
+				[41,50],
+				[61,70],
+				[86,95],
+				[106,115],
+				[126,135],
+				[151,160],
+				[171,180],
+				[191,200],
+				[206,215],
+				[226,235],
+				[246,255]
+			]
+		},
+		{
+			"ConditionName": "instr_gen",
+			"OnOffsets": [
+				[1,4]
+			]
+		},
+		{
+			"ConditionName": "instr_gen2",
+			"OnOffsets": [
+				[5,8]
+			]
+		},
+		{
+			"ConditionName": "instr_finger_actual",
+			"OnOffsets": [
+				[9,10]
+			]
+		},
+		{
+			"ConditionName": "instr_question",
+			"OnOffsets": [
+				[71,72]
+			]
+		},
+		{
+			"ConditionName": "instr_finger_imagine",
+			"OnOffsets": [
+				[73,75]
+			]
+		},
+		{
+			"ConditionName": "instr_end_motor",
+			"OnOffsets": [
+				[256,260]
+			]
+		},
+		{
+			"ConditionName": "instr_fist_actual",
+			"OnOffsets": [
+				[136,140]
+			]
+		},
+		{
+			"ConditionName": "instr_fist_imagine",
+			"OnOffsets": [
+				[201,205]
+			]
+		}
+	]
+}

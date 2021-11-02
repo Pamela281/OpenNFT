@@ -119,10 +119,11 @@ switch feedbackType
                     'center', P.Screen.h * 0.45, P.Screen.black);
             case 9 % Instructions to perform actual movement: fist clenching
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Now, please continuously open and close both of your fists,';
-                line2 = '\n\n once "move" is displayed.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45); 
+                line1 = 'Now, we are going to change the movement.';
+                line2 = '\n\n Once "move" is displayed,';
+                line3 = '\n\n please continuously open and close both of your fists.';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                    'center', P.Screen.h * 0.45, P.Screen.black); 
             case 10 % Instructions to only imagine performing the movement: fist clenching
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Next, you will imagine to perform the previous movement (fist clenching),';
