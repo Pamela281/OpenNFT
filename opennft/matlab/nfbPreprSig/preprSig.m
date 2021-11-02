@@ -25,7 +25,7 @@ end
 
 [isPSC, isDCM, isSVM, isIGLM] = getFlagsType(P);
 
-[isCONT] = getFlagCont(P);
+isCONT = strcmp(P.Prot, 'Cont')  % save whether feedback is continuous
 
 % Get ROI masks from workspace
 if isDCM
@@ -37,7 +37,7 @@ if isDCM
 end
 if isPSC || P.isRestingState
     ROIs = evalin('base', 'ROIs');
-    if (isCONT == false)
+    if ~isCONT
         WEIGHTs = evalin('base', 'WEIGHTs');
     end
 end
@@ -69,7 +69,7 @@ for indRoi = 1:P.NrROIs
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect);
     end
     
-    if (isSVM || isPSC) && (isCONT == false)
+    if (isSVM || isPSC) && (~isCONT)
         roiVect = mainLoopData.smReslVol_2D(ROIs(indRoi).mask2D>0);
         weightVect = WEIGHTs.mask2D(ROIs(indRoi).mask2D>0);
         rawTimeSeries(indRoi, indVolNorm) = dot(roiVect,weightVect*1e-8);

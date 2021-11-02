@@ -58,7 +58,7 @@ if isPSC || P.isRestingState
     end
    
     %% Weights
-    if length(P.WeightsFileName)>0
+    if ~strcmp(P.Prot, 'Cont')  % only check for weight map, if feedback is not continuous
         weightDir = P.WeightsFileName;
         weightNames = {};
         weightNames = cellstr([spm_select('FPList', weightDir, '^.*.img$'); ...
