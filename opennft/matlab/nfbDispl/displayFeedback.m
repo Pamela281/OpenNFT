@@ -240,9 +240,18 @@ case 'bar_count'
 
                 P.neutral_image_idx = P.neutral_image_idx + 1;
 
+            case 2 % WELCOME
+                line1 = 'Bienvenue dans cette expérience';
+                line2 = '\n \n Détendez-vous et essayez de ne pas bouger la tete';
 
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.45);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
-            case 2 % Baseline instructions
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                    'NA');
+
+            case 3 % Baseline instructions
                 line1 = 'Images neutres';
                 line2 = '\n \n Classez les images en fonction de leur type';
                 line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
@@ -254,7 +263,7 @@ case 'bar_count'
                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
                 
-            case 3 % Regulation instructions
+            case 4 % Regulation instructions
                 line1 = 'Images émotionnelles';
                 line2 = '\n \n \n essayer de reguler vos émotions en vous basant';
                 line3 = '\n \n \n sur la jauge présentée en fin de bloc';
@@ -266,7 +275,7 @@ case 'bar_count'
                  fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
                 
-            case 4  % Regulation
+            case 5  % Regulation
                 t = P.randomizedTrials_regulation(P.regulation_image_idx);
                 file = P.imgList_regulation_condition{t};
                 image_name = fullfile(P.image_regulation_condition,file);
@@ -283,7 +292,7 @@ case 'bar_count'
                 P.regulation_image_idx = P.regulation_image_idx + 1;
                 
                 
-            case 5 % NF
+            case 6 % NF
                  % Fixation Point
                  Screen('FillOval', P.Screen.wPtr, [255 255 255], ...
                      [floor(P.Screen.w/2-P.Screen.w/200), ...
