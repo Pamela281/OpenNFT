@@ -85,7 +85,7 @@ if (strcmp(P.Prot, 'Inter') ||  strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTa
                 mainLoopData.flagEndPSC = 0;
                 mainLoopData.dispValue = 0;
                 mainLoopData.Reward = '';
-                displayData.displayStage = 'instruction';
+                displayData.displayStage = 'baseline';
             case 2
                 mainLoopData.flagEndPSC = 0;
                 mainLoopData.dispValue = 0;
@@ -102,6 +102,11 @@ if (strcmp(P.Prot, 'Inter') ||  strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTa
                 mainLoopData.Reward = '';
                 displayData.displayStage = 'instruction';
             case 5
+                mainLoopData.flagEndPSC = 0;
+                mainLoopData.dispValue = 0;
+                mainLoopData.Reward = '';
+                displayData.displayStage = 'regulation';
+            case 6
                 mainLoopData.flagEndPSC = 1; %0
                 %mainLoopData.dispValue = 0;
                 %mainLoopData.Reward = '';

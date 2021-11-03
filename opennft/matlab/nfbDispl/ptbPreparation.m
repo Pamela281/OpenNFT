@@ -126,12 +126,14 @@ P.condition = [P.condition_instruction P.condition_neutral P.condition_regulatio
     P.condition_jauge P.condition_fixation_cross];
 
 %Text "BONJOUR" - also to check that PTB-3 function 'DrawFormattedText" is working
+%{
 welcome1 = 'Bonjour';
 welcome2 = '\n Bienvenue dans cette expérience';
 welcome3 = '\n \n Essayez de ne pas bouger la tête';
+%}
 
 Screen('TextSize', P.Screen.wPtr, 50);
-DrawFormattedText(P.Screen.wPtr, [welcome1 welcome2 welcome3], ...
+DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
     'center', P.Screen.h * 0.45, [000 000 000]);
 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 P.TTLonsets = GetSecs;
