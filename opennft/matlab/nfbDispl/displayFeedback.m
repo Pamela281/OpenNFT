@@ -64,7 +64,7 @@ switch feedbackType
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'MOVE', ...
                     floor(P.Screen.w/2-P.Screen.h/7), ...
-                    floor(P.Screen.h/2+1.5*P.Screen.h/10), P.Screen.white);
+                    floor(P.Screen.h/2+1.5*P.Screen.h/10), P.Screen.black);
                 % draw target bar
                 Screen('DrawLines', P.Screen.wPtr, ...
                     [floor(P.Screen.w/2-P.Screen.w/20), ...
@@ -86,8 +86,8 @@ switch feedbackType
                     'center', P.Screen.h * 0.45, P.Screen.black);
             case 4 % General instructions B
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = '\n\n You will alternately see the instructions "move" and "hold".';
-                line2 = '\n\n\n Please perform the movement, while "move"';
+                line1 = 'You will alternately see the instructions "move" and "hold".';
+                line2 = '\n\n Please perform the movement, while "move"';
                 line3 = '\n\n is displayed, and do not move during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);            
@@ -105,9 +105,9 @@ switch feedbackType
                     'center', P.Screen.h * 0.45, P.Screen.black); 
             case 7 % Instructions imagination finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Next, you will imagine to perform the previous movement (finger tapping),';
-                line2 = '\n\n without actually performing it. Please imagine to finger tap during';
-                line3 = '\n\n "move" and imagine to keep your finger still during "hold".';
+                line1 = 'Next, you will IMAGINE to perform the previous movement (finger tapping),';
+                line2 = '\n\n without actually performing it. Please IMAGINE to finger tap during';
+                line3 = '\n\n "move" and IMAGINE to keep your finger still during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
             case 8 % End instructions
