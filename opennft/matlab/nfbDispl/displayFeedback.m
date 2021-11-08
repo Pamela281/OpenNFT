@@ -253,10 +253,10 @@ case 'bar_count'
 
             case 3 % Baseline instructions
                 line1 = 'Images neutres';
-                line2 = '\n \n Classez les images en fonction de leur type';
-                line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
+                %line2 = '\n \n Classez les images en fonction de leur type';
+                %line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
 
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                DrawFormattedText(P.Screen.wPtr, [line1], ...
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
@@ -265,10 +265,9 @@ case 'bar_count'
                 
             case 4 % Regulation instructions
                 line1 = 'Images émotionnelles';
-                line2 = '\n \n \n essayer de reguler vos émotions en vous basant';
-                line3 = '\n \n \n sur la jauge présentée en fin de bloc';
+                line2 = '\n \n Essayez d"augmenter la jauge présentée en fin de bloc';
 
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
