@@ -61,7 +61,7 @@ switch feedbackType
                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
                 % feedback value
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
-                    P.Screen.w/2 - P.Screen.w/30-100, ...
+                    P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
             case 2 % Activity - feedback displayed
                 % Text "MOVE"
@@ -83,12 +83,12 @@ switch feedbackType
                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
                 % feedback value
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
-                    P.Screen.w/2 - P.Screen.w/30-100, ...
+                    P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
             case 3 % General instructions A
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Before starting with the main experiment,';
-                line2 = '\n\n you are going to perform a small motor task,';
+                line2 = '\n\n you are going to perform a small Motor Task,';
                 line3 = '\n\n to familiarize yourself with the feedback method.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
@@ -102,7 +102,7 @@ switch feedbackType
             case 5 % Instructions actual movement finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'First, please continuously move your right forefinger up and down,';
-                line2 = '\n\n once "move" is displayed.';
+                line2 = '\n\n once "move" is displayed. Keep your finger still during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45); 
             case 6 % Instructions imagination finger tapping
