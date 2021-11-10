@@ -1,0 +1,14 @@
+{
+	"ContrastActivation": "+1*move",
+	"SignalPreprocessingBasis": "move",
+	"ConditionIndex": [
+		{
+			"ConditionName": "move",
+			"OnOffsets": [
+				[10,20],
+				[30,40],
+				[50,60]
+			]
+		}
+	]
+}
