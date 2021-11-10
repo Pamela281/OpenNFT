@@ -5,18 +5,18 @@
 		{
 			"ConditionName": "move",
 			"OnOffsets": [
-				[21,30],
-				[41,50],
-				[61,70],
-				[86,95],
-				[106,115],
-				[126,135],
-				[151,160],
-				[171,180],
-				[191,200],
-				[206,215],
+				[26,35],
+				[46,55],
+				[66,75],
+				[96,105],
+				[116,125],
+				[136,145],
+				[161,170],
+				[181,190],
+				[201,210],
 				[226,235],
-				[246,255]
+				[246,255],
+				[266,275]
 			]
 		},
 		{
@@ -28,43 +28,43 @@
 		{
 			"ConditionName": "instr_gen2",
 			"OnOffsets": [
-				[5,8]
+				[5,10]
 			]
 		},
 		{
 			"ConditionName": "instr_finger_actual",
 			"OnOffsets": [
-				[9,10]
+				[11,15]
 			]
 		},
 		{
 			"ConditionName": "instr_question",
 			"OnOffsets": [
-				[71,72]
+				[76,78]
 			]
 		},
 		{
 			"ConditionName": "instr_finger_imagine",
 			"OnOffsets": [
-				[73,75]
+				[79,85]
 			]
 		},
 		{
 			"ConditionName": "instr_end_motor",
 			"OnOffsets": [
-				[256,260]
+				[276,280]
 			]
 		},
 		{
 			"ConditionName": "instr_fist_actual",
 			"OnOffsets": [
-				[136,140]
+				[146,150]
 			]
 		},
 		{
 			"ConditionName": "instr_fist_imagine",
 			"OnOffsets": [
-				[201,205]
+				[211,215]
 			]
 		}
 	]
