@@ -95,8 +95,8 @@ switch feedbackType
             case 4 % General instructions B
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'You will alternately see the instructions "go" and "hold".';
-                line2 = '\n\n Please perform the movement, while "go"';
-                line3 = '\n\n is displayed, and do not move during "hold".';
+                line2 = '\n\n Please perform the task, while "go"';
+                line3 = '\n\n is displayed, and do not perform it during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);            
             case 5 % Instructions actual movement finger tapping
@@ -131,21 +131,6 @@ switch feedbackType
                 line1 = 'Could you observe your brain activity, even during the imagined movement?';
                 line2 = '\n\n We hope that you got an idea of how neurofeedback works.';
                 line3 = '\n\n Enjoy the rest of the experiment!';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
-            case 10 % Instructions to perform actual movement: fist clenching
-                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Now, we are going to change the movement.';
-                line2 = '\n\n Once "go" is displayed, please clench your fists.';
-                line3 = '\n\n For that, please continuously OPEN AND CLOSE both of YOUR FISTS.';
-                line4 = '\n\n Please keep your hands relaxed during "hold".';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3 line4], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black); 
-            case 11 % Instructions to only imagine performing the movement: fist clenching
-                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Next, you will IMAGINE to perform the previous movement (fist clenching),';
-                line2 = '\n\n  without actually performing it. Please IMAGINE to clench your fists during';
-                line3 = '\n\n "go" and IMAGINE to keep your hands relaxed during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
         end
