@@ -66,7 +66,7 @@ switch feedbackType
             case 2 % Activity - feedback displayed
                 % Text "MOVE"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
-                Screen('DrawText', P.Screen.wPtr, 'MOVE', ...
+                Screen('DrawText', P.Screen.wPtr, 'GO', ...
                     floor(P.Screen.w/2-P.Screen.h/7), ...
                     floor(P.Screen.h/2+1.5*P.Screen.h/10), P.Screen.black);
                 % draw target bar
@@ -94,49 +94,58 @@ switch feedbackType
                     'center', P.Screen.h * 0.45, P.Screen.black);
             case 4 % General instructions B
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'You will alternately see the instructions "move" and "hold".';
-                line2 = '\n\n Please perform the movement, while "move"';
+                line1 = 'You will alternately see the instructions "go" and "hold".';
+                line2 = '\n\n Please perform the movement, while "go"';
                 line3 = '\n\n is displayed, and do not move during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);            
             case 5 % Instructions actual movement finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'First, please continuously move your right forefinger up and down,';
-                line2 = '\n\n once "move" is displayed. Keep your finger still during "hold".';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                line1 = 'First, please tap with your right finger once "go" is displayed.';
+                line2 = '\n\n For that, continuously MOVE YOUR RIGHT FOREFINGER up and down.';
+                line3 = '\n\n Please keep your finger still during "hold".';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45); 
             case 6 % Instructions imagination finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Were you able to spot a difference in activity';
-                line2 = '\n\n between "hold" and "move" periods?';
+                line2 = '\n\n between "hold" and "go" periods?';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, P.Screen.black); 
             case 7 % Instructions imagination finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Next, you will IMAGINE to perform the previous movement (finger tapping),';
                 line2 = '\n\n without actually performing it. Please IMAGINE to finger tap during';
-                line3 = '\n\n "move" and IMAGINE to keep your finger still during "hold".';
+                line3 = '\n\n "go" and IMAGINE to keep your finger still during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
-            case 8 % End instructions
+            case 8 % Instructions imagination finger tapping
+                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
+                line1 = 'Instead of imagining how it looks when you move your finger,';
+                line2 = '\n\n please really try to IMAGINE the whole experience';
+                line3 = '\n\n of HOW IT FEELS when you move your finger.';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                    'center', P.Screen.h * 0.45, P.Screen.black);            
+            case 9 % End instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Could you observe your brain activity, even during the imagined movement?';
                 line2 = '\n\n We hope that you got an idea of how neurofeedback works.';
                 line3 = '\n\n Enjoy the rest of the experiment!';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
-            case 9 % Instructions to perform actual movement: fist clenching
+            case 10 % Instructions to perform actual movement: fist clenching
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Now, we are going to change the movement.';
-                line2 = '\n\n Once "move" is displayed,';
-                line3 = '\n\n please continuously open and close both of your fists.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                line2 = '\n\n Once "go" is displayed, please clench your fists.';
+                line3 = '\n\n For that, please continuously OPEN AND CLOSE both of YOUR FISTS.';
+                line4 = '\n\n Please keep your hands relaxed during "hold".';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3 line4], ...
                     'center', P.Screen.h * 0.45, P.Screen.black); 
-            case 10 % Instructions to only imagine performing the movement: fist clenching
+            case 11 % Instructions to only imagine performing the movement: fist clenching
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Next, you will imagine to perform the previous movement (fist clenching),';
-                line2 = '\n\n  without actually performing it. Please imagine to clench your fists during';
-                line3 = '\n\n "move" and imagine to keep your hands relaxed during "hold".';
+                line1 = 'Next, you will IMAGINE to perform the previous movement (fist clenching),';
+                line2 = '\n\n  without actually performing it. Please IMAGINE to clench your fists during';
+                line3 = '\n\n "go" and IMAGINE to keep your hands relaxed during "hold".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
         end
