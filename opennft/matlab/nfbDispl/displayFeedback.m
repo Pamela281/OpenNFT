@@ -41,7 +41,7 @@ switch feedbackType
         case 'bar_count'
         dispValue  = round(dispValue); %dispValue*(floor(P.Screen.h/2) - floor(P.Screen.h/10))/100;
         switch condition
-            case 1 % No activity - thermometer drawn but no feedback displayed
+            case 1 % No activity - thermometer drawn but no real feedback displayed!
                 % Text "HOLD"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'REPOS', ...
@@ -64,7 +64,7 @@ switch feedbackType
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
             case 2 % Activity - feedback displayed
-                % Text "MOVE"
+                % Text "GO"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'BOUGEZ', ...
                     floor(P.Screen.w/2-P.Screen.h/7), ...
@@ -85,34 +85,35 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
-            case 3 % General instructions A
+            case 3 % General instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Avant de commencer l expérience,';
                 line2 = '\n\n vous allez effectuer une petite tache motrice,';
                 line3 = '\n\n pour vous familiariser avec la technique du Neurofeedback.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
-            case 4 % General instructions B
+            case 4 % Instructions finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Vous allez voir alternativement les instructions "repos" et "bougez".';
-                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index de haut en bas de manière continue,';
-                line3 = '\n\n Lorque "repos" est affiché, arrêtez de bouger votre doigt.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index droit';
+                line3 = '\n\n de haut en bas de manière continue; lorque "repos" ';
+                line4 = '\n\n est affiché, arrêtez de bouger votre doigt.';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3 line4], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);             
-            case 5 % Instructions imagination finger tapping
+            case 5 % Instructions - question
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Êtes-vous capable de voir une différence';
                 line2 = '\n\n entre la phase "repos" et la phase "bougez"?';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, P.Screen.black); 
-            case 6 % Instructions imagination finger tapping
+            case 6 % Instructions imagination finger tapping A
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Ensuite, imaginez de faire le même muvement que précédemment,';
                 line2 = '\n\n sans réellement le faire. IMAGINEZ que vous tapez du doigt pendant';
                 line3 = '\n\n "bougez" et IMAGINEZ de ne plus taper du doigt pendant "repos".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
-            case 7 % Instructions imagination finger tapping
+            case 7 % Instructions imagination finger tapping B
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Au lieu d imaginer ce à quoi cela ressemble lorsque vous bougez votre doigt,';
                 line2 = '\n\n essayez vraiment d imaginer le RESSENTI lorsque';
@@ -121,9 +122,9 @@ switch feedbackType
                     'center', P.Screen.h * 0.45, P.Screen.black);            
             case 8 % End instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Êtes-vous capable de voir un changement d activité, même en imaginant le mouvement ?';
-                line2 = '\n\n Vous avez maintenant une idée de comment fonctionne le neurofeedback.';
-                line3 = '\n\n Profitez du reste de l expérience!';
+                line1 = 'Êtes-vous capable de voir un changement d activité,';
+                line2 = '\n\n même en imaginant le mouvement ? Vous avez maintenant une idée de';
+                line3 = '\n\n comment fonctionne le neurofeedback. Profitez du reste de l expérience!';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
         end
