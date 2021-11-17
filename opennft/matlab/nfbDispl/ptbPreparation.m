@@ -111,7 +111,7 @@ RestrictKeysForKbCheck(ttlKey)
 [P.Motor_onset,message] = fopen([workFolder filesep 'NF_BD_motor' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
-if P.StimuliFile_NF < 0
+if P.StimuliFile_NF < 0 | P.Motor_onset < 0
    error('Failed to open myfile because: %s', message);
 end
 
