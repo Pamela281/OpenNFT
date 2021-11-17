@@ -355,20 +355,6 @@ case 'bar_count'
                      'NA');
 %}
 
-                % red if positive, blue if negative
-%                 if dispValue >0
-%                     dispColor = [255, 0, 0];
-%                 else
-%                     dispColor = [0, 0, 255];
-%                 end
-%                 
-%                 % feedback value
-%                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
-%                     P.Screen.w/2 - P.Screen.w/30+0, ...
-%                     P.Screen.h/2 - P.Screen.h/4, dispColor);
-%                 % display
-%                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
-%                     P.Screen.vbl + P.Screen.ifi/2);
         end
         
         
