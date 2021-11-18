@@ -145,8 +145,7 @@ switch feedbackType
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
         end
-        P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
-            P.Screen.vbl + P.Screen.ifi/2);
+
 
     %{
     % CONTINUOUS PSC DEFAULT
@@ -240,7 +239,7 @@ case 'bar_count'
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(2), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(2), StimulusOnsetTime - P.TTLonsets,...
                     convertCharsToStrings(image_name));
 
                 P.neutral_image_idx = P.neutral_image_idx + 1;
@@ -253,7 +252,7 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
 
             case 3 % Baseline instructions
@@ -265,7 +264,7 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
                 
             case 4 % Regulation instructions
@@ -276,7 +275,7 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
-                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
                 
             case 5  % Regulation
@@ -290,7 +289,7 @@ case 'bar_count'
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(3), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(3), StimulusOnsetTime - P.TTLonsets,...
                     convertCharsToStrings(image_name));
 
                 P.regulation_image_idx = P.regulation_image_idx + 1;
@@ -339,20 +338,6 @@ case 'bar_count'
                      'NA');
 %}
 
-                % red if positive, blue if negative
-%                 if dispValue >0
-%                     dispColor = [255, 0, 0];
-%                 else
-%                     dispColor = [0, 0, 255];
-%                 end
-%                 
-%                 % feedback value
-%                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
-%                     P.Screen.w/2 - P.Screen.w/30+0, ...
-%                     P.Screen.h/2 - P.Screen.h/4, dispColor);
-%                 % display
-%                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
-%                     P.Screen.vbl + P.Screen.ifi/2);
         end
         
         
