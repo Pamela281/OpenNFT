@@ -5,9 +5,9 @@
 		{
 			"ConditionName": "move",
 			"OnOffsets": [
-				[26,35],
-				[46,55],
-				[66,75],
+				[21,30],
+				[41,50],
+				[61,70],
 				[101,110],
 				[121,130],
 				[141,150]
@@ -16,31 +16,31 @@
 		{
 			"ConditionName": "instr_gen",
 			"OnOffsets": [
-				[1,7]
+				[1,5]
 			]
 		},
 		{
 			"ConditionName": "instr_gen2",
 			"OnOffsets": [
-				[8,15]
+				[6,10]
 			]
 		},
 		{
 			"ConditionName": "instr_question",
 			"OnOffsets": [
-				[76,78]
+				[71,73]
 			]
 		},
 		{
 			"ConditionName": "instr_finger_imagine1",
 			"OnOffsets": [
-				[79,85]
+				[74,81]
 			]
 		},
 		{
 			"ConditionName": "instr_finger_imagine2",
 			"OnOffsets": [
-				[86,90]
+				[82,90]
 			]
 		},
 		{
