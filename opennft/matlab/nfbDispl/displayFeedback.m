@@ -63,6 +63,9 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
+                % add onset time to output txt file
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(2), StimulusOnsetTime - P.TTLonsets);
             case 2 % Activity - feedback displayed
                 % Text "GO"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
@@ -85,6 +88,8 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(2), StimulusOnsetTime - P.TTLonsets);
             case 3 % General instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Avant de commencer l expérience,';
@@ -92,6 +97,8 @@ switch feedbackType
                 line3 = '\n\n pour vous familiariser avec la technique du Neurofeedback.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 4 % Instructions finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Vous allez voir alternativement les instructions "repos" et "bougez".';
@@ -100,12 +107,16 @@ switch feedbackType
                 line4 = '\n\n est affiché, arrêtez de bouger votre doigt.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3 line4], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);             
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 5 % Instructions - question
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Êtes-vous capable de voir une différence';
                 line2 = '\n\n entre la phase "repos" et la phase "bougez"?';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, P.Screen.black); 
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 6 % Instructions imagination finger tapping A
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Ensuite, imaginez de faire le même muvement que précédemment,';
@@ -113,6 +124,8 @@ switch feedbackType
                 line3 = '\n\n "bougez" et IMAGINEZ de ne plus taper du doigt pendant "repos".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 7 % Instructions imagination finger tapping B
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Au lieu d imaginer ce à quoi cela ressemble lorsque vous bougez votre doigt,';
@@ -120,6 +133,8 @@ switch feedbackType
                 line3 = '\n\n vous bougez votre doigt durant toute l expérience.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);            
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 8 % End instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Êtes-vous capable de voir un changement d activité,';
@@ -127,6 +142,8 @@ switch feedbackType
                 line3 = '\n\n comment fonctionne le neurofeedback. Profitez du reste de l expérience!';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
         end
         P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
             P.Screen.vbl + P.Screen.ifi/2);
