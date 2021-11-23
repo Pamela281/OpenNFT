@@ -153,7 +153,7 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 P.TTLonsets = GetSecs;
 
 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
-    'NA'); fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
+    'NA'); fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
 
 
 % Each event row for PTB is formatted as
