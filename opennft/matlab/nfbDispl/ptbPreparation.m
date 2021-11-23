@@ -108,10 +108,10 @@ RestrictKeysForKbCheck(ttlKey)
 [P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
-[P.Motor_onset,message] = fopen([workFolder filesep 'NF_BD_motor' ...
+[P.Motor_onset, message] = fopen([workFolder filesep 'NF_BD_motor' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
-if P.StimuliFile_NF < 0 | P.Motor_onset < 0
+if P.StimuliFile_NF < 0 || P.Motor_onset < 0
    error('Failed to open myfile because: %s', message);
 end
 
@@ -127,8 +127,8 @@ fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13))
 fprintf(P.Motor_onset, '\n');
 fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
 
-P.condition_motor = ["instructions" "hold" "move"]
-P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"]
+P.condition_motor = ["instructions" "hold" "move"];
+P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"];
 
 %{
 P.condition_instruction = "instructions"; ...
@@ -153,7 +153,8 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 P.TTLonsets = GetSecs;
 
 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
-    'NA'); fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
+    'NA');
+fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
 
 
 % Each event row for PTB is formatted as
