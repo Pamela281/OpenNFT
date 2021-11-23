@@ -41,7 +41,7 @@ switch feedbackType
         case 'bar_count'
         dispValue  = round(dispValue); %dispValue*(floor(P.Screen.h/2) - floor(P.Screen.h/10))/100;
         switch condition
-            case 1 % No activity - thermometer drawn but no feedback displayed
+            case 1 % No activity - thermometer drawn but no real feedback displayed!
                 % Text "HOLD"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'REPOS', ...
@@ -63,11 +63,9 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
-
+                % add onset time to output txt file
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
-
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(2), StimulusOnsetTime - P.TTLonsets);
-
             case 2 % Activity - feedback displayed
                 % Text "MOVE"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
@@ -90,12 +88,9 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
-
-                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
-
-                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(3), StimulusOnsetTime - P.TTLonsets);
-
-            case 3 % General instructions A
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t %s\t\n', P.condition_motor(2), StimulusOnsetTime - P.TTLonsets);
+            case 3 % General instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Pour vous familiariser avec la technique de Neurofeedback,,';
                 line2 = '\n\n vous allez effectuer une tâche motrice';
@@ -105,7 +100,8 @@ switch feedbackType
 
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
 
-            case 4 % General instructions B
+
+            case 4 % Instructions finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Les instructions "repos" et bougez" vont être affichées alternativement';
                 line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index de haut en bas de manière continue,';
