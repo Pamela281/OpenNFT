@@ -97,10 +97,9 @@ switch feedbackType
 
             case 3 % General instructions A
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Avant de commencer l expérience,';
-                line2 = '\n\n pour vous familiariser avec la technique de Neurofeedback,';
-                line3 = '\n\n vous allez effectuer une petite tâche motrice';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                line1 = 'Pour vous familiariser avec la technique de Neurofeedback,,';
+                line2 = '\n\n vous allez effectuer une tâche motrice';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
 
