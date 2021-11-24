@@ -41,7 +41,7 @@ switch feedbackType
         case 'bar_count'
         dispValue  = round(dispValue); %dispValue*(floor(P.Screen.h/2) - floor(P.Screen.h/10))/100;
         switch condition
-            case 1 % No activity - thermometer drawn but no feedback displayed
+            case 1 % No activity - thermometer drawn but no real feedback displayed!
                 % Text "HOLD"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'REPOS', ...
@@ -63,6 +63,9 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
+                % add onset time to output txt file
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(2), StimulusOnsetTime - P.TTLonsets);
             case 2 % Activity - feedback displayed
                 % Text "MOVE"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
@@ -85,50 +88,61 @@ switch feedbackType
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
                     P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
-            case 3 % General instructions A
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(3), StimulusOnsetTime - P.TTLonsets);
+            case 3 % General instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Avant de commencer l expérience,';
-                line2 = '\n\n vous allez effectuer une petite tache motrice,';
-                line3 = '\n\n pour vous familiariser avec la technique du Neurofeedback.';
+                line1 = 'Pour vous familiariser avec la technique de Neurofeedback,,';
+                line2 = '\n\n vous allez effectuer une tâche motrice';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+            case 4 % Instructions finger tapping
+                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
+                line1 = 'Les instructions "repos" et bougez" vont être affichées alternativement';
+                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index de haut en bas de manière continue,';
+                line3 = '\n\n Lorsque "repos" est affiché, ne bougez plus votre doigt.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
-            case 4 % General instructions B
-                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Vous allez voir alternativement les instructions "repos" et "bougez".';
-                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index de haut en bas de manière continue,';
-                line3 = '\n\n Lorque "repos" est affiché, arrêtez de bouger votre doigt.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);             
-            case 5 % Instructions imagination finger tapping
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+            case 5 % Instructions - question
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Êtes-vous capable de voir une différence';
                 line2 = '\n\n entre la phase "repos" et la phase "bougez"?';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black); 
-            case 6 % Instructions imagination finger tapping
+                    'center', P.Screen.h * 0.45, P.Screen.black);
+
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+            case 6 % Instructions imagination finger tapping A
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Ensuite, imaginez de faire le même muvement que précédemment,';
+                line1 = 'Ensuite, imaginez de faire le même mouvement que précédemment,';
                 line2 = '\n\n sans réellement le faire. IMAGINEZ que vous tapez du doigt pendant';
                 line3 = '\n\n "bougez" et IMAGINEZ de ne plus taper du doigt pendant "repos".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
-            case 7 % Instructions imagination finger tapping
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+            case 7 % Instructions imagination finger tapping B
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Au lieu d imaginer ce à quoi cela ressemble lorsque vous bougez votre doigt,';
-                line2 = '\n\n essayez vraiment d imaginer le RESSENTI lorsque';
-                line3 = '\n\n vous bougez votre doigt durant toute l expérience.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);            
+                line1 = 'En bougeant votre doigt, essayez vraiment d IMAGINER le ressenti du mouvement';
+                line2 = '\n\n et pas uniquement d IMAGINER ce à quoi cela ressemble';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 8 % End instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Êtes-vous capable de voir un changement d activité, même en imaginant le mouvement ?';
+                line1 = 'Voyez-vous un changement d activité? Même en imaginant le mouvement ?';
                 line2 = '\n\n Vous avez maintenant une idée de comment fonctionne le neurofeedback.';
-                line3 = '\n\n Profitez du reste de l expérience!';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
         end
-        P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
-            P.Screen.vbl + P.Screen.ifi/2);
+
 
     %{
     % CONTINUOUS PSC DEFAULT
@@ -222,7 +236,7 @@ case 'bar_count'
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(2), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(2), StimulusOnsetTime - P.TTLonsets,...
                     convertCharsToStrings(image_name));
 
                 P.neutral_image_idx = P.neutral_image_idx + 1;
@@ -235,7 +249,7 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
 
             case 3 % Baseline instructions
@@ -247,7 +261,7 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
                 
             case 4 % Regulation instructions
@@ -258,7 +272,7 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
-                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1), StimulusOnsetTime - P.TTLonsets,...
+                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
                     'NA');
                 
             case 5  % Regulation
@@ -272,7 +286,7 @@ case 'bar_count'
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(3), StimulusOnsetTime - P.TTLonsets,...
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(3), StimulusOnsetTime - P.TTLonsets,...
                     convertCharsToStrings(image_name));
 
                 P.regulation_image_idx = P.regulation_image_idx + 1;
@@ -321,20 +335,6 @@ case 'bar_count'
                      'NA');
 %}
 
-                % red if positive, blue if negative
-%                 if dispValue >0
-%                     dispColor = [255, 0, 0];
-%                 else
-%                     dispColor = [0, 0, 255];
-%                 end
-%                 
-%                 % feedback value
-%                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
-%                     P.Screen.w/2 - P.Screen.w/30+0, ...
-%                     P.Screen.h/2 - P.Screen.h/4, dispColor);
-%                 % display
-%                 P.Screen.vbl = Screen('Flip', P.Screen.wPtr, ...
-%                     P.Screen.vbl + P.Screen.ifi/2);
         end
         
         

@@ -105,10 +105,13 @@ RestrictKeysForKbCheck(ttlKey)
 
 
 %% TXT file
-[P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_' ...
+[P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
     P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
 
-if P.StimuliFile_NF < 0
+[P.Motor_onset, message] = fopen([workFolder filesep 'NF_BD_motor' ...
+    P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+
+if P.StimuliFile_NF < 0 | P.Motor_onset < 0
    error('Failed to open myfile because: %s', message);
 end
 
@@ -118,12 +121,23 @@ fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 1
 fprintf(P.StimuliFile_NF, '\n');
 fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\timage\n');
 
+fprintf(P.Motor_onset, '%s\t %s\n', 'Subject ID:', P.SubjectID);
+fprintf(P.Motor_onset, '%s\t %s\n', 'Date', 'Time');
+fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
+fprintf(P.Motor_onset, '\n');
+fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
+
+P.condition_motor = ["instructions" "hold" "move"]
+P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"]
+
+%{
 P.condition_instruction = "instructions"; ...
     P.condition_neutral = "neutre"; P.condition_regulation = "regulation";...
     P.condition_jauge = "jauge"; P.condition_fixation_cross = "croix de fixation";
 
 P.condition = [P.condition_instruction P.condition_neutral P.condition_regulation ...
     P.condition_jauge P.condition_fixation_cross];
+%}
 
 %Text "BONJOUR" - also to check that PTB-3 function 'DrawFormattedText" is working
 %{
@@ -138,8 +152,8 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 P.TTLonsets = GetSecs;
 
-fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(1),  StimulusOnsetTime - P.TTLonsets,...
-    'NA');
+fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
+    'NA'); fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
 
 
 % Each event row for PTB is formatted as

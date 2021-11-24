@@ -46,7 +46,7 @@
 		{
 			"ConditionName": "instr_end_motor",
 			"OnOffsets": [
-				[151,155]
+				[151,160]
 			]
 		}
 	]
