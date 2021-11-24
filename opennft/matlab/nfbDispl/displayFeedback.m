@@ -67,7 +67,7 @@ switch feedbackType
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(2), StimulusOnsetTime - P.TTLonsets);
             case 2 % Activity - feedback displayed
-                % Text "GO"
+                % Text "MOVE"
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'BOUGEZ', ...
                     floor(P.Screen.w/2-P.Screen.h/7), ...
@@ -92,59 +92,96 @@ switch feedbackType
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(3), StimulusOnsetTime - P.TTLonsets);
             case 3 % General instructions
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Avant de commencer l expérience,';
-                line2 = '\n\n vous allez effectuer une petite tache motrice,';
-                line3 = '\n\n pour vous familiariser avec la technique du Neurofeedback.';
+                line1 = 'Pour vous familiariser avec la technique de Neurofeedback,,';
+                line2 = '\n\n vous allez effectuer une tâche motrice';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+<<<<<<< HEAD
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+                fprintf('%s\t %d\t\n');
+=======
+
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+
+
+>>>>>>> OpenNFT_NFB_BD
+            case 4 % Instructions finger tapping
+                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
+                line1 = 'Les instructions "repos" et bougez" vont être affichées alternativement';
+                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index de haut en bas de manière continue,';
+                line3 = '\n\n Lorsque "repos" est affiché, ne bougez plus votre doigt.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
-                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
-                fprintf('%s\t %d\t\n');
-            case 4 % Instructions finger tapping
-                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Vous allez voir alternativement les instructions "repos" et "bougez".';
-                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index droit';
-                line3 = '\n\n de haut en bas de manière continue; lorque "repos" ';
-                line4 = '\n\n est affiché, arrêtez de bouger votre doigt.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3 line4], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);             
-                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+<<<<<<< HEAD
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 5 % Instructions - question
+=======
+
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+
+            case 5 % Instructions imagination finger tapping
+>>>>>>> OpenNFT_NFB_BD
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Êtes-vous capable de voir une différence';
                 line2 = '\n\n entre la phase "repos" et la phase "bougez"?';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black); 
+                    'center', P.Screen.h * 0.45, P.Screen.black);
+
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+<<<<<<< HEAD
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 6 % Instructions imagination finger tapping A
+=======
+
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+
+            case 6 % Instructions imagination finger tapping
+>>>>>>> OpenNFT_NFB_BD
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Ensuite, imaginez de faire le même muvement que précédemment,';
+                line1 = 'Ensuite, imaginez de faire le même mouvement que précédemment,';
                 line2 = '\n\n sans réellement le faire. IMAGINEZ que vous tapez du doigt pendant';
                 line3 = '\n\n "bougez" et IMAGINEZ de ne plus taper du doigt pendant "repos".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+<<<<<<< HEAD
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
             case 7 % Instructions imagination finger tapping B
-                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Au lieu d imaginer ce à quoi cela ressemble lorsque vous bougez votre doigt,';
-                line2 = '\n\n essayez vraiment d imaginer le RESSENTI lorsque';
-                line3 = '\n\n vous bougez votre doigt durant toute l expérience.';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);            
-                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+=======
+
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
-            case 8 % End instructions
+
+            case 7 % Instructions imagination finger tapping
+>>>>>>> OpenNFT_NFB_BD
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Êtes-vous capable de voir un changement d activité,';
-                line2 = '\n\n même en imaginant le mouvement ? Vous avez maintenant une idée de';
-                line3 = '\n\n comment fonctionne le neurofeedback. Profitez du reste de l expérience!';
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                line1 = 'En bougeant votre doigt, essayez vraiment d IMAGINER le ressenti du mouvement';
+                line2 = '\n\n et pas uniquement d IMAGINER ce à quoi cela ressemble';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+<<<<<<< HEAD
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+=======
+
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+
+>>>>>>> OpenNFT_NFB_BD
+            case 8 % End instructions
+                Screen('TextSize', P.Screen.wPtr, textSizeInstr);
+                line1 = 'Voyez-vous un changement d activité? Même en imaginant le mouvement ?';
+                line2 = '\n\n Vous avez maintenant une idée de comment fonctionne le neurofeedback.';
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
+                    'center', P.Screen.h * 0.45, P.Screen.black);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
+<<<<<<< HEAD
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+=======
+
+                fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1), StimulusOnsetTime - P.TTLonsets);
+
+>>>>>>> OpenNFT_NFB_BD
         end
 
 
