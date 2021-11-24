@@ -74,3 +74,4 @@ matlab/Ind_DCM_*.mat
 *.nii
 *.dat
 NFB_OpenNFT/NF_INT_SVM_BD/*
+NFB_OpenNFT/motor_nfb_files/motor_nfb_PC.ini
