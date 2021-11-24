@@ -21,6 +21,8 @@ function ptbPreparation(screenId, workFolder, protName)
 
 P = evalin('base', 'P');
 
+isCONT = strcmp(P.Prot, 'Cont')  % save whether feedback is continuous
+
 Screen('CloseAll');
 Screen('Preference', 'SkipSyncTests', 2);
 
@@ -105,30 +107,31 @@ RestrictKeysForKbCheck(ttlKey)
 
 
 %% TXT file
-[P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
-    P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
-
-[P.Motor_onset, message] = fopen([workFolder filesep 'NF_BD_motor' ...
-    P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
-
-if P.StimuliFile_NF < 0 | P.Motor_onset < 0
-   error('Failed to open myfile because: %s', message);
+if isCONT
+    [P.Motor_onset, message] = fopen([workFolder filesep 'NF_BD_motor' ...
+        P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+    if P.Motor_onset < 0
+        error('Failed to open myfile because: %s', message);
+    end
+    fprintf(P.Motor_onset, '%s\t %s\n', 'Subject ID:', P.SubjectID);
+    fprintf(P.Motor_onset, '%s\t %s\n', 'Date', 'Time');
+    fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
+    fprintf(P.Motor_onset, '\n');
+    fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
+    P.condition_motor = ["instructions" "hold" "move"]
+else
+    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
+        P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+    if P.StimuliFile_NF < 0
+       error('Failed to open myfile because: %s', message);
+    end
+    fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Subject ID:', P.SubjectID);
+    fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
+    fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
+    fprintf(P.StimuliFile_NF, '\n');
+    fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\timage\n');
+    P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"]
 end
-
-fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Subject ID:', P.SubjectID);
-fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
-fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
-fprintf(P.StimuliFile_NF, '\n');
-fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\timage\n');
-
-fprintf(P.Motor_onset, '%s\t %s\n', 'Subject ID:', P.SubjectID);
-fprintf(P.Motor_onset, '%s\t %s\n', 'Date', 'Time');
-fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
-fprintf(P.Motor_onset, '\n');
-fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
-
-P.condition_motor = ["instructions" "hold" "move"]
-P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"]
 
 %{
 P.condition_instruction = "instructions"; ...
@@ -152,9 +155,12 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 P.TTLonsets = GetSecs;
 
-fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
-    'NA'); fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
-
+if isCONT
+    fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
+else
+    fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
+        'NA');
+end
 
 % Each event row for PTB is formatted as
 % [t9, t10, displayTimeInstruction, displayTimeFeedback]
