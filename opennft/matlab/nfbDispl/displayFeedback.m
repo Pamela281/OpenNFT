@@ -101,8 +101,8 @@ switch feedbackType
             case 4 % Instructions finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Les instructions "repos" et bougez" vont être affichées alternativement.';
-                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre index de haut en bas de';
-                line3 = '\n\n manière continue. Lorsque "repos" est affiché, ne bougez plus votre doigt.';
+                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre doigt de manière répétée';
+                line3 = '\n\n et continue. Lorsque "repos" est affiché, ne bougez plus votre doigt.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, P.Screen.black);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
