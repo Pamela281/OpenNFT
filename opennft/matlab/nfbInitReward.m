@@ -12,7 +12,7 @@ function nfbInitReward()
 
 P = evalin('base', 'P');
 if P.NFRunNr > 1
-    folder = [P.WorkFolder filesep 'NF_Data_' num2str(P.NFRunNr - 1)];
+    folder = [P.WorkFolder filesep 'NF_Data_' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr - 1)]; % add 24012022 and remove coma
 
     if strcmp(P.Prot, 'Inter') && strcmp(P.Type, 'PSC')
         load([folder filesep 'reward_' ...
