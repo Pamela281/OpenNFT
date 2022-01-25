@@ -235,7 +235,7 @@ case 'bar_count'
                 Screen(P.Screen.wPtr,'FillRect',255/1.5);
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
-                
+
 
                 [keyIsDown, keyCode] = KbQueueCheck(P.deviceIndex_buttons);
                 if keyIsDown
@@ -265,8 +265,8 @@ case 'bar_count'
 
             case 3 % Baseline instructions
                 line1 = 'Images neutres';
-                %line2 = '\n \n Classez les images en fonction de leur type';
-                %line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
+                line2 = '\n \n Identifiez si la scène présentée se déroule à l"intérieur ou à l"extérieur';
+                line3 = '\n\n\n Réponses : Index = intérieure ; Majeur = extérieure';
 
                 DrawFormattedText(P.Screen.wPtr, [line1], ...
                     'center', P.Screen.h * 0.45);
@@ -277,7 +277,7 @@ case 'bar_count'
                 
             case 4 % Regulation instructions
                 line1 = 'Images émotionnelles';
-                line2 = '\n \n Essayez d"augmenter la jauge présentée en fin de bloc';
+                line2 = '\n \n Trouvez une stratégie pour augmenter la jauge présentée en fin de bloc';
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45);
@@ -342,8 +342,8 @@ case 'bar_count'
                 %Screen(P.Screen.wPtr,'FillRect',255/1.5);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
                 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(5), StimulusOnsetTime - P.TTLonsets,...
-                     'NA');
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition(5), StimulusOnsetTime - P.TTLonsets,...
+                     'NA', 'NA');
 %}
 
         end
