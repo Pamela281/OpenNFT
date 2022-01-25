@@ -21,7 +21,7 @@ function ptbPreparation(screenId, workFolder, protName)
 
 P = evalin('base', 'P');
 
-isCONT = strcmp(P.Prot, 'Cont')  % save whether feedback is continuous
+isCONT = strcmp(P.Prot, 'Cont');  % save whether feedback is continuous
 
 Screen('CloseAll');
 Screen('Preference', 'SkipSyncTests', 2);
@@ -89,21 +89,10 @@ P.Screen.lw = 5;
 while KbCheck
 end
 
-global deviceIndex
-deviceIndex = [];
-
 %input parameter
 
 KbName('UnifyKeyNames');
 
-ttlKey = KbName('t');                           %emulates trigger from fMRI
-
-keysOfInterest=zeros(1,256); %% 
-keysOfInterest(ttlKey)=1; %% 
-KbQueueCreate(deviceIndex, keysOfInterest); %% 
-KbQueueStart(deviceIndex); %%
-
-RestrictKeysForKbCheck(ttlKey)
 
 
 %% TXT file
@@ -118,7 +107,7 @@ if isCONT
     fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
     fprintf(P.Motor_onset, '\n');
     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
-    P.condition_motor = ["instructions" "hold" "move"]
+    P.condition_motor = ["instructions" "hold" "move"];
 else
     [P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
@@ -129,8 +118,8 @@ else
     fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
     fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
     fprintf(P.StimuliFile_NF, '\n');
-    fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\timage\n');
-    P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"]
+    fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\tanswer\timage\n');
+    P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"];
 end
 
 %{
@@ -158,8 +147,8 @@ P.TTLonsets = GetSecs;
 if isCONT
     fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
 else
-    fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
-        'NA');
+    fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
+        'NA','NA');
 end
 
 % Each event row for PTB is formatted as
@@ -244,6 +233,24 @@ end
 
 % Intermittent SVM
 if strcmp(protName, 'Inter')
+
+    P.device_buttons = 'Clavier'; %'Arduino LLC Arduino Leonardo'; %'Dell KB216 Wired Keyboard'; %'Dell Dell Smart Card Reader Keyboard' ;
+    responseKeys  = [KbName('k') KbName('j')]; %j = index, k = majeur
+
+    [keyboardIndices, productNames, allInfos] = GetKeyboardIndices;
+    [logicalKey,locationKey]=ismember({P.device_buttons},productNames); % push buttons
+    P.deviceIndex_buttons=allInfos{locationKey}.index;
+
+    keysOfInterest = zeros (1,256);
+    keysOfInterest(responseKeys) = 1;
+    KbQueueCreate(P.deviceIndex_buttons, keysOfInterest);
+    KbQueueStart(P.deviceIndex_buttons);
+
+    P.answer = '';
+
+    % start listening to key input
+    KbQueueCreate();
+    KbQueueStart();
     
     imageFormat = 'jpg';
     
@@ -264,6 +271,26 @@ if strcmp(protName, 'Inter')
     
     P.randomizedTrials_regulation = randperm(nTrials_regulation);
     P.regulation_image_idx = 1;
+
+    % accepted response keys
+    P.Screen.indexKey = responseKeys(2);
+    P.Screen.majorKey = responseKeys(1);
+
+    %P.indoor.answer = '';
+    %P.outdoor.answer = '';
+%     P.answer = '';
+% 
+%     [keyIsDown, keyCode] = KbQueueCheck(deviceIndex_buttons);
+%     if keyIsDown
+%         if keyCode(P.Screen.indexKey) ~= 0
+%             P.answer = "indoor"; % Indoor images
+%             P.indoor.answer = 'indoor'
+%             disp('ok index')
+%         elseif keyCode(P.Screen.majorKey) ~= 0
+%             P.answer = "outdoor";  % Outdoor images
+%             disp('ok majeur')
+%         end
+%     end
 
 end
 
