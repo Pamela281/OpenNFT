@@ -234,7 +234,8 @@ end
 % Intermittent SVM
 if strcmp(protName, 'Inter')
 
-    P.device_buttons = 'Clavier'; %'Arduino LLC Arduino Leonardo'; %'Dell KB216 Wired Keyboard'; %'Dell Dell Smart Card Reader Keyboard' ;
+    P.device_buttons_PC = 'Clavier'; %'Arduino LLC Arduino Leonardo'; %'Dell KB216 Wired Keyboard'; %'Dell Dell Smart Card Reader Keyboard' ;
+    P.device_buttons_IRM = 'Arduino LLC Arduino Leonardo';
     responseKeys  = [KbName('k') KbName('j')]; %j = index, k = majeur
 
     [keyboardIndices, productNames, allInfos] = GetKeyboardIndices;
