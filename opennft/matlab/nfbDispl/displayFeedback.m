@@ -268,7 +268,7 @@ case 'bar_count'
                 line2 = '\n \n Identifiez si la scène présentée se déroule à l"intérieur ou à l"extérieur';
                 line3 = '\n\n\n Réponses : Index = intérieure ; Majeur = extérieure';
 
-                DrawFormattedText(P.Screen.wPtr, [line1], ...
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
