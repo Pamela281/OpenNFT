@@ -236,8 +236,19 @@ case 'bar_count'
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(2), StimulusOnsetTime - P.TTLonsets,...
-                    convertCharsToStrings(image_name));
+
+                [keyIsDown, keyCode] = KbQueueCheck(P.deviceIndex_buttons);
+                if keyIsDown
+                    if keyCode(P.Screen.indexKey) ~= 0
+                        P.answer = "indoor"; % Indoor images
+                        %P.indoor.answer = 'indoor'
+                    elseif keyCode(P.Screen.majorKey) ~= 0
+                        P.answer = "outdoor";  % Outdoor images
+                    end
+                end
+
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(2), StimulusOnsetTime - P.TTLonsets,...
+                    P.answer,convertCharsToStrings(image_name));
 
                 P.neutral_image_idx = P.neutral_image_idx + 1;
 
@@ -249,31 +260,31 @@ case 'bar_count'
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
-                    'NA');
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
+                    'NA','NA');
 
             case 3 % Baseline instructions
                 line1 = 'Images neutres';
-                %line2 = '\n \n Classez les images en fonction de leur type';
-                %line3 = '\n\n\n Gauche = intérieur ; Droite = extérieur';
+                line2 = '\n \n Identifiez si la scène présentée se déroule à l"intérieur ou à l"extérieur';
+                line3 = '\n\n\n Réponses : Index = intérieure ; Majeur = extérieure';
 
-                DrawFormattedText(P.Screen.wPtr, [line1], ...
+                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
-                    'NA');
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
+                    'NA','NA');
                 
             case 4 % Regulation instructions
                 line1 = 'Images émotionnelles';
-                line2 = '\n \n Essayez d"augmenter la jauge présentée en fin de bloc';
+                line2 = '\n \n Trouvez une stratégie pour augmenter la jauge présentée en fin de bloc';
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
-                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
-                    'NA');
+                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
+                    'NA','NA');
                 
             case 5  % Regulation
                 t = P.randomizedTrials_regulation(P.regulation_image_idx);
@@ -286,8 +297,8 @@ case 'bar_count'
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition_emo(3), StimulusOnsetTime - P.TTLonsets,...
-                    convertCharsToStrings(image_name));
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(3), StimulusOnsetTime - P.TTLonsets,...
+                    'NA',convertCharsToStrings(image_name));
 
                 P.regulation_image_idx = P.regulation_image_idx + 1;
                 
@@ -322,8 +333,8 @@ case 'bar_count'
                  [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, ...
                      P.Screen.vbl + P.Screen.ifi/2);
 
-                  fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(4), StimulusOnsetTime - P.TTLonsets,...
-                     'NA');
+                  fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(4), StimulusOnsetTime - P.TTLonsets,...
+                     'NA','NA');
                 
                 %transfert
 %{
@@ -331,8 +342,8 @@ case 'bar_count'
                 %Screen(P.Screen.wPtr,'FillRect',255/1.5);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
                 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t\n', P.condition(5), StimulusOnsetTime - P.TTLonsets,...
-                     'NA');
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition(5), StimulusOnsetTime - P.TTLonsets,...
+                     'NA', 'NA');
 %}
 
         end

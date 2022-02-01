@@ -108,27 +108,27 @@ if ~P.isRestingState
     % check if vectNFBs exists
     if sum(strcmp(fieldnames(mainLoopData), 'vectNFBs')) == 1
         save([folder filesep P.SubjectID '_' ...
-            num2str(P.NFRunNr) '_NFBs' '.mat'], ...
-            '-struct', 'mainLoopData', 'vectNFBs');
+            P.ProjectName '_' num2str(P.NFRunNr) '_NFBs' '.mat'], ...
+            '-struct', 'mainLoopData', 'vectNFBs'); %add 24012022
     end
 end
 
 % save time-series
 if P.NrROIs >0
     save([folder filesep P.SubjectID '_' ...
-        num2str(P.NFRunNr) '_raw_tsROIs' '.mat'], ...
-        '-struct', 'mainLoopData', 'rawTimeSeries');
+        P.ProjectName '_' num2str(P.NFRunNr) '_raw_tsROIs' '.mat'], ...
+        '-struct', 'mainLoopData', 'rawTimeSeries'); %add 24012022
     save([folder filesep P.SubjectID '_' ...
-        num2str(P.NFRunNr) '_proc_tsROIs' '.mat'], ...
-        '-struct', 'mainLoopData', 'kalmanProcTimeSeries');
+        P.ProjectName '_' num2str(P.NFRunNr) '_proc_tsROIs' '.mat'], ...
+        '-struct', 'mainLoopData', 'kalmanProcTimeSeries'); %add 24012022
 end
 
 %% Configuration
 % save parameters
 save([folder filesep P.SubjectID '_' ...
-    num2str(P.NFRunNr) '_mainLoopData' '.mat'],'-struct','mainLoopData');
+    P.ProjectName '_' num2str(P.NFRunNr) '_mainLoopData' '.mat'],'-struct','mainLoopData'); %add 24012022
 save([folder filesep P.SubjectID '_' ...
-    num2str(P.NFRunNr) '_P' '.mat'], '-struct', 'P');
+    P.ProjectName '_' num2str(P.NFRunNr) '_P' '.mat'], '-struct', 'P'); %add 24012022
 
 % save ROIs
 if isPSC || isSVM
@@ -142,7 +142,7 @@ if isDCM
 end
 if ~P.isRestingState
     save([folder filesep P.SubjectID '_' ...
-        num2str(P.NFRunNr) '_roiData' '.mat'], 'roiData');
+        P.ProjectName '_' num2str(P.NFRunNr) '_roiData' '.mat'], 'roiData'); %add 24012022
 end
 
 %% Results
@@ -150,17 +150,17 @@ if isfield(mainLoopData, 'vectNFBs')
     
     % save feedback values
     save([folder filesep P.SubjectID '_' ...
-        num2str(P.NFRunNr) '_NFBs' '.mat'], ...
-        '-struct', 'mainLoopData', 'vectNFBs');
+        P.ProjectName '_' num2str(P.NFRunNr) '_NFBs' '.mat'], ...
+        '-struct', 'mainLoopData', 'vectNFBs'); %add 24012022
     
     % save time-series
     if P.NrROIs >0
         save([folder filesep P.SubjectID '_' ...
-            num2str(P.NFRunNr) '_raw_tsROIs' '.mat'], ...
-            '-struct', 'mainLoopData', 'rawTimeSeries');
+            P.ProjectName '_' num2str(P.NFRunNr) '_raw_tsROIs' '.mat'], ...
+            '-struct', 'mainLoopData', 'rawTimeSeries'); %add 24012022
         save([folder filesep P.SubjectID '_' ...
-            num2str(P.NFRunNr) '_proc_tsROIs' '.mat'], ...
-            '-struct', 'mainLoopData', 'kalmanProcTimeSeries');
+            P.ProjectName '_' num2str(P.NFRunNr) '_proc_tsROIs' '.mat'], ...
+            '-struct', 'mainLoopData', 'kalmanProcTimeSeries'); %add 24012022
     end
     
     % save reward values
@@ -177,7 +177,7 @@ if isfield(mainLoopData, 'vectNFBs')
     end
     
     % save activation map(s)
-    folder = [P.WorkFolder filesep 'NF_Data_' num2str(P.NFRunNr)];
+    folder = [P.WorkFolder filesep 'NF_Data_' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr)];
     if ~isempty(mainLoopData.statMap3D_iGLM)
         if ~isDCM
             statVolData = mainLoopData.statMap3D_iGLM;
