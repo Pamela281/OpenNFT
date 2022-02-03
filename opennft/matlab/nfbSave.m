@@ -177,7 +177,8 @@ if isfield(mainLoopData, 'vectNFBs')
     end
     
     % save activation map(s)
-    folder = [P.WorkFolder filesep 'NF_Data_' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr)];
+    folder = P.nfbDataFolder;
+    %folder = [P.WorkFolder filesep 'Pilot' filesep P.SubjectID filesep 'NF_Data_' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr)];
     if ~isempty(mainLoopData.statMap3D_iGLM)
         if ~isDCM
             statVolData = mainLoopData.statMap3D_iGLM;
