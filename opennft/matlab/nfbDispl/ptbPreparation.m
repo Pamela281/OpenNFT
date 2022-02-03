@@ -97,7 +97,7 @@ KbName('UnifyKeyNames');
 
 %% TXT file
 if isCONT
-    [P.Motor_onset, message] = fopen([workFolder filesep 'NF_BD_motor' ...
+    [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_motor' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
     if P.Motor_onset < 0
         error('Failed to open myfile because: %s', message);
@@ -109,7 +109,7 @@ if isCONT
     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
     P.condition_motor = ["instructions" "hold" "move"];
 else
-    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
+    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
     if P.StimuliFile_NF < 0
        error('Failed to open myfile because: %s', message);
