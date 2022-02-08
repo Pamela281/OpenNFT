@@ -97,7 +97,7 @@ KbName('UnifyKeyNames');
 
 %% TXT file
 if isCONT
-    [P.Motor_onset, message] = fopen([workFolder filesep 'NF_BD_motor' ...
+    [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_motor' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
     if P.Motor_onset < 0
         error('Failed to open myfile because: %s', message);
@@ -109,7 +109,7 @@ if isCONT
     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
     P.condition_motor = ["instructions" "hold" "move"];
 else
-    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'NF_BD_emo' ...
+    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
     if P.StimuliFile_NF < 0
        error('Failed to open myfile because: %s', message);
@@ -233,9 +233,26 @@ end
 
 % Intermittent SVM
 if strcmp(protName, 'Inter')
+    device = questdlg('Are you on your PC or at the MRI console ?',...
+    'Device',...
+    'MRI console', 'PC','PC');
 
-    P.device_buttons_PC = 'Clavier'; %'Arduino LLC Arduino Leonardo'; %'Dell KB216 Wired Keyboard'; %'Dell Dell Smart Card Reader Keyboard' ;
-    P.device_buttons_IRM = 'Arduino LLC Arduino Leonardo';
+    % Handle response
+    switch device
+        case 'MRI console'
+            disp([' You are at the ' device])
+            device = 1;
+        case 'PC'
+            disp([' You are on your ' device])
+            device = 2;
+    end
+
+    if device == 1
+        P.device_buttons = 'Arduino LLC Arduino Leonardo';
+    elseif device == 2
+        P.device_buttons = 'Clavier';
+    end
+
     responseKeys  = [KbName('k') KbName('j')]; %j = index, k = majeur
 
     [keyboardIndices, productNames, allInfos] = GetKeyboardIndices;

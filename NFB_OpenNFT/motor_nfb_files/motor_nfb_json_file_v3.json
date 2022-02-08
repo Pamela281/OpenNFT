@@ -1,0 +1,54 @@
+{
+	"ContrastActivation": "+1*move;0*instr_gen;0*instr_gen2;0*instr_question;0*instr_finger_imagine1;0*instr_finger_imagine2;0*instr_end_motor",
+	"SignalPreprocessingBasis": "move",
+	"ConditionIndex": [
+		{
+			"ConditionName": "move",
+			"OnOffsets": [
+				[26,35],
+				[46,55],
+				[66,75],
+				[101,110],
+				[121,130],
+				[141,150]
+			]
+		},
+		{
+			"ConditionName": "instr_gen",
+			"OnOffsets": [
+				[1,7]
+			]
+		},
+		{
+			"ConditionName": "instr_gen2",
+			"OnOffsets": [
+				[8,15]
+			]
+		},
+		{
+			"ConditionName": "instr_question",
+			"OnOffsets": [
+				[76,78]
+			]
+		},
+		{
+			"ConditionName": "instr_finger_imagine1",
+			"OnOffsets": [
+				[79,85]
+			]
+		},
+		{
+			"ConditionName": "instr_finger_imagine2",
+			"OnOffsets": [
+				[86,90]
+			]
+		},
+		{
+			"ConditionName": "instr_end_motor",
+			"OnOffsets": [
+				[151,160]
+			]
+		}
+	]
+}
+
