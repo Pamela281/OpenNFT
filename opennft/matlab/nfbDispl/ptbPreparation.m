@@ -273,7 +273,7 @@ if strcmp(protName, 'Inter')
     imageFormat = 'jpg';
     
     % Neutral condition
-    P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final' filesep 'Run']; %to change
+    P.image_neutral_condition = '/volatile/opennft/Images_NFB/Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final/Run'; %to change
     imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
     P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
     nTrials_neutral = length(P.imgList_neutral_condition);
@@ -282,7 +282,7 @@ if strcmp(protName, 'Inter')
     P.neutral_image_idx = 1;
     
     % regulation condition stimuli
-    P.image_regulation_condition =[workFolder filesep '..' filesep 'Images_NFB' filesep 'Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final']; % to change
+    P.image_regulation_condition ='/volatile/opennft/Images_NFB/Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final'; % to change
     imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
     P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
     nTrials_regulation = length(P.imgList_regulation_condition);
