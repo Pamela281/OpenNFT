@@ -107,7 +107,9 @@ if isCONT
     fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
     fprintf(P.Motor_onset, '\n');
     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
-    P.condition_motor = ["instructions" "hold" "move"];
+    P.condition_motor = ["hold" "move" "instructions" "instructions" "instructions" "instructions" ...
+        "instructions" "instructions"]
+    %P.condition_motor = ["instructions" "hold" "move"];
 else
     [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
@@ -145,7 +147,7 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 P.TTLonsets = GetSecs;
 
 if isCONT
-    fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
+    fprintf(P.Motor_onset, '%s\t %s\t\n', P.condition_motor(3),  '0');
 else
     fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
         'NA','NA');

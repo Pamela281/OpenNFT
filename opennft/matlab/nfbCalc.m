@@ -84,8 +84,28 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
         mainLoopData.dispValues(indVolNorm) = dispValue;
         mainLoopData.dispValue = dispValue;
     else
+%{
         tmp_fbVal = 0;
-        mainLoopData.dispValue = 0;                                    
+        mainLoopData.dispValue = 0;
+%}
+
+        tmp_fbVal = eval(P.RoiAnatOperation);
+        dispValue = round(P.MaxFeedbackVal*tmp_fbVal, P.FeedbackValDec);
+
+                % [0...P.MaxFeedbackVal], for Display
+        if ~P.NegFeedback && dispValue < 0
+            dispValue = 0;
+        elseif P.NegFeedback && dispValue < P.MinFeedbackVal
+             dispValue = P.MinFeedbackVal;
+        end
+        if dispValue > P.MaxFeedbackVal
+            dispValue = P.MaxFeedbackVal;
+        end
+
+        mainLoopData.norm_percValues(indVolNorm,:) = norm_percValues;
+        mainLoopData.dispValues(indVolNorm) = dispValue;
+        mainLoopData.dispValue = dispValue;
+
     end
 
     mainLoopData.vectNFBs(indVolNorm) = tmp_fbVal;
