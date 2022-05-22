@@ -53,7 +53,7 @@ if (strcmp(P.Prot, 'Inter') ||  strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTa
         % otheriwse it could be just 2 conditions in all the settings
         if condition == 1
             mainLoopData.flagEndPSC = 1;
-            %mainLoopData.dispValue = 1;
+            % mainLoopData.dispValue = 1;
             mainLoopData.Reward = '';
         elseif condition == 2
             mainLoopData.flagEndPSC = 1;
