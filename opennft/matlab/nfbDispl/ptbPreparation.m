@@ -107,7 +107,9 @@ if isCONT
     fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
     fprintf(P.Motor_onset, '\n');
     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
-    P.condition_motor = ["instructions" "hold" "move"];
+    P.condition_motor = ["hold" "move" "instructions" "instructions" "instructions" "instructions" ...
+        "instructions" "instructions"]
+    %P.condition_motor = ["instructions" "hold" "move"];
 else
     [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo' ...
         P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
@@ -145,7 +147,7 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 P.TTLonsets = GetSecs;
 
 if isCONT
-    fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(1),  StimulusOnsetTime - P.TTLonsets);
+    fprintf(P.Motor_onset, '%s\t %s\t\n', P.condition_motor(3),  '0');
 else
     fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
         'NA','NA');
@@ -269,11 +271,26 @@ if strcmp(protName, 'Inter')
     % start listening to key input
     KbQueueCreate();
     KbQueueStart();
-    
+
+    % Images
     imageFormat = 'jpg';
+
+%{
+    if device == 1
+        P.image_neutral_condition = [workFolder filesep '..' filesep ...
+            '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
+    elseif device == 2
+        P.image_neutral_condition = [workFolder filesep '..' filesep ...
+            '..' Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
+%}
+
     
     % Neutral condition
-    P.image_neutral_condition = '/volatile/opennft/Images_NFB/Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final/Run'; %to change
+    % P.image_neutral_condition = '/volatile/opennft/Images_NFB/Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final/Run'; %to change
+    % P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final' filesep 'Run'];
+    % P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
+    P.image_neutral_condition = [workFolder filesep '..' filesep ...
+            '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
     imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
     P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
     nTrials_neutral = length(P.imgList_neutral_condition);
@@ -282,7 +299,11 @@ if strcmp(protName, 'Inter')
     P.neutral_image_idx = 1;
     
     % regulation condition stimuli
-    P.image_regulation_condition ='/volatile/opennft/Images_NFB/Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final'; % to change
+    % P.image_regulation_condition ='/volatile/opennft/Images_NFB/Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final'; % to change
+    % P.image_regulation_condition =[workFolder filesep '..' filesep 'Images_NFB' filesep 'Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final']; % to change
+    % P.image_regulation_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neg']; %to change
+    P.image_regulation_condition = [workFolder filesep '..' filesep ...
+        '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neg']
     imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
     P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
     nTrials_regulation = length(P.imgList_regulation_condition);

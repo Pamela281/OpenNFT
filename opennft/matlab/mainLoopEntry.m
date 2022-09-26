@@ -52,13 +52,13 @@ if (strcmp(P.Prot, 'Inter') ||  strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTa
         % here 2nd and 3rd conditions are left for simplicity,
         % otheriwse it could be just 2 conditions in all the settings
         if condition == 1
-            mainLoopData.flagEndPSC = 0;
-            mainLoopData.dispValue = 0;
+            mainLoopData.flagEndPSC = 1;
+            % mainLoopData.dispValue = 1;
             mainLoopData.Reward = '';
         elseif condition == 2
             mainLoopData.flagEndPSC = 1;
         elseif condition > 2
-            mainLoopData.flagEndPSC = 0;
+            mainLoopData.flagEndPSC = 1;
             mainLoopData.dispValue = 0;
             mainLoopData.Reward = '';
         end
@@ -72,7 +72,7 @@ if (strcmp(P.Prot, 'Inter') ||  strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTa
             mainLoopData.Reward = '';
         elseif condition == 2
             mainLoopData.flagEndPSC = 1;
-        elseif condition == 3
+        elseif condition > 2
             mainLoopData.flagEndPSC = 0;
             mainLoopData.Reward = '';
         end
