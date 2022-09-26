@@ -368,10 +368,11 @@ case 'bar_count'
 %{
                 drawCross(P.Screen.wPtr,P.Screen.w, P.Screen.h)
                 %Screen(P.Screen.wPtr,'FillRect',255/1.5);
-                [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
+                [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, ...
+                     P.Screen.vbl + P.Screen.ifi/2);
                 
-                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition(5), StimulusOnsetTime - P.TTLonsets,...
-                     'NA', 'NA');
+                fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(4), StimulusOnsetTime - P.TTLonsets,...
+                     'NA','NA');
 %}
 
         end
