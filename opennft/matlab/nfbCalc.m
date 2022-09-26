@@ -84,10 +84,11 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
         mainLoopData.dispValues(indVolNorm) = dispValue;
         mainLoopData.dispValue = dispValue;
     else
-%{
+
         tmp_fbVal = 0;
         mainLoopData.dispValue = 0;
-%}
+
+%{
 
         tmp_fbVal = eval(P.RoiAnatOperation);
         dispValue = round(P.MaxFeedbackVal*tmp_fbVal, P.FeedbackValDec);
@@ -105,6 +106,7 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
         mainLoopData.norm_percValues(indVolNorm,:) = norm_percValues;
         mainLoopData.dispValues(indVolNorm) = dispValue;
         mainLoopData.dispValue = dispValue;
+%}
 
     end
 
