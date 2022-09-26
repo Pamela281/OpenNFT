@@ -271,11 +271,25 @@ if strcmp(protName, 'Inter')
     % start listening to key input
     KbQueueCreate();
     KbQueueStart();
-    
+
+    % Images
     imageFormat = 'jpg';
+
+%{
+    if device == 1
+        P.image_neutral_condition = [workFolder filesep '..' filesep ...
+            '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
+    elseif device == 2
+        P.image_neutral_condition = [workFolder filesep '..' filesep ...
+            '..' Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
+%}
+
     
     % Neutral condition
-    P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final' filesep 'Run']; %to change
+    % P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final' filesep 'Run'];
+    % P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
+    P.image_neutral_condition = [workFolder filesep '..' filesep ...
+            '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
     imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
     P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
     nTrials_neutral = length(P.imgList_neutral_condition);
@@ -284,7 +298,10 @@ if strcmp(protName, 'Inter')
     P.neutral_image_idx = 1;
     
     % regulation condition stimuli
-    P.image_regulation_condition =[workFolder filesep '..' filesep 'Images_NFB' filesep 'Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final']; % to change
+    % P.image_regulation_condition =[workFolder filesep '..' filesep 'Images_NFB' filesep 'Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final']; % to change
+    % P.image_regulation_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neg']; %to change
+    P.image_regulation_condition = [workFolder filesep '..' filesep ...
+        '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neg']
     imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
     P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
     nTrials_regulation = length(P.imgList_regulation_condition);
