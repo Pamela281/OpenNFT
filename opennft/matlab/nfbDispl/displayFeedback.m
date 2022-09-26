@@ -24,8 +24,8 @@ disp(displayData)
 eval(varsFromStruct(displayData, fieldNames, defaultFields))
 
 if ~strcmp(feedbackType, 'PSC') %Default : 'DCM'
-    dispColor = [255, 255, 255];
-    instrColor = [155, 150, 150];
+    dispColor = 0 %[0 0 0]%[255, 255, 255];
+    instrColor = 225 %[225 225 255] %[155, 150, 150];
     textSizeInstr = 50;
 end
 
@@ -47,19 +47,19 @@ switch feedbackType
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'REPOS', ...
                     floor(P.Screen.w/2-P.Screen.h/7), ...
-                    floor(P.Screen.h/2+1.5*P.Screen.h/10), P.Screen.white);
+                    floor(P.Screen.h/2+1.5*P.Screen.h/10), 225);
                 % draw target bar
                 Screen('DrawLines', P.Screen.wPtr, ...
                     [floor(P.Screen.w/2-P.Screen.w/20), ...
                     floor(P.Screen.w/2+P.Screen.w/20); ...
                     floor(P.Screen.h/10), floor(P.Screen.h/10)], ...
-                    P.Screen.lw, [255 0 0]);
+                    P.Screen.lw, [0 255 0]); %green
                 % draw activity bar
                 Screen('DrawLines', P.Screen.wPtr, ...
                     [floor(P.Screen.w/2-P.Screen.w/20), ...
                     floor(P.Screen.w/2+P.Screen.w/20); ...
                     floor(P.Screen.h/2-dispValue), ...
-                    floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
+                    floor(P.Screen.h/2-dispValue)], P.Screen.lw, [255 0 0]); %red
                 % feedback value
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
@@ -81,17 +81,17 @@ switch feedbackType
                     [floor(P.Screen.w/2-P.Screen.w/20), ...
                     floor(P.Screen.w/2+P.Screen.w/20); ...
                     floor(P.Screen.h/10), floor(P.Screen.h/10)], ...
-                    P.Screen.lw, [255 0 0]);
+                    P.Screen.lw, [0 255 0]); %green
                 % draw activity bar
                 Screen('DrawLines', P.Screen.wPtr, ...
                     [floor(P.Screen.w/2-P.Screen.w/20), ...
                     floor(P.Screen.w/2+P.Screen.w/20); ...
                     floor(P.Screen.h/2-dispValue), ...
-                    floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]);
+                    floor(P.Screen.h/2-dispValue)], P.Screen.lw, [255 0 0]); %red
                 % feedback value
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
-                    P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
+                    P.Screen.h/2 - P.Screen.h/50, 225); %0 255 0
 %{
                 [P.Screen.vbl,StimulusOnsetTime_motor] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(condition), StimulusOnsetTime_motor - P.TTLonsets);
@@ -102,7 +102,7 @@ switch feedbackType
                 line1 = 'Pour vous familiariser avec la technique de Neurofeedback,';
                 line2 = '\n\n vous allez effectuer une tâche motrice.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
+                    'center', P.Screen.h * 0.45, 225); %black
 %{
                 [P.Screen.vbl,StimulusOnsetTime_motor] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(condition), StimulusOnsetTime_motor - P.TTLonsets);
@@ -114,7 +114,7 @@ switch feedbackType
                 line2 = '\n\n Lorsque "bougez" est affiché, bougez votre doigt de manière répétée';
                 line3 = '\n\n et continue. Lorsque "repos" est affiché, ne bougez plus votre doigt.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
+                    'center', P.Screen.h * 0.45, 225);
 %{
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(condition), StimulusOnsetTime - P.TTLonsets);
@@ -125,7 +125,7 @@ switch feedbackType
                 line1 = 'Êtes-vous capable de voir une différence';
                 line2 = '\n\n entre la phase "repos" et la phase "bougez"?';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
+                    'center', P.Screen.h * 0.45, 225);
 
 %{
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
@@ -138,7 +138,7 @@ switch feedbackType
                 line2 = '\n\n sans réellement le faire. IMAGINEZ que vous tapez du doigt pendant';
                 line3 = '\n\n "bougez" et IMAGINEZ de ne plus taper du doigt pendant "repos".';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
+                    'center', P.Screen.h * 0.45, 225);
 %{
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(condition), StimulusOnsetTime - P.TTLonsets);
@@ -149,7 +149,7 @@ switch feedbackType
                 line1 = 'En bougeant votre doigt, essayez vraiment d IMAGINER le ressenti du mouvement';
                 line2 = '\n\n et pas uniquement d IMAGINER ce à quoi cela ressemble.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
+                    'center', P.Screen.h * 0.45, 225);
 %{
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(condition), StimulusOnsetTime - P.TTLonsets);
@@ -160,7 +160,7 @@ switch feedbackType
                 line1 = 'Voyez-vous un changement d activité? Même en imaginant le mouvement?';
                 line2 = '\n\n Vous avez maintenant une idée de comment fonctionne le neurofeedback.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45, P.Screen.black);
+                    'center', P.Screen.h * 0.45, 225);
 %{
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
                 fprintf(P.Motor_onset, '%s\t %d\t\n', P.condition_motor(condition), StimulusOnsetTime - P.TTLonsets);
@@ -260,7 +260,7 @@ case 'bar_count'
                 image= imread(image_name);
                 imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
 
-                Screen(P.Screen.wPtr,'FillRect',255/1.5);
+                Screen(P.Screen.wPtr,'FillRect',0); %255/1.5
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
@@ -285,7 +285,7 @@ case 'bar_count'
                 line2 = '\n \n Détendez-vous et essayez de ne pas bouger la tete';
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45);
+                    'center', P.Screen.h * 0.45, instrColor);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 
                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
@@ -297,7 +297,7 @@ case 'bar_count'
                 line3 = '\n\n\n Réponses : Index = intérieure ; Majeur = extérieure';
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
-                    'center', P.Screen.h * 0.45);
+                    'center', P.Screen.h * 0.45, instrColor);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
                 fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
@@ -308,7 +308,7 @@ case 'bar_count'
                 line2 = '\n \n Trouvez une stratégie pour augmenter la jauge présentée en fin de bloc';
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
-                    'center', P.Screen.h * 0.45);
+                    'center', P.Screen.h * 0.45, instrColor);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
                  fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1), StimulusOnsetTime - P.TTLonsets,...
@@ -321,7 +321,7 @@ case 'bar_count'
                 image= imread(image_name);
                 imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
                 
-                Screen(P.Screen.wPtr,'FillRect',255/1.5);
+                Screen(P.Screen.wPtr,'FillRect',0);
                 Screen('DrawTexture',P.Screen.wPtr, imageDisplay,[]);
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
 
@@ -333,7 +333,7 @@ case 'bar_count'
                 
             case 6 % NF
                  % Fixation Point
-                 Screen('FillOval', P.Screen.wPtr, [255 255 255], ...
+                 Screen('FillOval', P.Screen.wPtr, 225, ... %255 255 255
                      [floor(P.Screen.w/2-P.Screen.w/200), ...
                      floor(P.Screen.h/2-P.Screen.w/200), ...
                      floor(P.Screen.w/2+P.Screen.w/200), ...
@@ -344,19 +344,19 @@ case 'bar_count'
                      [floor(P.Screen.w/2-P.Screen.w/20), ...
                      floor(P.Screen.w/2+P.Screen.w/20); ...
                      floor(P.Screen.h/10), floor(P.Screen.h/10)], ...
-                     P.Screen.lw, [255 0 0]); %red
+                     P.Screen.lw, [0 255 0]); %green
 
                  % draw activity bar
                  Screen('DrawLines', P.Screen.wPtr, ...
                      [floor(P.Screen.w/2-P.Screen.w/20), ...
                      floor(P.Screen.w/2+P.Screen.w/20); ...
                      floor(P.Screen.h/2-dispValue), ...
-                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [0 255 0]) %green
+                     floor(P.Screen.h/2-dispValue)], P.Screen.lw, [255 0 0]) %red 255 0 0
 
                  % feedback value
                  Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                      P.Screen.w/2 - P.Screen.w/30-100, ...
-                     P.Screen.h/2 - P.Screen.h/50);
+                     P.Screen.h/2 - P.Screen.h/50, instrColor);
 
                  [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr, ...
                      P.Screen.vbl + P.Screen.ifi/2);

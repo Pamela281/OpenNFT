@@ -50,15 +50,15 @@ fFullScreen = P.DisplayFeedbackFullscreen;
 if ~fFullScreen
     % part of the screen, e.g. for test mode
     if strcmp(protName, 'Cont')
-        P.Screen.wPtr = Screen('OpenWindow', screenid, [125 125 125], ...
+        P.Screen.wPtr = Screen('OpenWindow', screenid, 0, ... %125 125 125
             [40 40 640 520]);
     else
-        P.Screen.wPtr = Screen('OpenWindow', screenid, [125 125 125], ...
+        P.Screen.wPtr = Screen('OpenWindow', screenid, 0, ...
             [40 40 720 720]);
     end
 else
     % full screen
-    P.Screen.wPtr = Screen('OpenWindow', screenid, [200 200 200]);
+    P.Screen.wPtr = Screen('OpenWindow', screenid, 0); % 200 200 200
 end
 
 [w, h] = Screen('WindowSize', P.Screen.wPtr);
@@ -142,7 +142,7 @@ welcome3 = '\n \n Essayez de ne pas bouger la tête';
 
 Screen('TextSize', P.Screen.wPtr, 50);
 DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
-    'center', P.Screen.h * 0.45, [000 000 000]);
+    'center', P.Screen.h * 0.45, 255); %0
 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
 P.TTLonsets = GetSecs;
 
