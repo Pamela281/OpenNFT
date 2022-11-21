@@ -24,8 +24,8 @@ disp(displayData)
 eval(varsFromStruct(displayData, fieldNames, defaultFields))
 
 if ~strcmp(feedbackType, 'PSC') %Default : 'DCM'
-    dispColor = 0 %[0 0 0]%[255, 255, 255];
-    instrColor = 225 %[225 225 255] %[155, 150, 150];
+    dispColor = 0; %[0 0 0]%[255, 255, 255];
+    instrColor = 225; %[225 225 255] %[155, 150, 150];
     textSizeInstr = 50;
 end
 
@@ -63,7 +63,7 @@ switch feedbackType
                 % feedback value
                 Screen('DrawText', P.Screen.wPtr, mat2str(dispValue), ...
                     P.Screen.w/2 - 3*P.Screen.w/30-100, ...
-                    P.Screen.h/2 - P.Screen.h/50, [0 255 0]);
+                    P.Screen.h/2 - P.Screen.h/50, P.Screen.white);
                 % add onset time to output txt file
                 %{
                 [P.Screen.vbl,StimulusOnsetTime_motor] = Screen('Flip', P.Screen.wPtr, P.Screen.vbl + P.Screen.ifi/2);
@@ -75,7 +75,7 @@ switch feedbackType
                 Screen('TextSize', P.Screen.wPtr , P.Screen.h/10);
                 Screen('DrawText', P.Screen.wPtr, 'BOUGEZ', ...
                     floor(P.Screen.w/2-P.Screen.h/7), ...
-                    floor(P.Screen.h/2+1.5*P.Screen.h/10), P.Screen.black);
+                    floor(P.Screen.h/2+1.5*P.Screen.h/10), P.Screen.white);
                 % draw target bar
                 Screen('DrawLines', P.Screen.wPtr, ...
                     [floor(P.Screen.w/2-P.Screen.w/20), ...
