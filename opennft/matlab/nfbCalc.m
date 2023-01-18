@@ -49,7 +49,7 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
         % Get reference baseline in cumulated way across the RUN, 
         % or any other fashion
         i_blockBAS = [];
-        if blockNF<2
+        if blockNF<2 % we have 6 blockNF
             % according to json protocol
             % index for Baseline == 1
             i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-6:end);
@@ -74,7 +74,7 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
         if ~P.NegFeedback && dispValue < 0
             dispValue = 0;
         elseif P.NegFeedback && dispValue < P.MinFeedbackVal
-             dispValue = P.MinFeedbackVal;
+             dispValue = dispValue; %P.MinFeedbackVal;
         end
         if dispValue > P.MaxFeedbackVal
             dispValue = P.MaxFeedbackVal;
@@ -85,8 +85,29 @@ if isPSC && (strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTask'))
         mainLoopData.dispValue = dispValue;
     else
 
-        tmp_fbVal = 0;
+        i_blockBAS = [];
+
+        for iBas = 1:blockNF
+                i_blockBAS = [i_blockBAS P.ProtCond{ 1 }{iBas}(3:end)];
+                % ignore 2 scans for HRF shift, e.g. if TR = 2sec
+        end
+
+
+        for indRoi = 1:P.NrROIs
+            mBas = median(mainLoopData.scalProcTimeSeries(indRoi,i_blockBAS));
+            norm_percValues(indRoi) = mBas;
+        end
+
+        tmp_fbVal = eval(P.RoiAnatOperation);
+        dispValue = round(P.MaxFeedbackVal*tmp_fbVal, P.FeedbackValDec);
+        mainLoopData.norm_percValues(indVolNorm,:) = norm_percValues;
+        mainLoopData.dispValues(indVolNorm) = dispValue;
+        mainLoopData.dispValue = dispValue;
+
+       %{
+ tmp_fbVal = 0;
         mainLoopData.dispValue = 0;
+%}
 
 %{
 
@@ -160,10 +181,15 @@ if isPSC && strcmp(P.Prot, 'Inter')
             
             %Intermittent svm
             for indRoi = 1:P.NrROIs
+
+                norm_percValues(indRoi) = median(mainLoopData.scalProcTimeSeries(indRoi,...
+                    i_blockNF))
+                %mainLoopData.scalProcTimeSeries(indRoi,...
+                    %i_blockNF)
                 
-                mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
-                    i_blockNF));
-                norm_percValues(indRoi) =  mCond;
+                %mCond = median(mainLoopData.scalProcTimeSeries(indRoi,...
+                %    i_blockNF));
+                %norm_percValues(indRoi) =  mCond;
 
             end
 
