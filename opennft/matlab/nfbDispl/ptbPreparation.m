@@ -255,6 +255,28 @@ if strcmp(protName, 'Inter')
         P.device_buttons = 'Clavier';
     end
 
+    session = questdlg('Is it a neurofeedback session or a transfert session ?', ...
+    'Session',...
+    'Neurofeedback', 'Transfert', 'Neurofeedback');
+
+    % Handle response
+    switch session
+        case 'Neurofeedback'
+            disp(' This is a neurofeedback session ')
+            P.session = 1;
+        case 'Transfert'
+            disp(' This is a transfert session ')
+            P.session = 2;
+    end
+
+%{
+    if session == 1
+        P.session = 'Neurofeedback';
+    elseif device == 2
+        P.device_buttons = 'Clavier';
+    end
+%}
+
     responseKeys  = [KbName('k') KbName('j')]; %j = index, k = majeur
 
     [keyboardIndices, productNames, allInfos] = GetKeyboardIndices;
