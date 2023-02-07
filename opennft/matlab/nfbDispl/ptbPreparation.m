@@ -108,7 +108,7 @@ if isCONT
     fprintf(P.Motor_onset, '\n');
     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
     P.condition_motor = ["hold" "move" "instructions" "instructions" "instructions" "instructions" ...
-        "instructions" "instructions"]
+        "instructions" "instructions"];
     %P.condition_motor = ["instructions" "hold" "move"];
 else
     [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo' ...

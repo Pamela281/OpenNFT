@@ -111,8 +111,8 @@ switch feedbackType
             case 4 % Instructions finger tapping
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Les instructions "repos" et bougez" vont être affichées alternativement.';
-                line2 = '\n\n Lorsque "bougez" est affiché, bougez votre doigt de manière répétée';
-                line3 = '\n\n et continue. Lorsque "repos" est affiché, ne bougez plus votre doigt.';
+                line2 = '\n\n Lorsque "bougez" est affiché, appuyez sur la manette avec l"index de votre main droite manière répétée';
+                line3 = '\n\n de manière répétée. Lorsque "repos" est affiché, ne bougez plus votre doigt.';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, 225);
 %{
