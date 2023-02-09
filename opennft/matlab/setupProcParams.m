@@ -363,7 +363,7 @@ mainLoopData.deg = deg;
 mainLoopData.b = b;
 
 % make output data folder
-P.nfbDataFolder = [P.WorkFolder filesep 'NF_Data_' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr)]; %%ProjectName add 24012022
+P.nfbDataFolder = [P.WorkFolder filesep 'NF_Data_sub-' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr)]; %%ProjectName add 24012022
 if ~exist(P.nfbDataFolder, 'dir')
     mkdir(P.nfbDataFolder);
 end
