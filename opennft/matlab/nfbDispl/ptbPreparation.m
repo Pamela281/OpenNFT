@@ -50,19 +50,20 @@ fFullScreen = P.DisplayFeedbackFullscreen;
 if ~fFullScreen
     % part of the screen, e.g. for test mode
     if strcmp(protName, 'Cont')
-        P.Screen.wPtr = Screen('OpenWindow', screenid, 0, ... %125 125 125
+        [P.Screen.wPtr,P.Screen.wRect] = Screen('OpenWindow', screenid, 0, ... %125 125 125
             [40 40 640 520]);
     else
-        P.Screen.wPtr = Screen('OpenWindow', screenid, 0, ...
+        [P.Screen.wPtr,P.Screen.wRect] = Screen('OpenWindow', screenid, 0, ...
             [40 40 720 720]);
     end
 else
     % full screen
-    P.Screen.wPtr = Screen('OpenWindow', screenid, 0); % 200 200 200
+    [P.Screen.wPtr,P.Screen.wRect] = Screen('OpenWindow', screenid, 0); % 200 200 200
 end
 
 [w, h] = Screen('WindowSize', P.Screen.wPtr);
 P.Screen.ifi = Screen('GetFlipInterval', P.Screen.wPtr);
+[P.xCenter, P.yCenter] = RectCenter(P.Screen.wRect);
 
 %get some color information
 P.Screen.white = WhiteIndex(screenid);
@@ -97,8 +98,8 @@ KbName('UnifyKeyNames');
 
 %% TXT file
 if isCONT
-    [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_motor' ...
-        P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+    [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_motor_' ...
+        'sub-' P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
     if P.Motor_onset < 0
         error('Failed to open myfile because: %s', message);
     end
@@ -111,8 +112,8 @@ if isCONT
         "instructions" "instructions"];
     %P.condition_motor = ["instructions" "hold" "move"];
 else
-    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo' ...
-        P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo_' ...
+        'sub-' P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
     if P.StimuliFile_NF < 0
        error('Failed to open myfile because: %s', message);
     end
@@ -308,10 +309,8 @@ if strcmp(protName, 'Inter')
 
     
     % Neutral condition
-    % P.image_neutral_condition = '/volatile/opennft/Images_NFB/Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final/Run'; %to change
-    % P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'Neutre_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final' filesep 'Run'];
-    % P.image_neutral_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
-    P.image_neutral_condition = [workFolder filesep '..' filesep ...
+   %{
+ P.image_neutral_condition = [workFolder filesep '..' filesep ...
             '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neu']; %to change
     imgList_neutral_condition = dir(fullfile(P.image_neutral_condition,['*' imageFormat]));
     P.imgList_neutral_condition = {imgList_neutral_condition(:).name};
@@ -319,19 +318,59 @@ if strcmp(protName, 'Inter')
     
     P.randomizedTrials_neutral = randperm(nTrials_neutral);
     P.neutral_image_idx = 1;
-    
+%}
+    load(fullfile([workFolder filesep '..' filesep ...
+            '..' filesep 'matrice_randomisation_NFB_Paris.mat']));
+
+    renamed_image_path = [workFolder filesep '..' filesep ...
+        '..' filesep '..' filesep 'Images_NFB' filesep 'NFB'];
+
+    P.image_counter = 0;
+    subject_col = 1;
+    session_col = 2;
+    run_col = 3;
+    block_col = 4;
+    image_num_col = 5;
+    ordre_apparition_valences_col = 6;
+    valence_col = 7;
+    image_file_num_col = 8;
+
+    this_run = matrice_randomisation(find(matrice_randomisation(:,subject_col) == str2num(P.SubjectID) & ...
+     matrice_randomisation(:,session_col) == 1 & matrice_randomisation(:,run_col) == P.NFRunNr), :);
+
+    valence_folders = {'NEU','NEG'};
+    texture = [];
+    image_ID = {};
+
+    for i = 1:size(this_run,1)
+
+    valence_rep = valence_folders{this_run(i, valence_col)};               % valence
+    P.image_filename = sprintf('%s_%03d.jpg', upper(valence_rep), this_run(i, image_file_num_col));
+    image_filepath = fullfile(renamed_image_path, valence_rep, P.image_filename);
+
+   try
+            image = imread(image_filepath);
+        catch pb_imread
+            sca
+            fprintf('filename: %s\nProblem: %s\n', image_filepath, pb_imread.message);
+            break
+   end
+
+    P.texture(i) = Screen('MakeTexture',P.Screen.wPtr , image);
+    P.image_ID{i} = P.image_filename;
+    end
+
     % regulation condition stimuli
-    % P.image_regulation_condition ='/volatile/opennft/Images_NFB/Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final'; % to change
-    % P.image_regulation_condition =[workFolder filesep '..' filesep 'Images_NFB' filesep 'Neg_IAPS_GAPED_OASIS_EMOPICS_EmoMadrid_final']; % to change
-    % P.image_regulation_condition = [workFolder filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neg']; %to change
-    P.image_regulation_condition = [workFolder filesep '..' filesep ...
+     %{
+P.image_regulation_condition = [workFolder filesep '..' filesep ...
         '..' filesep '..' filesep 'Images_NFB' filesep 'NFB' filesep 'images_neg']
     imgList_regulation_condition = dir(fullfile(P.image_regulation_condition,['*' imageFormat]));
     P.imgList_regulation_condition ={imgList_regulation_condition(:).name};
     nTrials_regulation = length(P.imgList_regulation_condition);
-    
+
     P.randomizedTrials_regulation = randperm(nTrials_regulation);
     P.regulation_image_idx = 1;
+%}
 
     % accepted response keys
     P.Screen.indexKey = responseKeys(2);
