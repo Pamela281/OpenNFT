@@ -99,7 +99,7 @@ KbName('UnifyKeyNames');
 %% TXT file
 if isCONT
     [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_motor_' ...
-        'sub-' P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+        'sub-' P.SubjectID '_run-' num2str(P.NFRunNr) '.txt'],'w');
     if P.Motor_onset < 0
         error('Failed to open myfile because: %s', message);
     end
@@ -236,6 +236,23 @@ end
 
 % Intermittent SVM
 if strcmp(protName, 'Inter')
+    localisation = questdlg('Where are you ?',...
+    'localisation',...
+    'Paris', 'Grenoble','Bordeaux', 'Paris');
+
+    switch localisation
+        case 'Paris'
+            disp(['You are in' localisation])
+            localisation = 'Paris';
+        case 'Grenoble'
+            disp(['You are in' localisation])
+            localisation = 'Grenoble';
+        case 'Bordeaux'
+            disp(['You are in' localisation])
+            localisation = 'Bordeaux';
+    end
+
+
     device = questdlg('Are you on your PC or at the MRI console ?',...
     'Device',...
     'MRI console', 'PC','PC');
@@ -320,7 +337,7 @@ if strcmp(protName, 'Inter')
     P.neutral_image_idx = 1;
 %}
     load(fullfile([workFolder filesep '..' filesep ...
-            '..' filesep 'matrice_randomisation_NFB_Paris.mat']));
+            '..' filesep 'matrice_randomisation_NFB_' localisation '.mat']));
 
     renamed_image_path = [workFolder filesep '..' filesep ...
         '..' filesep '..' filesep 'Images_NFB' filesep 'NFB'];
