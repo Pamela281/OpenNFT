@@ -364,7 +364,7 @@ case 'bar_count'
 %                Screen('DrawTexture',P.Screen.wPtr ,P.texture(image_counter));
 
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
-                image_name = P.image_ID{P.image_counter}
+                image_name = P.image_ID{P.image_counter};
 
                 [keyIsDown, keyCode] = KbQueueCheck(P.deviceIndex_buttons);
                 if keyIsDown

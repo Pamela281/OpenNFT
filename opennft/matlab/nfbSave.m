@@ -141,7 +141,7 @@ if isDCM
     roiData.ROIoptimGlmAnat = evalin('base', 'ROIoptimGlmAnat');
 end
 if ~P.isRestingState
-    save([folder filesep P.SubjectID '_' ...
+    save([folder filesep 'sub-' P.SubjectID '_' ...
         P.ProjectName '_' num2str(P.NFRunNr) '_roiData' '.mat'], 'roiData'); %add 24012022
 end
 
@@ -158,8 +158,8 @@ if isfield(mainLoopData, 'vectNFBs')
         save([folder filesep 'sub-' P.SubjectID '_' ...
             P.ProjectName '_' num2str(P.NFRunNr) '_raw_tsROIs' '.mat'], ...
             '-struct', 'mainLoopData', 'rawTimeSeries'); %add 24012022
-        save([folder filesep P.SubjectID '_' ...
-            'sub-' P.ProjectName '_' num2str(P.NFRunNr) '_proc_tsROIs' '.mat'], ...
+        save([folder filesep 'sub-' P.SubjectID '_' ...
+            P.ProjectName '_' num2str(P.NFRunNr) '_proc_tsROIs' '.mat'], ...
             '-struct', 'mainLoopData', 'kalmanProcTimeSeries'); %add 24012022
     end
     
@@ -177,29 +177,29 @@ if isfield(mainLoopData, 'vectNFBs')
     end
     
     % save activation map(s)
-    folder = P.nfbDataFolder;
+    %folder = P.nfbDataFolder;
     %folder = [P.WorkFolder filesep 'Pilot' filesep P.SubjectID filesep 'NF_Data_' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr)];
     if ~isempty(mainLoopData.statMap3D_iGLM)
         if ~isDCM
             statVolData = mainLoopData.statMap3D_iGLM;
-            save([folder filesep 'statVolData_' ...
+            save([folder filesep 'sub-' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr) 'statVolData_' ...
                 sprintf('%02d',P.NFRunNr) '.mat'], 'statVolData');
         else
             for iDcmBlock = 1: size(mainLoopData.statMap3D_iGLM,4)
                 statVolData = ...
                     squeeze(mainLoopData.statMap3D_iGLM(:,:,:, iDcmBlock));
-                save([folder filesep 'statVolData_' ...
+                save([folder filesep 'sub-' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr) 'statVolData_' ...
                     sprintf('%02d',iDcmBlock) '.mat'],'statVolData');
             end
         end
     end
     
     % concatenate two TimeVector event files
-    fileTimeVectors_display = [folder filesep 'TimeVectors_display_' ...
+    fileTimeVectors_display = [folder 'sub-' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr) filesep 'TimeVectors_display_' ...
         sprintf('%02d', P.NFRunNr) '.txt'];
     
     if ~isSVM && exist(fileTimeVectors_display, 'file')
-        recs = load([folder filesep 'TimeVectors_' ...
+        recs = load([folder filesep 'sub-' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr) 'TimeVectors_' ...
             sprintf('%02d', P.NFRunNr) '.txt']);
         recsDisplay = load(fileTimeVectors_display);
         sz = size(recs);
@@ -208,7 +208,7 @@ if isfield(mainLoopData, 'vectNFBs')
         recs(tmpVect, 10:11) = recsDisplay(:,1:2);
         % Abs Matlab PTB Helper times for display
         recs(tmpVect, sz(2)+1:sz(2)+2) = recsDisplay(:,3:4);
-        save([folder filesep 'TimeVectors_' ...
+        save([folder filesep 'sub-' P.SubjectID '_' P.ProjectName '_' num2str(P.NFRunNr) 'TimeVectors_' ...
             sprintf('%02d', P.NFRunNr) '.txt'], 'recs', '-ascii', '-double');
     end
     
