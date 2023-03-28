@@ -353,7 +353,7 @@ if strcmp(protName, 'Inter')
     image_file_num_col = 8;
 
     this_run = matrice_randomisation(find(matrice_randomisation(:,subject_col) == str2num(P.SubjectID) & ...
-     matrice_randomisation(:,session_col) == 1 & matrice_randomisation(:,run_col) == P.NFRunNr), :);
+    matrice_randomisation(:,session_col) == 1 & matrice_randomisation(:,run_col) == P.NFRunNr), :);
 
     valence_folders = {'NEU','NEG'};
     texture = [];
@@ -365,13 +365,13 @@ if strcmp(protName, 'Inter')
     P.image_filename = sprintf('%s_%03d.jpg', upper(valence_rep), this_run(i, image_file_num_col));
     image_filepath = fullfile(renamed_image_path, valence_rep, P.image_filename);
 
-   try
-            image = imread(image_filepath);
-        catch pb_imread
-            sca
-            fprintf('filename: %s\nProblem: %s\n', image_filepath, pb_imread.message);
-            break
-   end
+       try
+                image = imread(image_filepath);
+            catch pb_imread
+                sca
+                fprintf('filename: %s\nProblem: %s\n', image_filepath, pb_imread.message);
+                break
+       end
 
     P.texture(i) = Screen('MakeTexture',P.Screen.wPtr , image);
     P.image_ID{i} = P.image_filename;
