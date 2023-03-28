@@ -173,18 +173,21 @@ if isPSC && strcmp(P.Prot, 'Inter')
             % into account
             if blockNF<2
                 i_blockNF = P.ProtCond{ 5 }{blockNF}(end-7:end);
-                %i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-6:end);
+                i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-7:end);
             else
                 i_blockNF = P.ProtCond{ 5 }{blockNF}(end-7:end);
-                %i_blockBAS = [P.ProtCond{ 1 }{blockNF}(end-5:end) ...
+                i_blockBAS = P.ProtCond{ 1 }{blockNF}(end-7:end); % ...
                               %P.ProtCond{ 1 }{blockNF}(end)+1];
             end
             
             %Intermittent svm
             for indRoi = 1:P.NrROIs
 
-                norm_percValues(indRoi) = median(mainLoopData.scalProcTimeSeries(indRoi,...
-                    i_blockNF));
+                %norm_percValues(indRoi) = median(mainLoopData.scalProcTimeSeries(indRoi,i_blockNF));
+                
+                norm_percValues(indRoi) = median(mainLoopData.scalProcTimeSeries(indRoi,i_blockNF)) - ...
+                    median(mainLoopData.scalProcTimeSeries(indRoi,i_blockBAS));
+                
                 %mainLoopData.scalProcTimeSeries(indRoi,...
                     %i_blockNF)
                 
@@ -195,7 +198,9 @@ if isPSC && strcmp(P.Prot, 'Inter')
             end
 
             % compute average PSC feedback value (SVM continu)
-            tmp_fbVal = mean(norm_percValues);
+            %tmp_fbVal = mean(norm_percValues); 
+            tmp_fbVal = norm_percValues(1) - norm_percValues(2); %
+            % 01_fcn.nii, 02_an.nii
             % compute average PSC feedback value(PSC inter)
             %tmp_fbVal = eval(P.RoiAnatOperation); %RoiAnatOperation = mean(norm_percValues)
             mainLoopData.vectNFBs(indVolNorm) = tmp_fbVal;
