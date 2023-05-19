@@ -94,35 +94,50 @@ end
 
 KbName('UnifyKeyNames');
 
-
+run_time = datestr(clock,'yyyy_mm_dd__HH_MM');
 
 %% TXT file
 if isCONT
-    [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_motor_' ...
-        'sub-' P.SubjectID '_run-' num2str(P.NFRunNr) '.txt'],'w');
+    run_filename = sprintf('sub-%s_motorNF_run-%d_rawevents_%s.tsv', ...
+    P.SubjectID, P.NFRunNr, run_time);
+
+    [P.Motor_onset, message] = fopen([workFolder filesep 'Onsets' filesep run_filename],'w');
+
     if P.Motor_onset < 0
         error('Failed to open myfile because: %s', message);
     end
-    fprintf(P.Motor_onset, '%s\t %s\n', 'Subject ID:', P.SubjectID);
-    fprintf(P.Motor_onset, '%s\t %s\n', 'Date', 'Time');
-    fprintf(P.Motor_onset, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
-    fprintf(P.Motor_onset, '\n');
-    fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
-    P.condition_motor = ["hold" "move" "instructions" "instructions" "instructions" "instructions" ...
-        "instructions" "instructions"];
+
+    fprintf(P.Motor_onset, 'Subject_Number:\t%s\n', P.SubjectID);                       % write Subject ID into StimuliFile
+    fprintf(P.Motor_onset, 'Date\t%s\n', datestr(clock, 1));                     % write Date in StimuliFile
+    fprintf(P.Motor_onset, 'Time\t%s\n', datestr(clock, 13));                    % write Time in StimuliFile
+    fprintf(P.Motor_onset, '\n');                                                % insert one carriage returns in StimuliFile
+    fprintf(P.Motor_onset, 'ID\trun\tproject_type\tfb_type');
+    fprintf(P.Motor_onset, '\tcondition\tonset_trial\tfb_value\tstim_start\n'); % Headers
+% 
+%     fprintf(P.Motor_onset, 'condition\tonsets_seconds\n');
+%     P.condition_motor = ["hold" "move" "instructions" "instructions" "instructions" "instructions" ...
+%         "instructions" "instructions"];
     %P.condition_motor = ["instructions" "hold" "move"];
 else
-    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo_' ...
-        'sub-' P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+    
+    run_filename = sprintf('sub-%s_emoNF_run-%d_rawevents_%s.tsv', ...
+    P.SubjectID, P.NFRunNr, run_time);
+
+%     [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep 'NF_BD_emo_' ...
+%         'sub-' P.SubjectID '_' num2str(P.NFRunNr) '.txt'],'w');
+    [P.StimuliFile_NF, message] = fopen([workFolder filesep 'Onsets' filesep run_filename],'w');
+    
     if P.StimuliFile_NF < 0
        error('Failed to open myfile because: %s', message);
     end
-    fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Subject ID:', P.SubjectID);
-    fprintf(P.StimuliFile_NF, '%s\t %s\n', 'Date', 'Time');
-    fprintf(P.StimuliFile_NF, '%s\t %s\n \n \n', datestr(clock, 1), datestr(clock, 13));
-    fprintf(P.StimuliFile_NF, '\n');
-    fprintf(P.StimuliFile_NF, 'condition\tonsets_seconds\tanswer\timage\n');
-    P.condition_emo = ["instructions" "neutre" "regulation" "jauge" "croix de fixation"];
+    
+    fprintf(P.StimuliFile_NF, 'Subject_Number:\t%s\n', P.SubjectID);                       % write Subject ID into StimuliFile
+    fprintf(P.StimuliFile_NF, 'Date\t%s\n', datestr(clock, 1));                     % write Date in StimuliFile
+    fprintf(P.StimuliFile_NF, 'Time\t%s\n', datestr(clock, 13));                    % write Time in StimuliFile
+    fprintf(P.StimuliFile_NF, '\n');                                                % insert one carriage returns in StimuliFile
+    fprintf(P.StimuliFile_NF, 'ID\trun\tproject_type\tfb_type');
+    fprintf(P.StimuliFile_NF, '\tcondition\tonset_trial\timage_name\tfb_value\tresponse_key_baseline\tstim_start\n'); % Headers
+
 end
 
 %{
@@ -148,10 +163,36 @@ DrawFormattedText(P.Screen.wPtr, 'Bonjour et bienvenue', ...
 P.TTLonsets = GetSecs;
 
 if isCONT
-    fprintf(P.Motor_onset, '%s\t %s\t\n', P.condition_motor(3),  '0');
+    fprintf(P.Motor_onset, '%s\t', P.SubjectID);                                         % subject
+    fprintf(P.Motor_onset, '%d\t', P.NFRunNr);                                           % run_id
+    fprintf(P.Motor_onset, '%s\t', P.ProjectName);                                        % project_name
+    fprintf(P.Motor_onset, '%s\t', P.Prot);                                              %fb_type (inter/cont)
+    fprintf(P.Motor_onset, '%s\t', 'instruction');
+    fprintf(P.Motor_onset, '%f\t', StimulusOnsetTime - P.TTLonsets);
+    fprintf(P.Motor_onset, '%d\t', 0);                                           %feedback value
+    fprintf(P.Motor_onset, '%d\n', P.TTLonsets);                                          % stimulation_start
+
+%     fprintf(P.Motor_onset, '%s\t %s\t\n', P.condition_motor(3),  '0');
 else
-    fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
-        'NA','NA');
+    roiDir = fullfile(workFolder,'Mask_ROI_fronto_limbic'); weightDir = fullfile(P.WorkFolder,'W1');
+    P.roiNames = cellstr([spm_select('FPList', roiDir, '^.*.img$'); ...
+        spm_select('FPList', roiDir, '^.*.nii$')]);
+    P.weightName = cellstr([spm_select('FPList', weightDir, '^.*.img$'); ...
+        spm_select('FPList', weightDir, '^.*.nii$')]);
+
+    fprintf(P.StimuliFile_NF, '%s\t', P.SubjectID);                                         % subject
+    fprintf(P.StimuliFile_NF, '%d\t', P.NFRunNr);                                           % run_id
+    fprintf(P.StimuliFile_NF, '%s\t', P.ProjectName);                                        % project_name
+    fprintf(P.StimuliFile_NF, '%s\t', P.Prot);                                              %fb_type (inter/cont)
+    fprintf(P.StimuliFile_NF, '%s\t', 'instruction');
+    fprintf(P.StimuliFile_NF, '%f\t', 0);
+    fprintf(P.StimuliFile_NF, '%s\t', 'NaN');                                               % image name
+    fprintf(P.StimuliFile_NF, '%d\t', 0);                                           %feedback value
+    fprintf(P.StimuliFile_NF, '%s\t', 'NaN');                                           %response_key
+    fprintf(P.StimuliFile_NF, '%d\n', P.TTLonsets);                                          % stimulation_start
+% 
+%     fprintf(P.StimuliFile_NF, '%s\t %d\t %s\t %s\t\n', P.condition_emo(1),  StimulusOnsetTime - P.TTLonsets,...
+%         'NA','NA');
 end
 
 % Each event row for PTB is formatted as
