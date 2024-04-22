@@ -85,7 +85,7 @@ if (strcmp(P.Prot, 'Inter') ||  strcmp(P.Prot, 'Cont') || strcmp(P.Prot, 'ContTa
                 mainLoopData.flagEndPSC = 0;
                 mainLoopData.dispValue = 0;
                 mainLoopData.Reward = '';
-                displayData.displayStage = 'baseline';
+                displayData.displayStage = 'neutre';
             case 2
                 mainLoopData.flagEndPSC = 0;
                 mainLoopData.dispValue = 0;

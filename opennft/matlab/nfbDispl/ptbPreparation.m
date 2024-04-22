@@ -136,7 +136,7 @@ else
     fprintf(P.StimuliFile_NF, 'Time\t%s\n', datestr(clock, 13));                    % write Time in StimuliFile
     fprintf(P.StimuliFile_NF, '\n');                                                % insert one carriage returns in StimuliFile
     fprintf(P.StimuliFile_NF, 'ID\trun\tproject_type\tfb_type');
-    fprintf(P.StimuliFile_NF, '\tcondition\tonset_trial\timage_name\tfb_value\tresponse_key_baseline\tstim_start\n'); % Headers
+    fprintf(P.StimuliFile_NF, '\ttrial_type\tonset\timage_name\tfb_value\tresponse_key_baseline\tstim_start\n'); % Headers
 
 end
 
@@ -308,11 +308,11 @@ if strcmp(protName, 'Inter')
             device = 2;
     end
 
-    if device == 1
-        P.device_buttons = 'Arduino LLC Arduino Leonardo';
-    elseif device == 2
-        P.device_buttons = 'Clavier';
-    end
+%     if device == 1
+%         P.device_buttons = 'Arduino LLC Arduino Leonardo';
+%     elseif device == 2
+%         P.device_buttons = 'AT Translated Set 2 keyboard'; %clavier
+%     end
 
     session = questdlg('Is it a neurofeedback session or a transfert session ?', ...
     'Session',...
@@ -336,22 +336,22 @@ if strcmp(protName, 'Inter')
     end
 %}
 
-    responseKeys  = [KbName('k') KbName('j')]; %j = index, k = majeur
-
-    [keyboardIndices, productNames, allInfos] = GetKeyboardIndices;
-    [logicalKey,locationKey]=ismember({P.device_buttons},productNames); % push buttons
-    P.deviceIndex_buttons=allInfos{locationKey}.index;
-
-    keysOfInterest = zeros (1,256);
-    keysOfInterest(responseKeys) = 1;
-    KbQueueCreate(P.deviceIndex_buttons, keysOfInterest);
-    KbQueueStart(P.deviceIndex_buttons);
-
-    P.answer = '';
-
-    % start listening to key input
-    KbQueueCreate();
-    KbQueueStart();
+%     responseKeys  = [KbName('k') KbName('j')]; %j = index, k = majeur
+% 
+%     [keyboardIndices, productNames, allInfos] = GetKeyboardIndices;
+%     [logicalKey,locationKey]=ismember({P.device_buttons},productNames); % push buttons
+%     P.deviceIndex_buttons=allInfos{locationKey}.index;
+% 
+%     keysOfInterest = zeros (1,256);
+%     keysOfInterest(responseKeys) = 1;
+%     KbQueueCreate(P.deviceIndex_buttons, keysOfInterest);
+%     KbQueueStart(P.deviceIndex_buttons);
+% 
+%     P.answer = '';
+% 
+%     % start listening to key input
+%     KbQueueCreate();
+%     KbQueueStart();
 
     % Images
     imageFormat = 'jpg';
@@ -383,7 +383,10 @@ if strcmp(protName, 'Inter')
     renamed_image_path = [workFolder filesep '..' filesep ...
         '..' filesep '..' filesep 'Images_NFB' filesep 'NFB'];
 
-    P.image_counter = 0;
+    P.tmp_count_neut = 0;
+    P.image_counter  = 0;
+%     P.image_counter_neg = 0;
+    P.tmp_count_neg = 0;
     subject_col = 1;
     session_col = 2;
     run_col = 3;
@@ -430,9 +433,9 @@ P.image_regulation_condition = [workFolder filesep '..' filesep ...
     P.regulation_image_idx = 1;
 %}
 
-    % accepted response keys
-    P.Screen.indexKey = responseKeys(2);
-    P.Screen.majorKey = responseKeys(1);
+%     % accepted response keys
+%     P.Screen.indexKey = responseKeys(2);
+%     P.Screen.majorKey = responseKeys(1);
 
     %P.indoor.answer = '';
     %P.outdoor.answer = '';

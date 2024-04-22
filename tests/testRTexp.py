@@ -17,15 +17,17 @@ import glob
 
 delete_files = True
 
-mask = "001_000030_000"
+mask = "001_000010_000"
 #fns = [1, 2, 3, 4, 6, 5, 7, 8]
 fns = None
 
 testCase = 'PSC'
 
 if testCase == 'PSC':
-    srcpath = '//canif/neurospin/psy_sbox/NF_BD/pilot_study/pilot_01/ses-neurofeedback/raw_data'
-    dstpath = 'C:/Users/pp262170/Documents/NF_BD/OpenNFT/workfolder/test_offline'
+    srcpath = '/volatile/home/pp262170/Documents/Neurofeedback/Pilot_study/raw_data/sub-10/test_emo_1/srcpath/' 
+    #'/volatile/home/pp262170/Documents/Neurofeedback/Script_Matlab/Test/sub-24/ses-01/raw_data/emo_R1/src_path/'
+    dstpath = '/volatile/home/pp262170/Documents/Neurofeedback/Pilot_study/raw_data/sub-10/test_emo_1/dstpath/'
+    #'/volatile/home/pp262170/Documents/Neurofeedback/Script_Matlab/Test/sub-24/ses-01/raw_data/emo_R1/dst_path/'
     pause_in_sec = 2
 
 elif testCase == 'SVM':
@@ -54,7 +56,7 @@ if delete_files:
         os.remove(f)
 
 if fns is None:
-    filelist = os.listdir(srcpath)
+    filelist = sorted(os.listdir(srcpath))
 else:
     filelist = []
     for fn in fns:

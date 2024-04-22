@@ -29,12 +29,12 @@ if ~strcmp(feedbackType, 'PSC') %Default : 'DCM'
     textSizeInstr = 50;
 end
 
-
-logfile = fopen('C:\Users\pp262170\Documents\Neurofeedback\displayfeedback_log.txt', 'a');
-fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
-        datetime, feedbackType,condition);
-fclose(logfile);
-
+% 
+% logfile = fopen('C:\Users\pp262170\Documents\Neurofeedback\displayfeedback_log.txt', 'a');
+% fprintf(logfile, '%s: feedback=%s, condition =%d\n', ...
+%         datetime, feedbackType,condition);
+% fclose(logfile);
+% 
 
 switch feedbackType    
     %% Continuous PSC JONAS
@@ -367,12 +367,16 @@ case 'bar_count'
         switch condition
             case 1  % Baseline
                 
-                trial_type_text = 'baseline';
+                trial_type_text = 'neutre';
 
 % t = P.randomizedTrials_neutral(P.neutral_image_idx);
 %                file = P.imgList_neutral_condition{t};
 %                image_name = fullfile(P.image_neutral_condition,file);
-                P.image_counter = P.image_counter + 1;
+                P.tmp_count_neut= P.tmp_count_neut+1;
+               
+                if rem(P.tmp_count_neut,2) == 1
+                    P.image_counter = P.image_counter + 1;
+                end
 %                image= imread(P.image_filepath);
 %                imageDisplay = Screen('MakeTexture', P.Screen.wPtr, image);
 %
@@ -386,16 +390,16 @@ case 'bar_count'
                 [StimulusOnsetTime] = Screen('Flip',P.Screen.wPtr);
                 image_name = P.image_ID{P.image_counter};
 
-                [keyIsDown, keyCode] = KbQueueCheck(P.deviceIndex_buttons);
-                if keyIsDown
-                    if keyCode(P.Screen.indexKey) ~= 0
-                        P.answer = "indoor"; % Indoor images
-                        %P.indoor.answer = 'indoor'
-                    elseif keyCode(P.Screen.majorKey) ~= 0
-                        P.answer = "outdoor";  % Outdoor images
-                    end
-                end
-                
+%                 [keyIsDown, keyCode] = KbQueueCheck(P.deviceIndex_buttons);
+%                 if keyIsDown
+%                     if keyCode(P.Screen.indexKey) ~= 0
+%                         P.answer = "indoor"; % Indoor images
+%                         %P.indoor.answer = 'indoor'
+%                     elseif keyCode(P.Screen.majorKey) ~= 0
+%                         P.answer = "outdoor";  % Outdoor images
+%                     end
+%                 end
+%                 
                 fprintf(P.StimuliFile_NF, '%s\t', P.SubjectID);                                         % subject
                 fprintf(P.StimuliFile_NF, '%d\t', P.NFRunNr);                                           % run_id
                 fprintf(P.StimuliFile_NF, '%s\t', P.ProjectName);                                        % project_name
@@ -444,11 +448,11 @@ case 'bar_count'
                 image_name = 'NaN';
                 P.answer = 'NaN';
                 
-                line1 = 'Images neutres';
-                line2 = '\n \n Identifiez si la scène présentée se déroule à l"intérieur ou à l"extérieur';
-                line3 = '\n\n\n Réponses : Index = intérieure ; Majeur = extérieure';
+                line1 = 'Image neutres';
+                line2 = '\n \n Regardez simplement les prochaines images';
+%                 line3 = '\n\n\n Réponses : Index = intérieure ; Majeur = extérieure';
 
-                DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
+                DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, instrColor);
                 [P.Screen.vbl,StimulusOnsetTime] = Screen('Flip', P.Screen.wPtr,P.Screen.vbl+P.Screen.ifi/2);
                 
@@ -472,7 +476,7 @@ case 'bar_count'
                 P.answer = 'NaN';
                 
                 line1 = 'Images émotionnelles';
-                line2 = '\n \n Trouvez une stratégie pour augmenter la jauge présentée en fin de bloc';
+                line2 = '\n \n Utilisez une stratégie de régulation pour augmenter la jauge présentée en fin de bloc';
 
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, instrColor);
@@ -506,7 +510,13 @@ case 'bar_count'
                 trial_type_text = 'regulation';
                 P.answer = 'NaN';
                 
-                P.image_counter = P.image_counter + 1;
+                P.tmp_count_neg = P.tmp_count_neg +1;
+               
+                if rem(P.tmp_count_neg,2) == 1
+                    P.image_counter = P.image_counter + 1;
+                end
+                
+               % P.image_counter = P.image_counter + 1;
                 Screen('DrawTexture',P.Screen.wPtr, P.texture(P.image_counter),[]);
 
 
