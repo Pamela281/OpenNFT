@@ -204,9 +204,9 @@ switch feedbackType
             case 4 % Instructions finger tapping
                 trial_type='instruction';
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
-                line1 = 'Les instructions "repos" et bougez" vont être affichées alternativement.';
-                line2 = '\n\n Lorsque "bougez" est affiché, appuyez sur la manette avec l"index de votre main droite manière répétée';
-                line3 = '\n\n de manière répétée. Lorsque "repos" est affiché, ne bougez plus votre doigt.';
+                line1 = 'Une instructions" bougez" et une croix de fixation vont être affichées alternativement.';
+                line2 = '\n\n Lorsque "bougez" est affiché, bougez l"index de votre main droite manière répétée';
+                line3 = '\n\n Lorsque "+" est affiché, restez immobile';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, 225);
 
@@ -233,7 +233,7 @@ switch feedbackType
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'Ensuite, imaginez de faire le même mouvement que précédemment,';
                 line2 = '\n\n sans réellement le faire. IMAGINEZ que vous tapez du doigt pendant';
-                line3 = '\n\n "bougez" et IMAGINEZ de ne plus taper du doigt pendant "repos".';
+                line3 = '\n\n "bougez" et restez immobile lorsque "+" est affiché';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2 line3], ...
                     'center', P.Screen.h * 0.45, 225);
                 %{
@@ -245,7 +245,7 @@ switch feedbackType
                 trial_type = 'instructions';
                 Screen('TextSize', P.Screen.wPtr, textSizeInstr);
                 line1 = 'En bougeant votre doigt, essayez vraiment d IMAGINER le ressenti du mouvement';
-                line2 = '\n\n et pas uniquement d IMAGINER ce à quoi cela ressemble.';
+                line2 = '\n\n et pas uniquement d IMAGINER ce à quoi cela ressemble';
                 DrawFormattedText(P.Screen.wPtr, [line1 line2], ...
                     'center', P.Screen.h * 0.45, 225);
 
@@ -369,7 +369,7 @@ case 'bar_count'
                 
                 trial_type_text = 'neutre';
 
-% t = P.randomizedTrials_neutral(P.neutral_image_idx);
+%                t = P.randomizedTrials_neutral(P.neutral_image_idx);
 %                file = P.imgList_neutral_condition{t};
 %                image_name = fullfile(P.image_neutral_condition,file);
                 P.tmp_count_neut= P.tmp_count_neut+1;
